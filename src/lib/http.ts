@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import NextFetchRequestConfig from "next/types";
 import envConfig from "@/schema/config";
 import { normalizePath } from "./utils";
-import useUserStore from "@/store/userStore";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -165,7 +164,8 @@ const createHttpClient = (defaultBaseUrl: string) => {
   };
 };
 
-const httpServer = createHttpClient(envConfig.NEXT_PUBLIC_URL);
+const httpLocal = createHttpClient(envConfig.NEXT_PUBLIC_URL);
 const httpBag = createHttpClient(envConfig.NEXT_PUBLIC_BAG_API_ENDPOINT);
+const httpMock = createHttpClient(envConfig.NEXT_PUBLIC_MOCK_API_ENDPOINT);
 
-export { httpServer, httpBag, HttpError, EntityError };
+export { httpLocal, httpBag, httpMock, HttpError, EntityError };

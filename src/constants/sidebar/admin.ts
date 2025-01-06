@@ -1,140 +1,303 @@
+import { TNavItem } from "@/types/SideBar";
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
   Command,
   Frame,
   GalleryVerticalEnd,
-  Map,
   PieChart,
-  Settings2,
-  SquareTerminal,
 } from "lucide-react";
+import { PATHS } from "../path";
 export const data = {
   user: {
     name: "shadcn",
+
     email: "m@example.com",
+
     avatar: "/avatars/shadcn.jpg",
   },
+
   teams: [
     {
       name: "Acme Inc",
+
       logo: GalleryVerticalEnd,
+
       plan: "Enterprise",
     },
+
     {
       name: "Acme Corp.",
+
       logo: AudioWaveform,
+
       plan: "Startup",
     },
+
     {
       name: "Evil Corp.",
+
       logo: Command,
+
       plan: "Free",
     },
   ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
+
   projects: [
     {
       name: "Design Engineering",
+
       url: "#",
+
       icon: Frame,
     },
+
     {
       name: "Sales & Marketing",
+
       url: "#",
+
       icon: PieChart,
     },
+
     {
       name: "Travel",
+
       url: "#",
+
       icon: Map,
     },
   ],
 };
+// **Navigation cho Admin**
+export const adminNavItems: TNavItem[] = [
+  {
+    title: "Tổng quan",
+    url: PATHS.admin.dashboard,
+    icon: "dashboard",
+    shortcut: ["d", "d"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Quản lý cửa hàng",
+    url: PATHS.admin.stores,
+    icon: "store",
+    shortcut: ["s", "t"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Quản lý shipper",
+    url: PATHS.admin.shippers,
+    icon: "truck",
+    shortcut: ["s", "h"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Khu vực",
+    url: PATHS.admin.areas,
+    icon: "building",
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Doanh thu",
+    url: "#",
+    icon: "chart",
+    isActive: false,
+    items: [
+      {
+        title: "Doanh thu cửa hàng",
+        url: PATHS.admin.revenue.stores,
+        icon: "storeChart",
+        shortcut: ["r", "s"],
+      },
+      {
+        title: "Doanh thu nền tảng",
+        url: PATHS.admin.revenue.platform,
+        icon: "platformChart",
+        shortcut: ["r", "p"],
+      },
+    ],
+  },
+  {
+    title: "Cài đặt",
+    url: PATHS.admin.settings,
+    icon: "settings",
+    shortcut: ["s", "e"],
+    isActive: false,
+    items: [],
+  },
+];
+
+// **Navigation cho Manager**
+export const managerNavItems: TNavItem[] = [
+  {
+    title: "Tổng quan",
+    url: PATHS.manager.dashboard,
+    icon: "dashboard",
+    shortcut: ["d", "d"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Quản lý nhiệm vụ",
+    url: PATHS.manager.tasks,
+    icon: "tasks",
+    shortcut: ["t", "s"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Quản lý nhân viên",
+    url: PATHS.manager.staffManagement,
+    icon: "staff",
+    shortcut: ["s", "m"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Khu vực",
+    url: PATHS.manager.areas,
+    icon: "building",
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Doanh thu",
+    url: PATHS.manager.revenue,
+    icon: "chart",
+    isActive: false,
+    items: [],
+  },
+];
+
+// **Navigation cho Staff**
+export const staffNavItems: TNavItem[] = [
+  {
+    title: "Tổng quan",
+    url: PATHS.staff.dashboard,
+    icon: "dashboard",
+    shortcut: ["d", "d"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Nhiệm vụ của tôi",
+    url: PATHS.staff.myTasks,
+    icon: "tasks",
+    shortcut: ["m", "t"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Lịch làm việc",
+    url: PATHS.staff.schedule,
+    icon: "calendar",
+    shortcut: ["s", "c"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Hướng dẫn",
+    url: PATHS.staff.guides,
+    icon: "info",
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Phản hồi",
+    url: PATHS.staff.feedback,
+    icon: "feedback",
+    shortcut: ["f", "b"],
+    isActive: false,
+    items: [],
+  },
+];
+
+// Navigation cho Store (Cửa hàng)
+export const storeNavItems: TNavItem[] = [
+  {
+    title: "Tổng quan",
+    url: "/store/dashboard",
+    icon: "dashboard",
+    isActive: false,
+    shortcut: ["d", "d"],
+    items: [],
+  },
+  {
+    title: "Sản phẩm",
+    url: "#",
+    icon: "box",
+    isActive: false,
+    items: [
+      {
+        title: "Tất cả sản phẩm",
+        url: "/store/products",
+        icon: "boxes",
+        shortcut: ["p", "a"],
+      },
+      {
+        title: "Thêm sản phẩm",
+        url: "/store/products/add",
+        icon: "plusBox",
+        shortcut: ["p", "n"],
+      },
+      {
+        title: "Danh mục",
+        url: "/store/products/categories",
+        icon: "category",
+        shortcut: ["p", "c"],
+      },
+    ],
+  },
+  {
+    title: "Đơn hàng",
+    url: "#",
+    icon: "boxes",
+    isActive: false,
+    items: [
+      {
+        title: "Tất cả đơn hàng",
+        url: "/store/orders",
+        icon: "list",
+        shortcut: ["o", "a"],
+      },
+      {
+        title: "Chờ xử lý",
+        url: "/store/orders/pending",
+        icon: "clock",
+        shortcut: ["o", "p"],
+      },
+      {
+        title: "Đang xử lý",
+        url: "/store/orders/processing",
+        icon: "loader",
+        shortcut: ["o", "r"],
+      },
+      {
+        title: "Hoàn thành",
+        url: "/store/orders/completed",
+        icon: "check",
+        shortcut: ["o", "c"],
+      },
+    ],
+  },
+  {
+    title: "Doanh thu",
+    url: "/store/revenue",
+    icon: "chart",
+    shortcut: ["r", "e"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Thông tin cửa hàng",
+    url: "/store/profile",
+    icon: "store",
+    shortcut: ["s", "p"],
+    isActive: false,
+    items: [],
+  },
+];

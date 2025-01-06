@@ -86,3 +86,45 @@ body {
     @apply bg-background text-foreground;
   }
 }
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  /* Hiện scrollbar khi hover vào container */
+  .scrollbar:hover::-webkit-scrollbar-track {
+    background: hsl(var(--sidebar-accent));
+  }
+
+  .scrollbar:hover::-webkit-scrollbar-thumb {
+    background: hsl(var(--sidebar-border));
+  }
+
+  .scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--sidebar-border));
+  }
+
+  /* Dark mode */
+  .dark .scrollbar:hover::-webkit-scrollbar-track {
+    background: hsla(0, 0%, 100%, 0.2); /* Trắng mờ */
+  }
+
+  .dark .scrollbar:hover::-webkit-scrollbar-thumb {
+    background: hsla(0, 0%, 100%, 0.5); /* Trắng đậm hơn khi hover */
+  }
+
+  .dark .scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    background: hsla(0, 0%, 100%, 0.7); /* Trắng gần như đầy */
+  }
+}

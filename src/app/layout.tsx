@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import IndexProvider from "@/providers/index-provider";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import HeaderMain from "@/components/header-main";
+// import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+// import { AppSidebar } from "@/components/app-sidebar";
+// import HeaderMain from "@/components/header-main";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as ToasterSonner } from "@/components/ui/sonner";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import NextTopLoader from "nextjs-toploader";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -33,14 +36,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NextTopLoader showSpinner={false} />
+
         <IndexProvider>
-          <SidebarProvider>
-            <AppSidebar variant="floating" collapsible="icon" />
-            <main className="flex-1 w-full">
-              <HeaderMain className="sticky top-0 z-50 w-full" />
-              {children}
-            </main>
-          </SidebarProvider>
+          <SidebarProvider>{children}</SidebarProvider>
+
           <Toaster />
           <ToasterSonner />
         </IndexProvider>

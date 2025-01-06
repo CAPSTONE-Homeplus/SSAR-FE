@@ -5,6 +5,7 @@ const configSchema = z.object({
   NEXT_PUBLIC_URL: z.string(),
   NEXT_PUBLIC_BAG_API_ENDPOINT: z.string(),
   NEXT_PUBLIC_URL_PRODUCTION: z.string(),
+  NEXT_PUBLIC_MOCK_API_ENDPOINT: z.string(),
 });
 
 // Kiểm tra môi trường hiện tại
@@ -17,6 +18,7 @@ const configProject = configSchema.safeParse({
     : process.env.NEXT_PUBLIC_URL_PRODUCTION, // URL cho môi trường production
   NEXT_PUBLIC_BAG_API_ENDPOINT: process.env.NEXT_PUBLIC_BAG_API_ENDPOINT,
   NEXT_PUBLIC_URL_PRODUCTION: process.env.NEXT_PUBLIC_URL_PRODUCTION,
+  NEXT_PUBLIC_MOCK_API_ENDPOINT: process.env.NEXT_PUBLIC_MOCK_API_ENDPOINT,
 });
 
 if (!configProject.success) {
