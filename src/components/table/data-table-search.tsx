@@ -16,6 +16,8 @@ interface DataTableSearchProps {
     value: number | ((old: number) => number | null) | null,
     options?: Options<Shallow> | undefined
   ) => Promise<URLSearchParams>;
+  className?: string;
+  placeholder?: string;
 }
 
 export function DataTableSearch({
@@ -23,6 +25,8 @@ export function DataTableSearch({
   searchQuery,
   setSearchQuery,
   setPage,
+  className,
+  placeholder,
 }: DataTableSearchProps) {
   const [isLoading, startTransition] = useTransition();
 
@@ -33,10 +37,14 @@ export function DataTableSearch({
 
   return (
     <Input
-      placeholder={`Search ${searchKey}...`}
+      placeholder={placeholder ?? `Search ${searchKey}...`}
       value={searchQuery ?? ""}
       onChange={(e) => handleSearch(e.target.value)}
-      className={cn("w-full md:max-w-sm", isLoading && "animate-pulse")}
+      className={cn(
+        "w-full md:max-w-sm",
+        isLoading && "animate-pulse",
+        className
+      )}
     />
   );
 }

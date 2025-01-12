@@ -1,11 +1,9 @@
 "use client";
 
-import * as React from "react";
+import React, { Suspense } from "react";
+import { useSelector } from "react-redux";
 
 import { NavMain } from "@/components/nav-main";
-// import { NavProjects } from "@/components/nav-projects";
-// import { NavSideBar } from "./nav-sidebar";
-
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -15,23 +13,52 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { data, adminNavItems } from "@/constants/sidebar/admin";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+import {
+  adminNavItems,
+  managerNavItems,
+  staffNavItems,
+  data,
+} from "@/constants/sidebar/route";
+import { RootState } from "@/redux/store";
+
+export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  // Lấy `role` từ Redux store.
+  const user = useSelector((state: RootState) => state.user.user);
+
+  // Dữ liệu sidebar theo role.
+  const getNavItemsByRole = () => {
+    switch (user?.role) {
+      case "admin":
+        return adminNavItems;
+      case "manager":
+        return managerNavItems;
+      case "staff":
+        return staffNavItems;
+      default:
+        return [];
+    }
+  };
+
   return (
-    <Sidebar {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={adminNavItems} />
-        {/* <NavMain items={data.navMain} />*/}
-        {/* <NavProjects projects={data.projects} /> */}
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Sidebar {...props}>
+        <SidebarHeader>
+          <TeamSwitcher teams={data.teams} />
+        </SidebarHeader>
+        <SidebarContent>
+          {user ? (
+            <NavMain items={getNavItemsByRole()} />
+          ) : (
+            <div>No access to this content</div>
+          )}
+        </SidebarContent>
+        <SidebarFooter>
+          <NavUser user={data.user} />
+          {/* Dữ liệu giả */}
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+    </Suspense>
   );
 }

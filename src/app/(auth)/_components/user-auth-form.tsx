@@ -16,6 +16,10 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { PATHS } from "@/constants/path";
+import { useDispatch } from "react-redux"; // Import redux dispatch
+import { setUser } from "@/redux/User/userSlice";
+import { useToast } from "@/hooks/use-toast";
+import authClient from "@/apis/clients/auth";
 
 const FormSchema = z.object({
   username: z
@@ -30,6 +34,9 @@ type UserFormValue = z.infer<typeof FormSchema>;
 
 export default function UserAuthForm() {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,8 +45,46 @@ export default function UserAuthForm() {
     },
   });
 
+  const fakeAuth = (username: string) => {
+    const roles = {
+      admin: { role: "admin", name: "Admin User", accessToken: "admin-token" },
+      manager: {
+        role: "manager",
+        name: "Manager User",
+        accessToken: "manager-token",
+      },
+      staff: { role: "staff", name: "Staff User", accessToken: "staff-token" },
+      store: { role: "store", name: "Store User", accessToken: "store-token" },
+    };
+
+    return roles[username as keyof typeof roles] || null;
+  };
+
   const onSubmit = async (data: UserFormValue) => {
-    router.push(PATHS.admin.dashboard);
+    const authData = fakeAuth(data.username);
+
+    if (!authData) {
+      toast({
+        title: "Tên đăng nhập hoặc mật khẩu không đúng",
+      });
+      return;
+    }
+
+    const { role, accessToken } = authData;
+
+    // Lưu vào Redux
+    dispatch(setUser({ role, accessToken }));
+    await authClient.auth({ user: authData });
+    toast({
+      title: "Chào mừng bạn quay trở lại",
+    });
+    if (role === "admin") {
+      router.push(PATHS.admin.overview);
+    } else if (role === "manager") {
+      router.push(PATHS.manager.overview);
+    } else if (role === "staff") {
+      router.push(PATHS.staff.myTasks);
+    }
   };
 
   return (
@@ -89,17 +134,6 @@ export default function UserAuthForm() {
           </Button>
         </form>
       </Form>
-      {/* <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <GithubSignInButton /> */}
     </>
   );
 }

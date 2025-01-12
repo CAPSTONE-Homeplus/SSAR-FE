@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "@/redux/store";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { AuthProvider } from "@/context/userContext";
 const IndexProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <NuqsAdapter>
@@ -16,7 +17,7 @@ const IndexProvider = ({ children }: { children: React.ReactNode }) => {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <AuthProvider>{children}</AuthProvider>
           </ThemeProvider>
         </Provider>
       </TankStackProvider>

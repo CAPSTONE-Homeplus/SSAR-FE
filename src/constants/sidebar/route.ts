@@ -72,7 +72,7 @@ export const data = {
 export const adminNavItems: TNavItem[] = [
   {
     title: "Tổng quan",
-    url: PATHS.admin.dashboard,
+    url: PATHS.admin.overview,
     icon: "dashboard",
     shortcut: ["d", "d"],
     isActive: false,
@@ -87,8 +87,8 @@ export const adminNavItems: TNavItem[] = [
     items: [],
   },
   {
-    title: "Quản lý shipper",
-    url: PATHS.admin.shippers,
+    title: "Quản lý quản lý",
+    url: PATHS.admin.managers,
     icon: "truck",
     shortcut: ["s", "h"],
     isActive: false,
@@ -135,7 +135,7 @@ export const adminNavItems: TNavItem[] = [
 export const managerNavItems: TNavItem[] = [
   {
     title: "Tổng quan",
-    url: PATHS.manager.dashboard,
+    url: PATHS.manager.overview,
     icon: "dashboard",
     shortcut: ["d", "d"],
     isActive: false,
@@ -150,12 +150,29 @@ export const managerNavItems: TNavItem[] = [
     items: [],
   },
   {
-    title: "Quản lý nhân viên",
-    url: PATHS.manager.staffManagement,
-    icon: "staff",
-    shortcut: ["s", "m"],
+    title: "Quản lý nhân sự",
+    url: "#",
+    icon: "users",
+    shortcut: ["o", "s"],
     isActive: false,
-    items: [],
+    items: [
+      {
+        title: "Quản lý shipper",
+        url: PATHS.manager.shippers,
+        icon: "truck",
+        shortcut: ["s", "h"],
+        isActive: false,
+        items: [],
+      },
+      {
+        title: "Quản lý nhân viên",
+        url: PATHS.manager.staffs,
+        icon: "staff",
+        shortcut: ["s", "m"],
+        isActive: false,
+        items: [],
+      },
+    ],
   },
   {
     title: "Khu vực",
@@ -175,14 +192,6 @@ export const managerNavItems: TNavItem[] = [
 
 // **Navigation cho Staff**
 export const staffNavItems: TNavItem[] = [
-  {
-    title: "Tổng quan",
-    url: PATHS.staff.dashboard,
-    icon: "dashboard",
-    shortcut: ["d", "d"],
-    isActive: false,
-    items: [],
-  },
   {
     title: "Nhiệm vụ của tôi",
     url: PATHS.staff.myTasks,
