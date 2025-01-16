@@ -1,24 +1,26 @@
 import { DataTable } from "@/components/table/data-table";
-import { TStoreResponse } from "@/schema/store.schema";
+import { TServiceResponse } from "@/schema/service.schema";
 import { TTableResponse } from "@/types/Table";
 import React from "react";
 import { columns } from "./store-tables/columns";
-import { getAllStores } from "@/apis/store";
+import { getAllServices } from "@/apis/service";
 
 const StoreTable = async () => {
-  const storeResponse = await getAllStores();
-  const parsedStoreResponse: TTableResponse<TStoreResponse> = {
-    listResult: storeResponse.payload,
-    limit: 10,
-    page: 1,
-    totalPage: 3,
+  const storeResponse = await getAllServices();
+  console.log(storeResponse);
+  const parsedStoreResponse: TTableResponse<TServiceResponse> = {
+    size: 0,
+    page: 0,
+    total: 0,
+    totalPages: 0,
+    items: storeResponse.payload.items,
   };
   return (
     <div>
       <DataTable
-        data={parsedStoreResponse.listResult}
+        data={parsedStoreResponse.items}
         columns={columns}
-        totalItems={parsedStoreResponse.totalPage}
+        totalItems={parsedStoreResponse.totalPages}
       />
     </div>
   );

@@ -102,6 +102,13 @@ export const adminNavItems: TNavItem[] = [
     items: [],
   },
   {
+    title: "Dịch vụ",
+    url: PATHS.admin.services,
+    icon: "package",
+    isActive: false,
+    items: [],
+  },
+  {
     title: "Doanh thu",
     url: "#",
     icon: "chart",
