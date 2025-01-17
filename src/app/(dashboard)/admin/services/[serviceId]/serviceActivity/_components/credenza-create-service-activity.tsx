@@ -13,10 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import {
-  BuildingCreateSchema,
-  TBuildingCreateRequest,
-} from "@/schema/building.schema";
-import {
   Credenza,
   CredenzaTrigger,
   CredenzaContent,
@@ -26,24 +22,29 @@ import {
   CredenzaFooter,
   CredenzaClose,
 } from "@/components/ui/credenza";
+import {
+  ServiceActivityCreateSchema,
+  TServiceActivityCreateRequest,
+} from "@/schema/service-activity.schema";
 
-export function CredenzaCreateBuilding() {
+export function CredenzaCreateServiceActivity() {
   const { toast } = useToast();
-  const form = useForm<TBuildingCreateRequest>({
-    resolver: zodResolver(BuildingCreateSchema),
+  const form = useForm<TServiceActivityCreateRequest>({
+    resolver: zodResolver(ServiceActivityCreateSchema),
     defaultValues: {
       name: "",
-      description: "",
-      clusterId: "",
-      createdBy: "",
-      updatedBy: "",
+      code: "",
+      prorityLevel: 0,
+      estimatedTimePerTask: "",
+      safetyMeasures: "",
+      serviceId: "",
     },
   });
 
-  const onSubmit = async (data: TBuildingCreateRequest) => {
-    console.log("New Building Created: ", data);
+  const onSubmit = async (data: TServiceActivityCreateRequest) => {
+    console.log("New Service Activity Created: ", data);
     toast({
-      title: "Tạo khu vực thành công",
+      title: "Tạo hoạt động dịch vụ thành công",
     });
     form.reset();
   };
@@ -51,12 +52,14 @@ export function CredenzaCreateBuilding() {
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button variant="default">Tạo Khu Vực</Button>
+        <Button variant="default">Tạo Hoạt Động Dịch Vụ</Button>
       </CredenzaTrigger>
       <CredenzaContent className="sm:max-w-[425px]">
         <CredenzaHeader>
-          <CredenzaTitle>Tạo Khu Vực</CredenzaTitle>
-          <CredenzaDescription>Tạo thông tin khu vực mới</CredenzaDescription>
+          <CredenzaTitle>Tạo Hoạt Động Dịch Vụ</CredenzaTitle>
+          <CredenzaDescription>
+            Tạo thông tin hoạt động dịch vụ mới
+          </CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -66,9 +69,9 @@ export function CredenzaCreateBuilding() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tên Khu Vực</FormLabel>
+                    <FormLabel>Tên Hoạt Động</FormLabel>
                     <FormControl>
-                      <Input placeholder="Tên khu vực..." {...field} />
+                      <Input placeholder="Tên hoạt động..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -76,12 +79,12 @@ export function CredenzaCreateBuilding() {
               />
               <FormField
                 control={form.control}
-                name="description"
+                name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mô Tả</FormLabel>
+                    <FormLabel>Mã Hoạt Động</FormLabel>
                     <FormControl>
-                      <Input placeholder="Mô tả..." {...field} />
+                      <Input placeholder="Mã hoạt động..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,12 +92,17 @@ export function CredenzaCreateBuilding() {
               />
               <FormField
                 control={form.control}
-                name="clusterId"
+                name="prorityLevel"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cluster ID</FormLabel>
+                    <FormLabel>Mức Độ Ưu Tiên</FormLabel>
                     <FormControl>
-                      <Input placeholder="Cluster ID..." {...field} />
+                      <Input
+                        type="number"
+                        placeholder="Mức độ ưu tiên..."
+                        {...field}
+                        min={0}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,12 +110,15 @@ export function CredenzaCreateBuilding() {
               />
               <FormField
                 control={form.control}
-                name="createdBy"
+                name="estimatedTimePerTask"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Người Tạo</FormLabel>
+                    <FormLabel>Thời Gian Dự Kiến Mỗi Nhiệm Vụ</FormLabel>
                     <FormControl>
-                      <Input placeholder="Người tạo..." {...field} />
+                      <Input
+                        placeholder="Thời gian dự kiến..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,12 +126,28 @@ export function CredenzaCreateBuilding() {
               />
               <FormField
                 control={form.control}
-                name="updatedBy"
+                name="safetyMeasures"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Người Cập Nhật</FormLabel>
+                    <FormLabel>Biện Pháp An Toàn</FormLabel>
                     <FormControl>
-                      <Input placeholder="Người cập nhật..." {...field} />
+                      <Input
+                        placeholder="Biện pháp an toàn..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="serviceId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>ID Dịch Vụ</FormLabel>
+                    <FormControl>
+                      <Input placeholder="ID dịch vụ..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

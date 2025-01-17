@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
-import { BuildingSchema, TBuildingRequest } from "@/schema/building.schema";
 import {
   Credenza,
   CredenzaTrigger,
@@ -23,22 +22,26 @@ import {
   CredenzaFooter,
   CredenzaClose,
 } from "@/components/ui/credenza";
+import {
+  ServiceActivityUpdateSchema,
+  TServiceActivityUpdateRequest,
+} from "@/schema/service-activity.schema";
 
 type Props = {
-  buildingData: TBuildingRequest; // Data passed to update form
+  serviceActivityData: TServiceActivityUpdateRequest; // Data passed to update form
 };
 
-export function CredenzaUpdateBuilding({ buildingData }: Props) {
+export function CredenzaUpdateServiceActivity({ serviceActivityData }: Props) {
   const { toast } = useToast();
-  const form = useForm<TBuildingRequest>({
-    resolver: zodResolver(BuildingSchema),
-    defaultValues: buildingData,
+  const form = useForm<TServiceActivityUpdateRequest>({
+    resolver: zodResolver(ServiceActivityUpdateSchema),
+    defaultValues: serviceActivityData,
   });
 
-  const onSubmit = async (data: TBuildingRequest) => {
-    console.log("Building Updated: ", data);
+  const onSubmit = async (data: TServiceActivityUpdateRequest) => {
+    console.log("Service Activity Updated: ", data);
     toast({
-      title: "Cập nhật khu vực thành công",
+      title: "Cập nhật hoạt động dịch vụ thành công",
     });
     form.reset();
   };
@@ -46,12 +49,14 @@ export function CredenzaUpdateBuilding({ buildingData }: Props) {
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button variant="default">Cập Nhật Khu Vực</Button>
+        <Button variant="default">Cập Nhật Hoạt Động Dịch Vụ</Button>
       </CredenzaTrigger>
       <CredenzaContent className="sm:max-w-[425px]">
         <CredenzaHeader>
-          <CredenzaTitle>Cập Nhật Khu Vực</CredenzaTitle>
-          <CredenzaDescription>Cập nhật thông tin khu vực</CredenzaDescription>
+          <CredenzaTitle>Cập Nhật Hoạt Động Dịch Vụ</CredenzaTitle>
+          <CredenzaDescription>
+            Cập nhật thông tin hoạt động dịch vụ
+          </CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -61,9 +66,9 @@ export function CredenzaUpdateBuilding({ buildingData }: Props) {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tên Khu Vực</FormLabel>
+                    <FormLabel>Tên Hoạt Động</FormLabel>
                     <FormControl>
-                      <Input placeholder="Tên khu vực..." {...field} />
+                      <Input placeholder="Tên hoạt động..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -71,12 +76,12 @@ export function CredenzaUpdateBuilding({ buildingData }: Props) {
               />
               <FormField
                 control={form.control}
-                name="description"
+                name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mô Tả</FormLabel>
+                    <FormLabel>Mã Hoạt Động</FormLabel>
                     <FormControl>
-                      <Input placeholder="Mô tả..." {...field} />
+                      <Input placeholder="Mã hoạt động..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -84,12 +89,12 @@ export function CredenzaUpdateBuilding({ buildingData }: Props) {
               />
               <FormField
                 control={form.control}
-                name="clusterId"
+                name="status"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cluster ID</FormLabel>
+                    <FormLabel>Trạng Thái</FormLabel>
                     <FormControl>
-                      <Input placeholder="Cluster ID..." {...field} />
+                      <Input placeholder="Trạng thái hoạt động..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -97,12 +102,16 @@ export function CredenzaUpdateBuilding({ buildingData }: Props) {
               />
               <FormField
                 control={form.control}
-                name="createdBy"
+                name="prorityLevel"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Người Tạo</FormLabel>
+                    <FormLabel>Mức Độ Ưu Tiên</FormLabel>
                     <FormControl>
-                      <Input placeholder="Người tạo..." {...field} />
+                      <Input
+                        type="number"
+                        placeholder="Mức độ ưu tiên..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,12 +119,31 @@ export function CredenzaUpdateBuilding({ buildingData }: Props) {
               />
               <FormField
                 control={form.control}
-                name="updatedBy"
+                name="estimatedTimePerTask"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Người Cập Nhật</FormLabel>
+                    <FormLabel>Thời Gian Dự Kiến Mỗi Nhiệm Vụ</FormLabel>
                     <FormControl>
-                      <Input placeholder="Người cập nhật..." {...field} />
+                      <Input
+                        placeholder="Thời gian dự kiến..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="safetyMeasures"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Biện Pháp An Toàn</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Biện pháp an toàn..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
