@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as ToasterSonner } from "@/components/ui/sonner";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import NextTopLoader from "nextjs-toploader";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,7 +40,15 @@ export default function RootLayout({
         <NextTopLoader showSpinner={false} />
 
         <IndexProvider>
-          <SidebarProvider>{children}</SidebarProvider>
+          <SidebarProvider>
+            <ThemeProvider
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </SidebarProvider>
 
           <Toaster />
           <ToasterSonner />

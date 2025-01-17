@@ -9,20 +9,20 @@ import {
 import { PATHS } from "../path";
 export const data = {
   user: {
-    name: "shadcn",
+    name: "Nguyen Van A",
 
-    email: "m@example.com",
+    email: "nguyenvana@gmail.com",
 
     avatar: "/avatars/shadcn.jpg",
   },
 
   teams: [
     {
-      name: "Acme Inc",
+      name: "ADMIN DASHBOARD",
 
       logo: GalleryVerticalEnd,
 
-      plan: "Enterprise",
+      plan: "HomePLus",
     },
 
     {
