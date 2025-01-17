@@ -3,6 +3,7 @@ import Link from "next/link";
 import UserAuthForm from "./user-auth-form";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -49,6 +50,7 @@ export default function SignInViewPage() {
           </blockquote>
         </div>
       </div>
+      <ModeToggle className="absolute top-4 right-4 z-50" />
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
@@ -59,6 +61,11 @@ export default function SignInViewPage() {
               Vui lòng đăng nhập vào tài khoản của bạn.
             </p>
           </div>
+          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+          <span className="relative z-10 bg-background px-2 text-muted-foreground">
+            Continue with form
+          </span>
+        </div>
           <UserAuthForm />
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{" "}
