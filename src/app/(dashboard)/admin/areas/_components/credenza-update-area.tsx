@@ -2,21 +2,20 @@
 import React from "react";
 import {
   Credenza,
-  CredenzaTrigger,
   CredenzaContent,
   CredenzaHeader,
   CredenzaTitle,
   CredenzaDescription,
   CredenzaFooter,
   CredenzaClose,
-} from "@/components/ui/credenza"; // Import from Credenza
+} from "@/components/ui/credenza";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateAreaSchema, TCreateAreaRequest } from "@/schema/area.schema";
+import { AreaResponseSchema, TUpdateAreaRequest } from "@/schema/area.schema";
 import {
   Form,
   FormControl,
@@ -24,104 +23,175 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { updateArea } from "@/apis/area";
 
 type Props = {
-  className?: string;
-  initialData: TCreateAreaRequest; // Data passed to update form
+  initialData: TUpdateAreaRequest;
+  setIsOpen: (open: boolean) => void;
+  isOpen: boolean;
 };
 
-export function CredenzaUpdateArea({ className, initialData }: Props) {
+export function CredenzaUpdateArea({ initialData, isOpen, setIsOpen }: Props) {
   const { toast } = useToast();
-  const form = useForm<TCreateAreaRequest>({
-    resolver: zodResolver(UpdateAreaSchema),
-    defaultValues: initialData, // Setting mock data as the default form values
+  const form = useForm<TUpdateAreaRequest>({
+    resolver: zodResolver(AreaResponseSchema),
+    defaultValues: initialData,
   });
 
-  const onSubmit = async (data: TCreateAreaRequest) => {
-    console.log("Updated data: ", data); // Log the updated data
-    toast({
-      title: "Cập nhật khu vực thành công",
-    });
-    form.reset(); // Reset form after successful submit
+  const onSubmit = async (data: TUpdateAreaRequest) => {
+    try {
+      const response = await updateArea(initialData.id, data);
+      if (response.status === 200) {
+        toast({
+          title: "Cập nhật khu vực thành công",
+          description: "Khu vực đã được cập nhật thành công.",
+        });
+        form.reset();
+        setIsOpen(false); // Đóng Credenza
+      } else {
+        toast({
+          title: "Lỗi",
+          description: "Không thể cập nhật khu vực",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Lỗi",
+        description: `Có lỗi xảy ra khi cập nhật khu vực ${error.message}`,
+        variant: "destructive",
+      });
+    }
   };
+  const { isSubmitting } = form.formState;
 
   return (
-    <Credenza>
-      <CredenzaTrigger asChild className={className}>
-        <Button variant="default">Cập Nhật Khu Vực</Button>
-      </CredenzaTrigger>
+    <Credenza open={isOpen} onOpenChange={setIsOpen}>
       <CredenzaContent className="sm:max-w-[425px]">
         <CredenzaHeader>
-          <CredenzaTitle>Cập Nhật Khu Vực</CredenzaTitle>
-          <CredenzaDescription>Cập nhật thông tin khu vực</CredenzaDescription>
+          <CredenzaTitle>Tạo Khu Vực</CredenzaTitle>
+          <CredenzaDescription>Nhập thông tin khu vực mới</CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="areaName" className="text-right">
-                  Tên Khu Vực
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="areaName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Tên khu vực..." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+            <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="name">Tên Khu Vực</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập tên khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="description" className="text-right">
-                  Mô Tả
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Mô tả..." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="code">Mã Khu Vực</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập mã khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="contactInfo"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="contactInfo">Thông Tin Liên Hệ</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập thông tin liên hệ..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="status" className="text-right">
-                  Trạng Thái
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="status"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Trạng thái..." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+              <FormField
+                control={form.control}
+                name="areaType"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="areaType">Loại Khu Vực</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập loại khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Label htmlFor="address">Địa Chỉ</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập địa chỉ..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Label htmlFor="description">Mô Tả</Label>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Nhập mô tả khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <CredenzaFooter>
-              <Button type="submit">Cập Nhật</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Đang cập nhập..." : "Cập nhập Khu Vực"}
+              </Button>
               <CredenzaClose asChild>
-                <Button type="button" variant="secondary">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsOpen(false)}
+                >
                   Đóng
                 </Button>
               </CredenzaClose>

@@ -3,7 +3,7 @@
 "use server";
 
 import { httpHomePlus } from "@/lib/http";
-import { TAreaResponse } from "@/schema/area.schema";
+import { TAreaResponse, TUpdateAreaRequest } from "@/schema/area.schema";
 import { TTableResponse } from "@/types/Table";
 
 export const getAllAreas = async (params?: any) => {
@@ -29,8 +29,11 @@ export const createArea = async (data: Partial<TAreaResponse>) => {
   return response;
 };
 
-export const updateArea = async (id: string, data: Partial<TAreaResponse>) => {
-  const response = await httpHomePlus.put<TAreaResponse>(`/areas/${id}`, data);
+export const updateArea = async (id: string, data: TUpdateAreaRequest) => {
+  const response = await httpHomePlus.patch<TAreaResponse>(
+    `/areas/${id}`,
+    data
+  );
   console.log("updateArea Response:", response);
   return response;
 };
