@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateAreaSchema, TAreaRequest } from "@/schema/area.schema";
+import { UpdateAreaSchema, TCreateAreaRequest } from "@/schema/area.schema";
 import {
   Form,
   FormControl,
@@ -27,17 +27,17 @@ import {
 
 type Props = {
   className?: string;
-  initialData: TAreaRequest; // Data passed to update form
+  initialData: TCreateAreaRequest; // Data passed to update form
 };
 
 export function CredenzaUpdateArea({ className, initialData }: Props) {
   const { toast } = useToast();
-  const form = useForm<TAreaRequest>({
+  const form = useForm<TCreateAreaRequest>({
     resolver: zodResolver(UpdateAreaSchema),
     defaultValues: initialData, // Setting mock data as the default form values
   });
 
-  const onSubmit = async (data: TAreaRequest) => {
+  const onSubmit = async (data: TCreateAreaRequest) => {
     console.log("Updated data: ", data); // Log the updated data
     toast({
       title: "Cập nhật khu vực thành công",

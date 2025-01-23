@@ -167,6 +167,8 @@ const createHttpClient = (defaultBaseUrl: string) => {
 const httpLocal = createHttpClient(envConfig.NEXT_PUBLIC_URL);
 const httpBag = createHttpClient(envConfig.NEXT_PUBLIC_BAG_API_ENDPOINT);
 const httpMock = createHttpClient(envConfig.NEXT_PUBLIC_MOCK_API_ENDPOINT);
-const httpHomePlus = createHttpClient(envConfig.NEXT_PUBLIC_HOMEPLUS_API_ENDPOINT);
+const httpHomePlus = createHttpClient(
+  envConfig.NEXT_PUBLIC_HOMEPLUS_API_ENDPOINT
+);
 
 export { httpLocal, httpBag, httpMock, httpHomePlus, HttpError, EntityError };

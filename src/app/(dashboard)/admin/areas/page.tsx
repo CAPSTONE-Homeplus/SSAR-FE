@@ -1,21 +1,19 @@
 import React from "react";
-import { CredenzaCreateArea } from "./_components/credenza-create-area";
-import { CredenzaUpdateArea } from "./_components/credenza-update-area";
-import { TAreaRequest } from "@/schema/area.schema";
+import AreaIndex from "./_components/area-index";
+import { SearchParams } from "nuqs";
+import { searchParamsCache, serialize } from "@/lib/searchparams";
+type pageProps = {
+  searchParams: Promise<SearchParams>;
+};
 
-const AreaPage = () => {
-  const fakeData: TAreaRequest = {
-    id: "123e4567-e89b-12d3-a456-426614174000",
-    areaName: "Test Area",
-    description: "This is a test area",
-    status: "ACTIVE",
-  };
-  return (
-    <div>
-      <CredenzaCreateArea />
-      <CredenzaUpdateArea initialData={fakeData} />
-    </div>
-  );
+const AreaPage = async (props: pageProps) => {
+  const searchParams = await props.searchParams;
+  // Allow nested RSCs to access the search params (in a type-safe way)
+  searchParamsCache.parse(searchParams);
+
+  // This key is used for invoke suspense if any of the search params changed (used for filters).
+  const key = serialize({ ...searchParams });
+  return <AreaIndex keyProps={key} />;
 };
 
 export default AreaPage;
