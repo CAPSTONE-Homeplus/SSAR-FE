@@ -26,18 +26,7 @@ export const CreateAreaSchema = z.object({
   areaType: z.string().min(1, { message: "Loại khu vực không được trống." }),
 });
 
-export const UpdateAreaSchema = z.object({
-  id: z.string().uuid(),
-  name: z.string().optional(),
-  hubId: z.string().optional(),
-  code: z.string().optional(),
-  description: z.string().optional(),
-  address: z.string().optional(),
-  contactInfo: z.string().optional(),
-  areaType: z.string().optional(),
-});
-
 // Types
 export type TAreaResponse = z.TypeOf<typeof AreaResponseSchema>;
 export type TCreateAreaRequest = z.TypeOf<typeof CreateAreaSchema>;
-export type TUpdateAreaRequest = z.TypeOf<typeof UpdateAreaSchema>;
+export type TUpdateAreaRequest = z.TypeOf<typeof AreaResponseSchema>;

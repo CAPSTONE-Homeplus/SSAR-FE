@@ -6,6 +6,7 @@ import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
 import AreaTableAction from "./area-tables/area-table-action";
+import { CredenzaCreateArea } from "./credenza-create-area";
 type Props = {
   keyProps: string;
 };
@@ -16,10 +17,12 @@ const AreaIndex = ({ keyProps }: Props) => {
         <AreaTable storeResponse={storeResponse} />
       </div> */}
       <div className="space-y-4">
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <Heading title="Khu vực" description="Quản lý khu vực " />
+          <CredenzaCreateArea />
         </div>
         <Separator />
+
         <AreaTableAction />
         <Suspense
           key={keyProps}

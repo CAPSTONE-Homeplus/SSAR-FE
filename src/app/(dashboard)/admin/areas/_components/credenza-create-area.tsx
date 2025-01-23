@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Credenza,
   CredenzaTrigger,
@@ -24,6 +24,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { createArea } from "@/apis/area";
 
 type Props = {
   className?: string;
@@ -31,100 +33,179 @@ type Props = {
 
 export function CredenzaCreateArea({ className }: Props) {
   const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState(false); // Để kiểm soát đóng Credenza
   const form = useForm<TCreateAreaRequest>({
     resolver: zodResolver(CreateAreaSchema),
     defaultValues: {
-      areaName: "",
+      name: "",
+      hubId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      code: "",
       description: "",
-      status: "ACTIVE",
+      address: "",
+      contactInfo: "",
+      areaType: "",
     },
   });
 
+  const { isSubmitting } = form.formState;
+
   const onSubmit = async (data: TCreateAreaRequest) => {
-    console.log("Submitted data: ", data); // Log the submitted data
-    toast({
-      title: "Tạo khu vực thành công",
-    });
-    form.reset(); // Reset form after successful submit
+    try {
+      const response = await createArea(data);
+      if (response.status === 201) {
+        toast({
+          title: "Tạo khu vực thành công",
+          description: "Khu vực đã được tạo thành công.",
+        });
+        form.reset();
+        setIsOpen(false); // Đóng Credenza
+      } else {
+        toast({
+          title: "Lỗi",
+          description: "Không thể tạo khu vực",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Lỗi",
+        description: `Có lỗi xảy ra khi tạo khu vực ${error.message}`,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <Credenza>
+    <Credenza open={isOpen} onOpenChange={setIsOpen}>
       <CredenzaTrigger asChild className={className}>
-        <Button variant="default">Tạo Khu Vực</Button>
+        <Button variant="default" onClick={() => setIsOpen(true)}>
+          Tạo Khu Vực
+        </Button>
       </CredenzaTrigger>
       <CredenzaContent className="sm:max-w-[425px]">
         <CredenzaHeader>
           <CredenzaTitle>Tạo Khu Vực</CredenzaTitle>
-          <CredenzaDescription>Tạo một khu vực mới</CredenzaDescription>
+          <CredenzaDescription>Nhập thông tin khu vực mới</CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="areaName" className="text-right">
-                  Tên Khu Vực
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="areaName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Tên khu vực..." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+            <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="name">Tên Khu Vực</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập tên khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="description" className="text-right">
-                  Mô Tả
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Mô tả..." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="code">Mã Khu Vực</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập mã khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="contactInfo"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="contactInfo">Thông Tin Liên Hệ</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập thông tin liên hệ..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="status" className="text-right">
-                  Trạng Thái
-                </Label>
-                <div className="col-span-3">
-                  <FormField
-                    control={form.control}
-                    name="status"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input placeholder="Trạng thái..." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+              <FormField
+                control={form.control}
+                name="areaType"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="areaType">Loại Khu Vực</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập loại khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Label htmlFor="address">Địa Chỉ</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập địa chỉ..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <Label htmlFor="description">Mô Tả</Label>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Nhập mô tả khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <CredenzaFooter>
-              <Button type="submit">Tạo Khu Vực</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Đang cập nhập..." : "Cập nhập Khu Vực"}
+              </Button>
               <CredenzaClose asChild>
-                <Button type="button" variant="secondary">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsOpen(false)}
+                >
                   Đóng
                 </Button>
               </CredenzaClose>
