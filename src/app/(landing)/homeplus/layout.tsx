@@ -1,6 +1,6 @@
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
-// import ChatIcons from "../../components/chat";
+import ChatIcons from "@/components/ui/chat";
 
 export default function HomeLayout({
   children,
@@ -10,8 +10,8 @@ export default function HomeLayout({
   return (
     <>
       <Header />
-      {/* <ChatIcons /> */}
-      <div className="mt-20">{children}</div>
+      <ChatIcons />
+      <main className="flex-1 mt-20">{children}</main> 
       <Footer />
     </>
   );
