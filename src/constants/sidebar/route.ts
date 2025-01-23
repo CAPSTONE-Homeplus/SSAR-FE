@@ -149,6 +149,22 @@ export const managerNavItems: TNavItem[] = [
     items: [],
   },
   {
+    title: "Phân Loại Dịch Vụ",
+    url: PATHS.manager.serviceCategory,
+    icon: "package",
+    shortcut: ["t", "s"],
+    isActive: false,
+    items: [],
+  },
+  {
+    title: "Dịch Vụ",
+    url: PATHS.manager.service,
+    icon: "package",
+    shortcut: ["t", "s"],
+    isActive: false,
+    items: [],
+  },
+  {
     title: "Quản lý nhiệm vụ",
     url: PATHS.manager.tasks,
     icon: "tasks",
