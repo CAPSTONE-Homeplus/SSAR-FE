@@ -6,11 +6,11 @@ import { searchParamsCache } from "@/lib/searchparams";
 const AreaTable = async () => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
-  const pageLimit = searchParamsCache.get("limit");
+  const size = searchParamsCache.get("size");
 
   const filters = {
     page,
-    limit: pageLimit,
+    size: size,
     ...(search && { search }),
   };
   const storeResponse = await getAllAreas(filters);
