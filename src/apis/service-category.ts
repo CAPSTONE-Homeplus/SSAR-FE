@@ -3,12 +3,12 @@
 "use server";
 
 import { httpHomePlus } from "@/lib/http";
-import { TServiceResponse } from "@/schema/service.schema";
+import { TServiceCategoryResponse } from "@/schema/service-category.schema";
 import { TTableResponse } from "@/types/Table";
 
-export const getAllServices = async (params?: any) => {
-  const response = await httpHomePlus.get<TTableResponse<TServiceResponse>>(
-    `/services`,
+export const getAllServiceCategories = async (params?: any) => {
+  const response = await httpHomePlus.get<TTableResponse<TServiceCategoryResponse>>(
+    `/service-categories`,
     {
       params,
     }
@@ -18,19 +18,19 @@ export const getAllServices = async (params?: any) => {
 };
 
 export const getAreaById = async (id: string) => {
-  const response = await httpHomePlus.get<TServiceResponse>(`/services/${id}`);
+  const response = await httpHomePlus.get<TServiceCategoryResponse>(`/services/${id}`);
   console.log("getAreaById Response:", response);
   return response;
 };
 
-export const createArea = async (data: Partial<TServiceResponse>) => {
-  const response = await httpHomePlus.post<TServiceResponse>(`/services`, data);
+export const createArea = async (data: Partial<TServiceCategoryResponse>) => {
+  const response = await httpHomePlus.post<TServiceCategoryResponse>(`/services`, data);
   console.log("createArea Response:", response);
   return response;
 };
 
-export const updateArea = async (id: string, data: Partial<TServiceResponse>) => {
-  const response = await httpHomePlus.put<TServiceResponse>(`/services/${id}`, data);
+export const updateArea = async (id: string, data: Partial<TServiceCategoryResponse>) => {
+  const response = await httpHomePlus.put<TServiceCategoryResponse>(`/services/${id}`, data);
   console.log("updateArea Response:", response);
   return response;
 };

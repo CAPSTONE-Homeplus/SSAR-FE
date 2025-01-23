@@ -3,25 +3,41 @@ import z from "zod";
 // Schema cho Area
 export const AreaResponseSchema = z.object({
   id: z.string().uuid(),
-  areaName: z.string().min(1, { message: "Tên khu vực không được trống." }),
+  name: z.string().min(1, { message: "Tên khu vực không được trống." }),
+  hubId: z.string().min(1, { message: "Hub ID không được trống." }),
+  code: z.string().min(1, { message: "Mã khu vực không được trống." }),
   description: z.string().optional(),
-  status: z.enum(["ACTIVE", "INACTIVE"]),
+  address: z.string().min(1, { message: "Địa chỉ không được trống." }),
+  contactInfo: z
+    .string()
+    .min(1, { message: "Thông tin liên hệ không được trống." }),
+  areaType: z.string().min(1, { message: "Loại khu vực không được trống." }),
 });
 
 export const CreateAreaSchema = z.object({
-  areaName: z.string().min(1, { message: "Tên khu vực không được trống." }),
+  name: z.string().min(1, { message: "Tên khu vực không được trống." }),
+  hubId: z.string().min(1, { message: "Hub ID không được trống." }),
+  code: z.string().min(1, { message: "Mã khu vực không được trống." }),
   description: z.string().optional(),
-  status: z.enum(["ACTIVE", "INACTIVE"]),
+  address: z.string().min(1, { message: "Địa chỉ không được trống." }),
+  contactInfo: z
+    .string()
+    .min(1, { message: "Thông tin liên hệ không được trống." }),
+  areaType: z.string().min(1, { message: "Loại khu vực không được trống." }),
 });
 
 export const UpdateAreaSchema = z.object({
   id: z.string().uuid(),
-  areaName: z.string().optional(),
+  name: z.string().optional(),
+  hubId: z.string().optional(),
+  code: z.string().optional(),
   description: z.string().optional(),
-  status: z.enum(["ACTIVE", "INACTIVE"]).optional(),
+  address: z.string().optional(),
+  contactInfo: z.string().optional(),
+  areaType: z.string().optional(),
 });
 
 // Types
 export type TAreaResponse = z.TypeOf<typeof AreaResponseSchema>;
 export type TCreateAreaRequest = z.TypeOf<typeof CreateAreaSchema>;
-export type TAreaRequest = z.TypeOf<typeof UpdateAreaSchema>;
+export type TUpdateAreaRequest = z.TypeOf<typeof UpdateAreaSchema>;

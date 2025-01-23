@@ -2,15 +2,17 @@
 
 "use server";
 
-import { httpHomePlus } from "@/lib/http"; 
-import { TAreaResponse } from "@/schema/area.schema"; 
-import { TTableResponse } from "@/types/Table"; 
+import { httpHomePlus } from "@/lib/http";
+import { TAreaResponse } from "@/schema/area.schema";
+import { TTableResponse } from "@/types/Table";
 
 export const getAllAreas = async (params?: any) => {
-  const response = await httpHomePlus.get<TTableResponse<TAreaResponse>>(`/areas`, {
-    params,
-    next: { tags: ["areas"] },
-  });
+  const response = await httpHomePlus.get<TTableResponse<TAreaResponse>>(
+    `/areas`,
+    {
+      params,
+    }
+  );
   console.log("getAllAreas Response:", response);
   return response;
 };
