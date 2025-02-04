@@ -96,10 +96,29 @@ export const adminNavItems: TNavItem[] = [
   },
   {
     title: "Khu vực",
-    url: PATHS.admin.areas,
+    url: "#",
     icon: "building",
     isActive: false,
-    items: [],
+    items: [
+      {
+        title: "Quản lí khu vực",
+        url: PATHS.admin.areas,
+        icon: "building",
+        shortcut: ["r", "a"],
+      },
+      {
+        title: "Quản lí cụm khu vực",
+        url: PATHS.admin.clusters,
+        icon: "building",
+        shortcut: ["r", "s"],
+      },
+      {
+        title: "Quản lí tòa nhà",
+        url: PATHS.admin.buildings,
+        icon: "building",
+        shortcut: ["r", "p"],
+      },
+    ],
   },
   {
     title: "Dịch vụ",

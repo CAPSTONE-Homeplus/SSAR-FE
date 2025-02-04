@@ -6,7 +6,7 @@ import IndexProvider from "@/providers/index-provider";
 // import { AppSidebar } from "@/components/app-sidebar";
 // import HeaderMain from "@/components/header-main";
 import { Toaster } from "@/components/ui/toaster";
-// import { Toaster as ToasterSonner } from "@/components/ui/sonner";
+import { Toaster as ToasterSonner } from "@/components/ui/sonner";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import NextTopLoader from "nextjs-toploader";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -46,12 +46,12 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <main>{children}</main>
+              {children}
             </ThemeProvider>
           </SidebarProvider>
 
           <Toaster />
-          {/* <ToasterSonner /> */}
+          <ToasterSonner />
         </IndexProvider>
       </body>
     </html>

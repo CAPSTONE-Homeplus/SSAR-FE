@@ -1,3 +1,5 @@
+import cluster from "cluster";
+
 export const RootPath = {
   admin: "/admin",
   manager: "/manager",
@@ -10,6 +12,8 @@ export const PATHS = {
     stores: `${RootPath.admin}/stores`,
     managers: `${RootPath.admin}/managers`,
     areas: `${RootPath.admin}/areas`,
+    clusters: `${RootPath.admin}/clusters`,
+    buildings: `${RootPath.admin}/buildings`,
     services: `${RootPath.admin}/services`,
     revenue: {
       stores: `${RootPath.admin}/revenue/stores`,
