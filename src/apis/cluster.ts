@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { httpHomePlus } from "@/lib/http"; // HTTP client của bạn
-import { TClusterResponse } from "@/schema/cluster.schema"; // Schema cho Cluster
-import { TTableResponse } from "@/types/Table"; // Kiểu trả về dạng bảng
+import { httpHomePlus } from "@/lib/http";
+import { TClusterResponse } from "@/schema/cluster.schema";
+import { TTableResponse } from "@/types/Table";
 
 // Lấy danh sách tất cả các cụm (cluster)
 export const getAllClusters = async (params?: any) => {
-  const response = await httpHomePlus.get<TTableResponse<TClusterResponse>>(`/clusters`, {
-    params,
-    next: { tags: ["clusters"] },
-  });
+  const response = await httpHomePlus.get<TTableResponse<TClusterResponse>>(
+    `/clusters`,
+    {
+      params,
+    }
+  );
   console.log("getAllClusters Response:", response);
   return response;
 };
@@ -30,8 +32,14 @@ export const createCluster = async (data: Partial<TClusterResponse>) => {
 };
 
 // Cập nhật thông tin của một cụm theo ID
-export const updateCluster = async (id: string, data: Partial<TClusterResponse>) => {
-  const response = await httpHomePlus.put<TClusterResponse>(`/clusters/${id}`, data);
+export const updateCluster = async (
+  id: string,
+  data: Partial<TClusterResponse>
+) => {
+  const response = await httpHomePlus.put<TClusterResponse>(
+    `/clusters/${id}`,
+    data
+  );
   console.log("updateCluster Response:", response);
   return response;
 };
