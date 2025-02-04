@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
+  // SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -32,6 +32,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      icon?: string;
     }[];
   }[];
 }) {
@@ -72,6 +73,7 @@ export function NavMain({
                           isActive={pathname === subItem.url}
                         >
                           <Link href={subItem.url}>
+                            {subItem.icon && <Icon />}
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>
