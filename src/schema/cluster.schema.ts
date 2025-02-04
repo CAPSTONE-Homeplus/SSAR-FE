@@ -1,23 +1,24 @@
-import { z } from "zod";
-import { BaseSchema } from "./base-schema"; // Import base schema
+import z from "zod";
 
-export const ClusterSchema = BaseSchema.extend({
+// Schema cho Cluster Response
+export const ClusterResponseSchema = z.object({
   id: z.string().uuid(),
-  name: z.string().max(255),
-  description: z.string().optional(),
-  location: z.string().max(255),
-  createdBy: z.string().max(50),
-  updatedBy: z.string().max(50),
+  name: z.string().min(1, { message: "Tên cụm không được trống." }),
+  code: z.string().min(1, { message: "Mã cụm không được trống." }),
+  status: z.string().min(1, { message: "Trạng thái không được trống." }),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
+  areaId: z.string().uuid(),
 });
 
-export const ClusterCreateSchema = BaseSchema.extend({
-  name: z.string().max(255),
-  description: z.string().optional(),
-  location: z.string().max(255),
-  createdBy: z.string().max(50),
-  updatedBy: z.string().max(50),
+// Schema cho Create/Update Cluster
+export const CreateUpdateClusterSchema = z.object({
+  name: z.string().min(1, { message: "Tên cụm không được trống." }),
+  code: z.string().min(1, { message: "Mã cụm không được trống." }),
+  areaId: z.string().uuid(),
 });
 
-export type TClusterRequest = z.infer<typeof ClusterSchema>;
-export type TClusterResponse = z.infer<typeof ClusterSchema>;
-export type TClusterCreateRequest = z.infer<typeof ClusterCreateSchema>;
+// Types
+export type TClusterResponse = z.TypeOf<typeof ClusterResponseSchema>;
+export type TCreateClusterRequest = z.TypeOf<typeof CreateUpdateClusterSchema>;
+export type TUpdateClusterRequest = z.TypeOf<typeof ClusterResponseSchema>;
