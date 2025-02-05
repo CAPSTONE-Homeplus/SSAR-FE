@@ -23,19 +23,21 @@ export function SelectAreaAsync({
   return (
     <Select value={value} onValueChange={onChange} disabled={isLoading}>
       <SelectTrigger>
-        {isLoading ? (
-          <Skeleton className="w-full h-8 rounded-md" />
-        ) : (
-          <SelectValue placeholder="Chọn khu vực" />
-        )}
+        <SelectValue placeholder="Chọn khu vực" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {data?.map((area) => (
-            <SelectItem key={area.id} value={area.id}>
-              {area.name}
-            </SelectItem>
-          ))}
+          {!isLoading
+            ? data?.map((area) => (
+                <SelectItem key={area.id} value={area.id}>
+                  {area.name}
+                </SelectItem>
+              ))
+            : Array.from({ length: 5 }).map((_, index) => (
+                <SelectItem key={index} value={index.toString()} disabled>
+                  <Skeleton className="h-4 w-full" />
+                </SelectItem>
+              ))}
         </SelectGroup>
       </SelectContent>
     </Select>

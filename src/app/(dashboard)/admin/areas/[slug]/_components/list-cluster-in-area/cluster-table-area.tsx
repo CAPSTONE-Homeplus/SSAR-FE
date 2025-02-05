@@ -1,10 +1,12 @@
-import { getAllClusters } from "@/apis/cluster";
 import { DataTable } from "@/components/table/data-table";
 
 import { searchParamsCache } from "@/lib/searchparams";
 import { columns } from "./cluster-tables/columns";
-
-const AreaTable = async () => {
+import { getClustersInArea } from "@/apis/area";
+type Props = {
+  slug: string;
+};
+const ClusterTableArea = async ({ slug }: Props) => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
@@ -14,7 +16,8 @@ const AreaTable = async () => {
     ...(search && { search }),
   };
 
-  const response = await getAllClusters(filters);
+  const response = await getClustersInArea(slug, filters);
+  await new Promise((resolve) => setTimeout(resolve, 4000));
 
   const responsePayload = response.payload;
   return (
@@ -28,4 +31,4 @@ const AreaTable = async () => {
   );
 };
 
-export default AreaTable;
+export default ClusterTableArea;

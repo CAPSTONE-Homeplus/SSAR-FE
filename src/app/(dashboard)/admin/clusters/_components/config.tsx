@@ -1,10 +1,10 @@
 export const statusOptions = [
   {
     label: "Có hiệu lực",
-    value: "active",
+    value: "Active",
   },
   {
     label: "Không hiệu lực",
-    value: "inactive",
+    value: "Inactive",
   },
 ];

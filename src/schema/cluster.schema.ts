@@ -12,13 +12,13 @@ export const ClusterResponseSchema = z.object({
 });
 
 // Schema cho Create/Update Cluster
-export const CreateUpdateClusterSchema = z.object({
+export const CreateClusterSchema = z.object({
   name: z.string().min(1, { message: "Tên cụm không được trống." }),
   code: z.string().min(1, { message: "Mã cụm không được trống." }),
-  areaId: z.string().uuid(),
+  areaId: z.string(),
 });
 
 // Types
 export type TClusterResponse = z.TypeOf<typeof ClusterResponseSchema>;
-export type TCreateClusterRequest = z.TypeOf<typeof CreateUpdateClusterSchema>;
+export type TCreateClusterRequest = z.TypeOf<typeof CreateClusterSchema>;
 export type TUpdateClusterRequest = z.TypeOf<typeof ClusterResponseSchema>;

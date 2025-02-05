@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { createArea } from "@/apis/area";
+import { useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -33,7 +34,8 @@ type Props = {
 
 export function CredenzaCreateArea({ className }: Props) {
   const { toast } = useToast();
-  const [isOpen, setIsOpen] = useState(false); // Để kiểm soát đóng Credenza
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const form = useForm<TCreateAreaRequest>({
     resolver: zodResolver(CreateAreaSchema),
     defaultValues: {
@@ -59,6 +61,7 @@ export function CredenzaCreateArea({ className }: Props) {
         });
         form.reset();
         setIsOpen(false); // Đóng Credenza
+        router.refresh(); // Refresh lại trang
       } else {
         toast({
           title: "Lỗi",
