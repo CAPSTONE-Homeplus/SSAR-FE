@@ -43,8 +43,8 @@ export default function Header() {
           </SheetContent>
         </Sheet>
 
-        <Link href="/" className="mr-6 hidden lg:flex" prefetch={false}>
-          <Icon className="h-30 w-20 dark:filter dark:invert" />
+        <Link href="/homeplus " className="mr-6 hidden lg:flex" prefetch={false}>
+          {/* <Icon className="h-30 w-20 dark:filter dark:invert" /> */}
           <span className="sr-only">ShadCN</span>
         </Link>
 
@@ -103,14 +103,14 @@ function Icon(props: any) {
       {/* <Link href={item.link}> */}
         <Image
           priority
-          src="/svgs/kalban-logo.svg"
+          src="/images/homeplus-logo.png"
           height={0}
           width={0}
-          alt="Kalban-logo"
+          alt="HomePlus-logo"
           {...props}
           href=""
         />
-        <p className="text-lg font-semibold lig">KALBAN</p>
+        <p className="text-lg font-semibold lig">HOMEPLUS</p>
       {/* </Link> */}
     </div>
   );

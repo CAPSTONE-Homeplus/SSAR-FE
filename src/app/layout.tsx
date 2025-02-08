@@ -41,6 +41,7 @@ export default function RootLayout({
 
         <IndexProvider>
           <SidebarProvider>
+            
             <ThemeProvider
               defaultTheme="system"
               enableSystem
