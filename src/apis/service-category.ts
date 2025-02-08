@@ -13,19 +13,19 @@ export const getAllServiceCategories = async (params?: any) => {
       params,
     }
   );
-  console.log("getAllserrr Response:", response);
+  // console.log("getAllserrr Response:", response);
   return response;
 };
 
 export const getAreaById = async (id: string) => {
   const response = await httpHomePlus.get<TServiceCategoryResponse>(`/services/${id}`);
-  console.log("getAreaById Response:", response);
+  // console.log("getAreaById Response:", response);
   return response;
 };
 
-export const createArea = async (data: Partial<TServiceCategoryResponse>) => {
-  const response = await httpHomePlus.post<TServiceCategoryResponse>(`/services`, data);
-  console.log("createArea Response:", response);
+export const createServiceCategory = async (data: Partial<TServiceCategoryResponse>) => {
+  const response = await httpHomePlus.post<TServiceCategoryResponse>(`/service-categories`, data);
+  console.log("create Services Response:", response);
   return response;
 };
 

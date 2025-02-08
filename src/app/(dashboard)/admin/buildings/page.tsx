@@ -1,7 +1,7 @@
 import React from "react";
 
 const BuildingPage = () => {
-  return <div>BuildingPage</div>;
+  return <div>BuildingPage1</div>;
 };
 
 export default BuildingPage;

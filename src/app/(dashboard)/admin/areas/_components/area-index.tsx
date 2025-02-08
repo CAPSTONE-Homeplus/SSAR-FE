@@ -13,9 +13,6 @@ type Props = {
 const AreaIndex = ({ keyProps }: Props) => {
   return (
     <PageContainer>
-      {/* <div className="space-y-2">
-        <AreaTable storeResponse={storeResponse} />
-      </div> */}
       <div className="space-y-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <Heading title="Khu vực" description="Quản lý khu vực " />

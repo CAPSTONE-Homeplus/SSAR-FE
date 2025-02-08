@@ -4,17 +4,8 @@ import { searchParams } from "@/lib/searchparams";
 import { useQueryState } from "nuqs";
 import { useCallback, useMemo } from "react";
 
-export const CATEGORY_OPTIONS = [
-  { value: "Electronics", label: "Electronics" },
-  { value: "Furniture", label: "Furniture" },
-  { value: "Clothing", label: "Clothing" },
-  { value: "Toys", label: "Toys" },
-  { value: "Groceries", label: "Groceries" },
-  { value: "Books", label: "Books" },
-  { value: "Jewelry", label: "Jewelry" },
-  { value: "Beauty Stores", label: "Beauty Stores" },
-];
-export function useStoreTableFilters() {
+
+export function useServiceCategoryTableFilters() {
   const [searchQuery, setSearchQuery] = useQueryState(
     "q",
     searchParams.q
@@ -22,10 +13,6 @@ export function useStoreTableFilters() {
       .withDefault("")
   );
 
-  const [categoriesFilter, setCategoriesFilter] = useQueryState(
-    "categories",
-    searchParams.categories.withOptions({ shallow: false }).withDefault("")
-  );
 
   const [page, setPage] = useQueryState(
     "page",
@@ -34,14 +21,13 @@ export function useStoreTableFilters() {
 
   const resetFilters = useCallback(() => {
     setSearchQuery(null);
-    setCategoriesFilter(null);
 
     setPage(1);
-  }, [setSearchQuery, setCategoriesFilter, setPage]);
+  }, [setSearchQuery, setPage]);
 
   const isAnyFilterActive = useMemo(() => {
-    return !!searchQuery || !!categoriesFilter;
-  }, [searchQuery, categoriesFilter]);
+    return !!searchQuery;
+  }, [searchQuery]);
 
   return {
     searchQuery,
@@ -50,7 +36,5 @@ export function useStoreTableFilters() {
     setPage,
     resetFilters,
     isAnyFilterActive,
-    categoriesFilter,
-    setCategoriesFilter,
   };
 }
