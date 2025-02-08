@@ -129,27 +129,15 @@ body {
   }
 }
 
-html,
+html {
+  overflow: hidden;
+}
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; 
-  scroll-behavior: smooth;
-
+  overflow-y: auto;
+}
+html, body {
+  width: 100%;
+  overflow-x: hidden;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 20px);
-}
 
-.scrollbar {
-  overflow: auto;
-}

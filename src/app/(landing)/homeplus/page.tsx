@@ -1,16 +1,15 @@
+import AboutUs from "@/app/(landing)/homeplus/_components/about-us";
+import Blog from "@/app/(landing)/homeplus/_components/blog";
+import ContactUs from "@/app/(landing)/homeplus/_components/contact-us";
+import DesignIntroduction from "@/app/(landing)/homeplus/_components/design-introduction";
+import Gallery from "@/app/(landing)/homeplus/_components/gallery";
+import Services from "@/app/(landing)/homeplus/_components/services";
 import Banner from "@/components/ui/banner";
-import AboutUs from "../../_components/about-us";
-import Services from "../../_components/services";
-import Blog from "../../_components/blog";
-import ContactUs from "../../_components/contact-us";
-import DesignIntroduction from "../../_components/design-introduction";
-// import Gallery from "@/app/_components/gallery";
+import Footer from "@/components/ui/footer";
+
 
 export default function Home() {
-  // const a =
-  //   '[{"img":"https://res.cloudinary.com/dsmdqayv6/image/upload/v1728140741/blob_fnzbmm.jpg"},{"img":"https://res.cloudinary.com/dsmdqayv6/image/upload/v1728140741/blob_hf7vhq.png"},{"img":"https://res.cloudinary.com/dsmdqayv6/image/upload/v1728140743/blob_xqgrky.png"}]';
-  // const parsedArray = JSON.parse(a);
-  // console.log("ihiiiiiiiii", parsedArray);
+
 
   return (
     <div>
@@ -21,11 +20,14 @@ export default function Home() {
           <DesignIntroduction />
           <Services />
           {/* <Testimonials /> */}
-          {/* <Gallery /> */}
-          {/* <Blog /> */}
+          <Gallery />
+          <Blog />
           <ContactUs />
         </div>
+
       </div>
+      <Footer />
+
     </div>
   );
 }
