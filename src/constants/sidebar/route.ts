@@ -160,14 +160,6 @@ export const adminNavItems: TNavItem[] = [
 // **Navigation cho Manager**
 export const managerNavItems: TNavItem[] = [
   {
-    title: "Tổng quan",
-    url: PATHS.manager.overview,
-    icon: "dashboard",
-    shortcut: ["d", "d"],
-    isActive: false,
-    items: [],
-  },
-  {
     title: "Phân Loại Dịch Vụ",
     url: PATHS.manager.serviceCategory,
     icon: "package",
@@ -177,51 +169,29 @@ export const managerNavItems: TNavItem[] = [
   },
   {
     title: "Dịch Vụ",
-    url: PATHS.manager.service,
-    icon: "package",
-    shortcut: ["t", "s"],
-    isActive: false,
-    items: [],
-  },
-  {
-    title: "Quản lý nhiệm vụ",
-    url: PATHS.manager.tasks,
-    icon: "tasks",
-    shortcut: ["t", "s"],
-    isActive: false,
-    items: [],
-  },
-  {
-    title: "Quản lý nhân sự",
     url: "#",
-    icon: "users",
-    shortcut: ["o", "s"],
+    icon: "package",
     isActive: false,
     items: [
       {
-        title: "Quản lý shipper",
-        url: PATHS.manager.shippers,
-        icon: "truck",
-        shortcut: ["s", "h"],
-        isActive: false,
-        items: [],
+        title: "Loại Dịch Vụ",
+        url: PATHS.manager.service,
+        icon: "package",
+        shortcut: ["t", "s"],
       },
       {
-        title: "Quản lý nhân viên",
-        url: PATHS.manager.staffs,
-        icon: "staff",
-        shortcut: ["s", "m"],
-        isActive: false,
-        items: [],
+        title: "Hoạt Động Của Dịch Vụ",
+        url: PATHS.admin.areas,
+        icon: "building",
+        shortcut: ["r", "s"],
       },
-    ],
-  },
-  {
-    title: "Khu vực",
-    url: PATHS.manager.areas,
-    icon: "building",
-    isActive: false,
-    items: [],
+      {
+        title: "Hoạt Động Của Dịch Vụ Phụ",
+        url: PATHS.admin.clusters,
+        icon: "building",
+        shortcut: ["r", "s"],
+      },
+    ]
   },
   {
     title: "Doanh thu",

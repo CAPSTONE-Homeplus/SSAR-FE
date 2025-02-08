@@ -13,7 +13,7 @@ export const getAllServices = async (params?: any) => {
       params,
     }
   );
-  console.log("getAllserrr Response:", response);
+  // console.log("getAllserrr Response:", response);
   return response;
 };
 
@@ -23,9 +23,9 @@ export const getAreaById = async (id: string) => {
   return response;
 };
 
-export const createArea = async (data: Partial<TServiceResponse>) => {
+export const createService = async (data: Partial<TServiceResponse>) => {
   const response = await httpHomePlus.post<TServiceResponse>(`/services`, data);
-  console.log("createArea Response:", response);
+  console.log("create Services Response:", response);
   return response;
 };
 

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Credenza,
   CredenzaTrigger,
@@ -16,7 +16,6 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ServiceCreateSchema, TServiceCreateRequest } from "@/schema/service.schema";
 import {
   Form,
   FormControl,
@@ -24,87 +23,112 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { ServiceCategoryCreateSchema, TServiceCategoryCreateRequest } from "@/schema/service-category.schema";
+import { createServiceCategory } from "@/apis/service-category";
 
 type Props = {
   className?: string;
 };
 
-export function CredenzaCreateService({ className }: Props) {
+export function CredenzaCreateServiceCategory({ className }: Props) {
   const { toast } = useToast();
-  const form = useForm<TServiceCreateRequest>({
-    resolver: zodResolver(ServiceCreateSchema),
+  const [isOpen, setIsOpen] = useState(false); // Để kiểm soát đóng Credenza
+  const form = useForm<TServiceCategoryCreateRequest>({
+    resolver: zodResolver(ServiceCategoryCreateSchema),
     defaultValues: {
       name: "",
-      description: "",
-      price: 0,
-      discount: 0,
-      prorityLevel: 0,
-      duration: 0,
-      maxCapacity: 0,
-      serviceCode: "",
-      serviceCategoryId: "",
       code: "",
     },
   });
 
-  const onSubmit = async (data: TServiceCreateRequest) => {
-    console.log("Submitted data: ", data); // Log dữ liệu đã submit
-    toast({
-      title: "Tạo dịch vụ thành công",
-    });
-    form.reset(); // Reset form sau khi submit thành công
+  const { isSubmitting } = form.formState;
+
+  const onSubmit = async (data: TServiceCategoryCreateRequest) => {
+    try {
+      const response = await createServiceCategory(data);
+      if (response.status === 201) {
+        toast({
+          title: "Tạo loại dịch vụ thành công",
+          description: "Loại dịch vụ đã được tạo thành công.",
+        });
+        form.reset();
+        setIsOpen(false); // Đóng Credenza
+      } else {
+        toast({
+          title: "Lỗi",
+          description: "Không thể tạo loại dịch vụ",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Lỗi",
+        description: `Có lỗi xảy ra khi tạo khu vực ${error.message}`,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <Credenza>
+    <Credenza open={isOpen} onOpenChange={setIsOpen}>
       <CredenzaTrigger asChild className={className}>
-        <Button variant="default">Tạo Dịch Vụ</Button>
+        <Button variant="default">Tạo Loại Dịch Vụ</Button>
       </CredenzaTrigger>
       <CredenzaContent className="sm:max-w-[425px]">
         <CredenzaHeader>
-          <CredenzaTitle>Tạo Dịch Vụ</CredenzaTitle>
-          <CredenzaDescription>Tạo một dịch vụ mới</CredenzaDescription>
+          <CredenzaTitle>Tạo Loại Dịch Vụ</CredenzaTitle>
+          <CredenzaDescription>Tạo một loại dịch vụ mới</CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4 py-4">
-              {[
-                { label: "Tên Dịch Vụ", name: "name", placeholder: "Tên dịch vụ..." },
-                { label: "Mô Tả", name: "description", placeholder: "Mô tả..." },
-                { label: "Giá", name: "price", placeholder: "Giá..." },
-                { label: "Giảm Giá", name: "discount", placeholder: "Giảm giá..." },
-                { label: "Mức Độ Ưu Tiên", name: "prorityLevel", placeholder: "Mức độ ưu tiên..." },
-                { label: "Thời Lượng", name: "duration", placeholder: "Thời lượng..." },
-                { label: "Sức Chứa Tối Đa", name: "maxCapacity", placeholder: "Sức chứa tối đa..." },
-                { label: "Mã Dịch Vụ", name: "serviceCode", placeholder: "Mã dịch vụ..." },
-                { label: "Mã Danh Mục", name: "serviceCategoryId", placeholder: "Mã danh mục..." },
-                { label: "Mã Code", name: "code", placeholder: "Mã code..." },
-              ].map((field) => (
-                <div key={field.name} className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor={field.name} className="text-right">
-                    {field.label}
-                  </Label>
-                  <div className="col-span-3">
-                    <FormField
-                      control={form.control}
-                      name={field.name as keyof TServiceCreateRequest}
-                      render={({ field: formField }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input placeholder={field.placeholder} {...formField} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="name">Tên Loại Dịch Vụ</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập tên khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="code">Mã Dịch Vụ</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập mã khu vực..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
             </div>
             <CredenzaFooter>
-              <Button type="submit">Tạo Dịch Vụ</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Đang cập nhập..." : "Cập nhập Khu Vực"}
+              </Button>
               <CredenzaClose asChild>
-                <Button type="button" variant="secondary">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsOpen(false)}
+                >
                   Đóng
                 </Button>
               </CredenzaClose>

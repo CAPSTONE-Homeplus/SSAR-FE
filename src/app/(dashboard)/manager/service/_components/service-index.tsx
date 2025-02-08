@@ -5,6 +5,7 @@ import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
 import ServiceTable from "@/app/(dashboard)/manager/service/_components/service-table";
+import { CredenzaCreateService } from "@/app/(dashboard)/manager/service/_components/credenza-create-service";
 type Props = {
   keyProps: string;
 };
@@ -17,6 +18,7 @@ const ServiceIndex = ({ keyProps }: Props) => {
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <Heading title="Khu vực" description="Quản lý khu vực " />
+          <CredenzaCreateService />
         </div>
         <Separator />
         {/* <ServiceTable /> */}

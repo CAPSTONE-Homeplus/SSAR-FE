@@ -1,7 +1,7 @@
 import Banner from "@/components/ui/banner";
 import AboutUs from "../../_components/about-us";
 import Services from "../../_components/services";
-// import Blog from "../../_components/blog";
+import Blog from "../../_components/blog";
 import ContactUs from "../../_components/contact-us";
 import DesignIntroduction from "../../_components/design-introduction";
 // import Gallery from "@/app/_components/gallery";
