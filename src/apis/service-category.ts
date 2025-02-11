@@ -3,7 +3,8 @@
 "use server";
 
 import { httpHomePlus } from "@/lib/http";
-import { TServiceCategoryResponse } from "@/schema/service-category.schema";
+import { TServiceCategoryResponse, TUpdateServiceCategoryRequest } from "@/schema/service-category.schema";
+import { TServiceResponse } from "@/schema/service.schema";
 import { TTableResponse } from "@/types/Table";
 
 export const getAllServiceCategories = async (params?: any) => {
@@ -17,9 +18,19 @@ export const getAllServiceCategories = async (params?: any) => {
   return response;
 };
 
-export const getAreaById = async (id: string) => {
-  const response = await httpHomePlus.get<TServiceCategoryResponse>(`/services/${id}`);
-  // console.log("getAreaById Response:", response);
+export const getServicesInServiceCategory = async (id: string, params?: any) => {
+  const response = await httpHomePlus.get<TTableResponse<TServiceResponse>>(
+    `/service-categories/${id}/services`,
+    {
+      params,
+    }
+  );
+  return response;
+};
+
+export const getServiceCategoryById = async (id: string) => {
+  const response = await httpHomePlus.get<TServiceCategoryResponse>(`/service-categories/${id}`);
+  console.log("Service Category Response:", response);
   return response;
 };
 
@@ -29,9 +40,12 @@ export const createServiceCategory = async (data: Partial<TServiceCategoryRespon
   return response;
 };
 
-export const updateArea = async (id: string, data: Partial<TServiceCategoryResponse>) => {
-  const response = await httpHomePlus.put<TServiceCategoryResponse>(`/services/${id}`, data);
-  console.log("updateArea Response:", response);
+export const updateServiceCategory = async (id: string, data: TUpdateServiceCategoryRequest) => {
+  const response = await httpHomePlus.patch<TServiceCategoryResponse>(
+    `/service-categories/${id}`,
+    data
+  );
+  console.log("update service-categories Response:", response);
   return response;
 };
 
