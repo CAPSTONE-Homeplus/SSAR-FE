@@ -18,4 +18,4 @@ export const RoomTypeCreateSchema = BaseSchema.extend({
 
 export type TRoomTypeRequest = z.infer<typeof RoomTypeSchema>;
 export type TRoomTypeResponse = z.infer<typeof RoomTypeSchema>;
-export type TRoomTypeCreateRequest = z.infer<typeof RoomTypeCreateSchema>;
+export type TCreateRoomTypeRequest = z.infer<typeof RoomTypeCreateSchema>;

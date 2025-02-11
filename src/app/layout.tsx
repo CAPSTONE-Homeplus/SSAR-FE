@@ -42,6 +42,7 @@ export default function RootLayout({
         <IndexProvider>
           <SidebarProvider>
             <ThemeProvider
+              attribute="class"
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange

@@ -14,6 +14,8 @@ export const PATHS = {
     areas: `${RootPath.admin}/areas`,
     clusters: `${RootPath.admin}/clusters`,
     buildings: `${RootPath.admin}/buildings`,
+    houses: `${RootPath.admin}/houses`,
+    rooms: `${RootPath.admin}/rooms`,
     services: `${RootPath.admin}/services`,
     revenue: {
       stores: `${RootPath.admin}/revenue/stores`,

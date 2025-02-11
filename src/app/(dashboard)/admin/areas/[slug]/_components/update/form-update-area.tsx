@@ -35,8 +35,8 @@ export function FormUpdateArea({ initialData }: Props) {
       const response = await updateArea(initialData.id, data);
       if (response.status === 200) {
         toast({
-          title: "Cập nhật khu vực thành công",
-          description: "Khu vực đã được cập nhật thành công.",
+          title: "Cập nhập thành công",
+          description: "Đã cập nhật thành công.",
         });
       } else {
         toast({
@@ -167,7 +167,7 @@ export function FormUpdateArea({ initialData }: Props) {
           />
         </div>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Đang cập nhập..." : "Cập nhập Khu Vực"}
+          {isSubmitting ? "Đang cập nhập..." : "Cập nhập"}
         </Button>
       </form>
     </Form>

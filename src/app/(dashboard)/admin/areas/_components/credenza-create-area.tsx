@@ -57,7 +57,7 @@ export function CredenzaCreateArea({ className }: Props) {
       if (response.status === 201) {
         toast({
           title: "Tạo khu vực thành công",
-          description: "Khu vực đã được tạo thành công.",
+          description: "Đã tạo thành công.",
         });
         form.reset();
         setIsOpen(false); // Đóng Credenza
@@ -201,7 +201,7 @@ export function CredenzaCreateArea({ className }: Props) {
             </div>
             <CredenzaFooter>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Đang cập nhập..." : "Cập nhập Khu Vực"}
+                {isSubmitting ? "Đang cập nhập..." : "Cập nhập"}
               </Button>
               <CredenzaClose asChild>
                 <Button
