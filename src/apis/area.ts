@@ -13,7 +13,7 @@ export const getAllAreas = async (params?: any) => {
     {
       params,
     }
-  );
+  ); 
   console.log("getAllAreas Response:", response);
   return response;
 };

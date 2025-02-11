@@ -13,11 +13,13 @@ export const ServiceCategorySchema = z.object({
 export const ServiceCategoryCreateSchema = z.object({
   name: z.string().max(255),
   code: z.string().max(255),
-
 });
+
 
 export type TServiceCategoryRequest = z.TypeOf<typeof ServiceCategorySchema>;
 export type TServiceCategoryResponse = z.TypeOf<typeof ServiceCategorySchema>;
 export type TServiceCategoryCreateRequest = z.TypeOf<
   typeof ServiceCategoryCreateSchema
 >;
+export type TUpdateServiceCategoryRequest = z.TypeOf<typeof ServiceCategorySchema>;
+
