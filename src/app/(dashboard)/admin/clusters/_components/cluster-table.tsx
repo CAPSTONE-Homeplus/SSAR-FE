@@ -8,13 +8,14 @@ const AreaTable = async () => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
-
   const filters = {
     page,
     size: size,
     ...(search && { search }),
   };
+
   const response = await getAllClusters(filters);
+
   const responsePayload = response.payload;
   return (
     <div>

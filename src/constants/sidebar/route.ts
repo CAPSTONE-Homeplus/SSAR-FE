@@ -118,8 +118,21 @@ export const adminNavItems: TNavItem[] = [
         icon: "building",
         shortcut: ["r", "p"],
       },
+      {
+        title: "Quản lí căn hộ",
+        url: PATHS.admin.houses,
+        icon: "home",
+        shortcut: ["r", "p"],
+      },
+      {
+        title: "Quản lí phòng",
+        url: PATHS.admin.rooms,
+        icon: "home",
+        shortcut: ["r", "p"],
+      },
     ],
   },
+
   {
     title: "Dịch vụ",
     url: PATHS.admin.services,

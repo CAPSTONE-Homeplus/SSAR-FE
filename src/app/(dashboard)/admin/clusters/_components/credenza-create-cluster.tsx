@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  ClusterResponseSchema,
+  CreateClusterSchema,
   TCreateClusterRequest,
 } from "@/schema/cluster.schema";
 import {
@@ -30,7 +30,7 @@ import {
 
 import { createCluster } from "@/apis/cluster";
 import { SelectAreaAsync } from "./select-area-async";
-
+import { useRouter } from "next/navigation";
 type Props = {
   className?: string;
 };
@@ -38,8 +38,10 @@ type Props = {
 export function CredenzaCreateCluster({ className }: Props) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
   const form = useForm<TCreateClusterRequest>({
-    resolver: zodResolver(ClusterResponseSchema),
+    resolver: zodResolver(CreateClusterSchema),
     defaultValues: {
       name: "",
       areaId: "",
@@ -53,21 +55,22 @@ export function CredenzaCreateCluster({ className }: Props) {
       if (response.status === 201) {
         toast({
           title: "Tạo Cụm thành công",
-          description: "Cụm đã được cập nhật thành công.",
+          description: "Cụm đã được tạo thành công.",
         });
         form.reset();
         setIsOpen(false);
+        router.refresh();
       } else {
         toast({
           title: "Lỗi",
-          description: "Không thể cập nhật Cụm",
+          description: "Không thể tạo Cụm",
           variant: "destructive",
         });
       }
     } catch (error: any) {
       toast({
         title: "Lỗi",
-        description: `Có lỗi xảy ra khi cập nhật Cụm ${error.message}`,
+        description: `Có lỗi xảy ra khi tạo Cụm ${error.message}`,
         variant: "destructive",
       });
     }
@@ -145,7 +148,7 @@ export function CredenzaCreateCluster({ className }: Props) {
             </div>
             <CredenzaFooter>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Đang cập nhật..." : "Tạo Cụm"}
+                {isSubmitting ? "Đang tạo..." : "Tạo Cụm"}
               </Button>
               <CredenzaClose asChild>
                 <Button type="button" variant="outline">

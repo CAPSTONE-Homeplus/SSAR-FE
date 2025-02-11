@@ -2,6 +2,7 @@
 "use server";
 
 import { httpHomePlus } from "@/lib/http";
+import { TBuildingResponse } from "@/schema/building.schema";
 import { TClusterResponse } from "@/schema/cluster.schema";
 import { TTableResponse } from "@/types/Table";
 
@@ -13,7 +14,18 @@ export const getAllClusters = async (params?: any) => {
       params,
     }
   );
-  console.log("getAllClusters Response:", response);
+  return response;
+};
+export const getBuildingsInCluster = async (
+  clusterId: string,
+  params?: any
+) => {
+  const response = await httpHomePlus.get<TTableResponse<TBuildingResponse>>(
+    `/clusters/${clusterId}/building`,
+    {
+      params,
+    }
+  );
   return response;
 };
 
@@ -36,7 +48,7 @@ export const updateCluster = async (
   id: string,
   data: Partial<TClusterResponse>
 ) => {
-  const response = await httpHomePlus.put<TClusterResponse>(
+  const response = await httpHomePlus.patch<TClusterResponse>(
     `/clusters/${id}`,
     data
   );

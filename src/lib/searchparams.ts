@@ -12,6 +12,7 @@ export const searchParams = {
   search: parseAsString,
   gender: parseAsString,
   categories: parseAsString,
+  areaId: parseAsString,
 };
 
 export const searchParamsCache = createSearchParamsCache(searchParams);
