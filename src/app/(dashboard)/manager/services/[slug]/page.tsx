@@ -1,17 +1,17 @@
 import React from "react";
 import { SearchParams } from "nuqs";
 import { searchParamsCache, serialize } from "@/lib/searchparams";
-import ServiceIndex from "@/app/(dashboard)/manager/service/_components/service-index";
+import ServiceDetailIndex from "./_components/service-detail-index";
 type pageProps = {
   searchParams: Promise<SearchParams>;
+  params: Promise<{ slug: string }>;
 };
-
-const ServicePage = async (props: pageProps) => {
+const ServiceDetail = async (props: pageProps) => {
   const searchParams = await props.searchParams;
   searchParamsCache.parse(searchParams);
 
   const key = serialize({ ...searchParams });
-  return <ServiceIndex keyProps={key} />;
+  return <ServiceDetailIndex slug={(await props.params).slug} keyProps={key} />;
 };
 
-export default ServicePage;
+export default ServiceDetail;

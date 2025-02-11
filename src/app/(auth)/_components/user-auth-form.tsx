@@ -77,11 +77,11 @@ export default function UserAuthForm() {
     await authClient.auth({ user: authData });
     toast({
       title: "Chào mừng bạn quay trở lại",
-    });
+    }); 
     if (role === "admin") {
       router.push(PATHS.admin.overview);
     } else if (role === "manager") {
-      router.push(PATHS.manager.serviceCategory);
+      router.push(PATHS.manager.serviceCategories);
     } else if (role === "staff") {
       router.push(PATHS.staff.myTasks);
     }

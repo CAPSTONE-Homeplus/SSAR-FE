@@ -3,7 +3,7 @@
 import { DataTableSearch } from "@/components/table/data-table-search";
 
 import { DataTableResetFilter } from "@/components/table/data-table-reset-filter";
-import { useServiceCategoryTableFilters } from "@/app/(dashboard)/manager/service-category/_components/service-category-tables/use-store-table-filters";
+import { useServiceCategoryTableFilters } from "@/app/(dashboard)/manager/service-categories/_components/service-category-tables/use-store-table-filters";
 
 export default function ServiceCategoryTableAction() {
   const {
