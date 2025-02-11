@@ -24,13 +24,10 @@ export const PATHS = {
     settings: `${RootPath.admin}/settings`,
   },
   manager: {
-    overview: `${RootPath.manager}/overview`,
     serviceCategory: `${RootPath.manager}/service-category`,
     service: `${RootPath.manager}/service`,
-    tasks: `${RootPath.manager}/tasks`,
-    shippers: `${RootPath.manager}/shippers`,
-    staffs: `${RootPath.manager}/staffs`,
-    areas: `${RootPath.manager}/areas`,
+    serviceActivity: `${RootPath.manager}/service-activity`,
+    serviceSubActivity: `${RootPath.manager}/service-sub-activity`,
     revenue: `${RootPath.manager}/revenue`,
   },
   staff: {

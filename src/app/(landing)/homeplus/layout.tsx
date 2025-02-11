@@ -11,7 +11,9 @@ export default function HomeLayout({
     <>
       <Header />
       <ChatIcons />
-      <main className="flex-1 mt-20">{children}</main> 
+      <main className="">
+        {children}
+      </main>
       <Footer />
     </>
   );

@@ -18,6 +18,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import LogoutIcon from "@mui/icons-material/Logout";
 import useUserStore from "@/store/userStore";
+import { ArrowRight } from "lucide-react";
 const UserHeader = () => {
   const { user, loadUserFromLocalStorage } = useUserStore();
 
@@ -32,18 +33,16 @@ const UserHeader = () => {
       {!user ? (
         <div className="flex gap-2">
           <Button
-            variant="outline"
-            className="text-sm sm:text-base"
-            onClick={() => router.push("/login")}
+            variant="ghost"
+            className="relative text-xs sm:text-sm flex items-center gap-2 px-4 py-2 transition-all 
+                 hover:border hover:border-gray-900 hover:p-0.5 hover:px-4 hover:py-2 
+                 dark:hover:border-gray-300"
+            onClick={() => router.push("/")}
           >
-            Đăng nhập
+            Bắt Đầu Ngay
+            <ArrowRight className="w-4 h-4" />
           </Button>
-          <Button
-            className="text-sm sm:text-base"
-            onClick={() => router.push("/register")}
-          >
-            Đăng ký
-          </Button>
+
         </div>
       ) : (
         <DropdownMenu>
@@ -73,9 +72,7 @@ const UserHeader = () => {
                 Hồ Sơ
               </DropdownMenuItem>
               {user?.roleName === "admin" && (
-                <DropdownMenuItem
-                  onClick={() => router.push("/admin/report")}
-                >
+                <DropdownMenuItem onClick={() => router.push("/admin/report")}>
                   <PersonIcon style={{ marginRight: "8px" }} />
                   Quản Lý
                 </DropdownMenuItem>

@@ -1,23 +1,23 @@
 import { z } from "zod";
-import { BaseSchema } from "./base-schema";
 
-export const ServiceCategorySchema = BaseSchema.extend({
+export const ServiceCategorySchema = z.object({
   id: z.string().uuid(),
   name: z.string().max(255),
-  description: z.string().optional(),
+  status: z.string().optional(),
   createdBy: z.string().max(50),
   updatedBy: z.string().max(50),
+  code: z.string().max(255),
+
 });
 
-export const ServiceCategoryCreateSchema = BaseSchema.extend({
+export const ServiceCategoryCreateSchema = z.object({
   name: z.string().max(255),
-  description: z.string().optional(),
-  createdBy: z.string().max(50),
-  updatedBy: z.string().max(50),
+  code: z.string().max(255),
+
 });
 
-export type TServiceCategoryRequest = z.infer<typeof ServiceCategorySchema>;
-export type TServiceCategoryResponse = z.infer<typeof ServiceCategorySchema>;
-export type TServiceCategoryCreateRequest = z.infer<
+export type TServiceCategoryRequest = z.TypeOf<typeof ServiceCategorySchema>;
+export type TServiceCategoryResponse = z.TypeOf<typeof ServiceCategorySchema>;
+export type TServiceCategoryCreateRequest = z.TypeOf<
   typeof ServiceCategoryCreateSchema
 >;
