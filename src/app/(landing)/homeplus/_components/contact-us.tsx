@@ -10,7 +10,7 @@ const ContactUs = () => {
     <div className="relative flex flex-col items-center justify-center h-80 z-1">
       <div className="absolute inset-0">
         <Image
-          src="/images/anhbia.png"
+          src="/image/banner_homeplus.webp"
           alt="Background"
           layout="fill"
           objectFit="fill"

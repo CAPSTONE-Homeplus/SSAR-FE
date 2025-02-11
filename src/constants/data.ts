@@ -29,28 +29,28 @@ export const services = [
 
 export const homepageList = [
   {
-    title: "Các Dòng Túi Nổi Bật",
+    title: "Các Dịch Vụ Nổi Bật",
     icon: MdOutlineScubaDiving,
     description:
-      "Trải nghiệm các loại mẫu sản phẩm đa dạng và đầy màu sắc thú vị.",
+      "Trải nghiệm các loại mẫu dịch vụ đa dạng và đầy thú vị.",
     image:
       "https://i.pinimg.com/736x/31/c8/e4/31c8e44217971fa28a82c0a71be7245e.jpg",
     link: "/products",
   },
   {
-    title: "Sáng Tạo Phong Cách Riêng",
+    title: "Mua Hàng Theo Phong Cách Riêng",
     icon: FaDisease,
     description:
-      "Khám phá các mô hình tự thiết kế để có thể thõa mãn sự sáng tạo của bản thân.",
+      "Khám phá các mô hình mua hàng mới lạ và phù hợp với nhu cầu của bạn.",
     image:
       "https://i.pinimg.com/736x/cd/a5/ea/cda5ea6ef22739ed0c3b1bef56d90456.jpg",
     link: "/design",
   },
   {
-    title: "Dịch Vụ Chăm Sóc Khách Hàng",
+    title: "Dịch Vụ Shipper Nhanh Chóng và An Toàn",
     icon: FcManager,
     description:
-      "Đi song song với các sản phẩm thì chú trọng về dịch vụ chăm sóc khách hàng là điều cốt lõi trong quy tắc bán hàng của chúng tôi.",
+      "Đảm bảo hàng hóa của bạn được giao đến nhanh chóng và an toàn.",
     image:
       "https://i.etsystatic.com/32479513/r/il/37406b/4413285919/il_570xN.4413285919_fflr.jpg",
     link: "/about",
@@ -135,9 +135,9 @@ export const products = [
 export const dataBlogs = [
   {
     id: 1,
-    name: "Tại sao bạn cần sắm túi tote vải canvas?",
+    name: "Đặt lịch nhanh chóng",
     description:
-      "Trong thời đại mà phong cách sống bền vững và thời trang tối giản đang được đề cao, túi tote vải canvas trở thành lựa chọn hàng đầu của nhiều người. Không chỉ là phụ kiện thời trang, túi tote vải còn mang đến nhiều lợi ích vượt trội so với các loại túi khác. Hãy cùng khám phá tại sao bạn nên sắm ngay cho mình một chiếc túi tote vải canvas nhé!",
+      "Thao tác 60 giây trên ứng dụng, có ngay người nhận việc sau 60 phút",
     author: "An-Thien",
     image:
       "/blog-images/1-1.jpg",
@@ -145,25 +145,25 @@ export const dataBlogs = [
     posts: [
       {
         id: 101,
-        title: "Đa dụng và tiện lợi",
+        title: "Giá cả rõ ràng",
         content:
-          "Túi tote vải canvas được thiết kế với kiểu dáng rộng rãi, không gian chứa đồ lớn và miệng túi mở. Bạn có thể dễ dàng mang theo mọi thứ cần thiết, từ laptop, sách, đồ dùng cá nhân, đến các vật dụng mua sắm hàng ngày. Chỉ cần một chiếc túi tote, bạn có thể dùng trong nhiều dịp khác nhau, từ đi làm, đi học, đến dạo phố hay đi du lịch ngắn ngày.",
+          "Giá dịch vụ được hiển thị rõ ràng trên ứng dụng. Bạn không phải trả thêm bất kỳ khoản chi phí nào.",
         tags: ["không rác thải", "bền vững", "mẹo sống xanh"],
         datePublished: "2024-08-10",
         image: "/blog-images/1-2.jpg",
       },
       {
         id: 102,
-        title: "Thân thiện với môi trường",
-        content: "Một trong những lý do nổi bật khiến túi tote vải canvas trở nên phổ biến là khả năng bảo vệ môi trường. Được làm từ chất liệu tự nhiên, vải canvas có thể tái chế và phân hủy nhanh hơn so với các loại túi nhựa hay túi ni-lông. Việc sử dụng túi tote vải đồng nghĩa với việc bạn đang góp phần giảm thiểu lượng rác thải nhựa và bảo vệ trái đất khỏi những tác động tiêu cực của ô nhiễm môi trường.",
+        title: "Đa dạng dịch vụ",
+        content: "Chúng tôi cung cấp nhiều dịch vụ khác nhau như dọn dẹp nhà cửa, giặt ủi, chăm sóc cây cảnh, vệ sinh công nghiệp, vệ sinh nhà ở, vệ sinh công trình, vệ sinh sau xây dựng, vệ sinh sân vườn, vệ sinh nhà hàng, vệ sinh văn phòng, vệ sinh cửa hàng, vệ sinh trường học, vệ sinh bệnh viện, vệ sinh khách sạn, vệ sinh nhà trọ, vệ sinh chung cư, vệ sinh biệt thự, vệ sinh nhà xưởng, vệ sinh nhà máy",
         tags: [],
         datePublished: "",
         image: "/blog-images/1-3.jpg",
       },
       {
         id: 103,
-        title: "Bền bỉ và tiết kiệm chi phí",
-        content: "Vải canvas nổi tiếng với độ bền cao, chịu được mài mòn và ít bị rách khi so với các loại vải khác. Một chiếc túi tote vải canvas chất lượng có thể sử dụng trong thời gian dài, giúp bạn tiết kiệm chi phí thay thế thường xuyên. Bạn có thể giặt sạch túi và tái sử dụng nhiều lần mà không lo ngại về sự hao mòn đáng kể.",
+        title: "An toàn tối đa",
+        content: "Đội ngũ nhân viên được đào tạo chuyên nghiệp, có kinh nghiệm, nhiệt tình và thân thiện. Chúng tôi cam kết mang đến dịch vụ tốt nhất cho khách hàng.",
         tags: [],
         datePublished: "",
         image: "/blog-images/1-4.jpg",
@@ -188,9 +188,9 @@ export const dataBlogs = [
   },
   {
     id: 2,
-    name: "Top 5 cách tạo dáng và trang trí túi xách đơn giản mà đẹp",
+    name: "Giá cả rõ ràng",
     description:
-      "Charm là những món phụ kiện nhỏ xinh có thể gắn vào khóa kéo hoặc quai túi xách. Những chiếc charm hình trái tim, ngôi sao, động vật, hoặc theo phong cách vintage đều sẽ giúp túi của bạn trở nên nổi bật hơn. Bạn có thể chọn charm có màu sắc hài hòa với túi hoặc những chiếc charm có ý nghĩa đặc biệt để cá nhân hóa phụ kiện này.", author: "Bob Sun",
+      "Giá dịch vụ được hiển thị rõ ràng trên ứng dụng. Bạn không phải trả thêm bất kỳ khoản chi phí nào.", author: "Bob Sun",
     image:
       "/blog-images/2-1.jpg",
     createdDate: "2024-02-20",
@@ -245,9 +245,9 @@ export const dataBlogs = [
   },
   {
     id: 3,
-    name: "Túi tote là gì? Vì sao cần có túi tote đeo chéo trong tủ đồ của mình?",
+    name: "Đa dạng dịch vụ",
     description:
-      "Túi tote, hay còn gọi là tote bag, là một loại túi xách được thiết kế với kiểu dáng đơn giản, rộng rãi và tiện lợi. Khác với những loại túi xách thời trang khác, túi tote thường có hình chữ nhật hoặc vuông, với hai quai dài để dễ dàng xách tay hoặc đeo trên vai. Chất liệu của túi tote cũng rất đa dạng, từ vải canvas, vải bố, da, cho đến chất liệu tái chế thân thiện với môi trường.",
+      "Với 9 dịch vụ tiện ích, bTaskee sẵn sàng hỗ trợ mọi nhu cầu việc nhà của bạn.",
     author: "Clara Rivers",
     image: "/blog-images/3-1.jpg",
     createdDate: "2024-03-15",

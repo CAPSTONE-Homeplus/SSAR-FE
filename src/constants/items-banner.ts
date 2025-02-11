@@ -1,45 +1,45 @@
 export const items = [
     {
-      title: "Trang Chủ",
+      title: "Chào mừng bạn đến với HomePlus!",
       description:
-        "Khám phá KALBAN, nơi cung cấp các sản phẩm túi xanh thân thiện với môi trường và phong cách sống bền vững.",
-      image: "/images/trangchu.jpg",
+        "Nơi bạn tìm thấy dịch vụ dọn dẹp chuyên nghiệp với đội ngũ tận tâm, quy trình bài bản. Hệ thống đặt lịch thông minh giúp bạn lựa chọn gói dịch vụ dễ dàng chỉ trong vài giây.",
+      image: "/image/banner_1.webp",
       link: "/",
     },
     {
-      title: "Sản Phẩm",
+      title: "Dịch vụ dọn dẹp – Giải pháp làm sạch cho mọi không gian!",
       description:
-        "Tìm hiểu các dòng sản phẩm túi xanh của KALBAN, được thiết kế để bảo vệ môi trường và đáp ứng nhu cầu hàng ngày của bạn.",
-      image: "/images/sp.webp",
+        "Cho dù bạn cần dọn nhà theo giờ, vệ sinh sâu toàn bộ căn hộ hay làm sạch đồ nội thất, HomePlus đều có gói dịch vụ linh hoạt, minh bạch, giá cả hợp lý. Chúng tôi cam kết 100% hài lòng với chất lượng dịch vụ.",
+      image: "/image/banner_2.webp",
       link: "/",
     },
     {
-      title: "Thiết Kế",
+      title: "Giao hàng nhanh chóng – Mua sắm dễ dàng, nhận hàng ngay!",
       description:
-        "KALBAN mang đến những thiết kế túi xanh hiện đại, tiện dụng và phong cách, phù hợp cho mọi hoàn cảnh.",
+        "Ngoài dịch vụ vệ sinh, HomePlus còn cung cấp các sản phẩm & dụng cụ làm sạch với chính sách giao hàng siêu tốc, đảm bảo bạn luôn có đầy đủ vật dụng cần thiết.",
       image:
-        "https://i.etsystatic.com/8661388/r/il/f8dd14/1968801704/il_570xN.1968801704_2afa.jpg",
+        "/image/banner_3.webp",
       link: "/",
     },
     {
-      title: "Blog",
+      title: "Blog – Bí quyết giữ nhà luôn sạch sẽ & gọn gàng!",
       description:
-        "Đọc các bài viết trên blog của KALBAN về lối sống xanh, bảo vệ môi trường và các mẹo tái chế sáng tạo.",
-      image: "/images/blogcanvas.jpg",
+        "Khám phá ngay những mẹo vệ sinh hiệu quả, cách chăm sóc nội thất, công thức làm sạch tự nhiên và những xu hướng dọn dẹp nhà cửa mới nhất.",
+      image: "/image/banner_4.webp",
       link: "/",
     },
     {
-      title: "Liên Hệ",
+      title: "Liên hệ ngay – Hỗ trợ tận tình, đặt lịch dễ dàng!",
       description:
-        "KALBAN cung cấp các dịch vụ tư vấn và hỗ trợ khách hàng, giúp bạn chọn lựa sản phẩm phù hợp nhất.",
-      image: "/images/sv.webp",
+        "Cần tư vấn hoặc đặt lịch ngay? HomePlus hỗ trợ 24/7, sẵn sàng phục vụ bạn mọi lúc, mọi nơi!",
+      image: "/image/banner_5.webp",
       link: "/",
     },
     {
       title: "Khác",
       description:
-        "Khám phá thêm về KALBAN, sứ mệnh của chúng tôi và những gì chúng tôi đang làm để tạo ra một thế giới xanh hơn.",
-      image: "/images/kalban-logo.jpg",
+        "Nhấn 'Đặt lịch ngay' để trải nghiệm dịch vụ chuyên nghiệp từ HomePlus!",
+      image: "/image/banner_6.webp",
       link: "/",
     },
   ];
