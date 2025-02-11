@@ -4,6 +4,7 @@
 
 import { httpHomePlus } from "@/lib/http";
 import { TAreaResponse, TUpdateAreaRequest } from "@/schema/area.schema";
+import { TClusterResponse } from "@/schema/cluster.schema";
 import { TTableResponse } from "@/types/Table";
 
 export const getAllAreas = async (params?: any) => {
@@ -14,6 +15,15 @@ export const getAllAreas = async (params?: any) => {
     }
   );
   console.log("getAllAreas Response:", response);
+  return response;
+};
+export const getClustersInArea = async (id: string, params?: any) => {
+  const response = await httpHomePlus.get<TTableResponse<TClusterResponse>>(
+    `/areas/${id}/cluster`,
+    {
+      params,
+    }
+  );
   return response;
 };
 

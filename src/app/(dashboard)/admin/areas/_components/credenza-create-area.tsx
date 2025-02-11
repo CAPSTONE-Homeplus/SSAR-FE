@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { createArea } from "@/apis/area";
+import { useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -33,7 +34,8 @@ type Props = {
 
 export function CredenzaCreateArea({ className }: Props) {
   const { toast } = useToast();
-  const [isOpen, setIsOpen] = useState(false); // Để kiểm soát đóng Credenza
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const form = useForm<TCreateAreaRequest>({
     resolver: zodResolver(CreateAreaSchema),
     defaultValues: {
@@ -55,10 +57,11 @@ export function CredenzaCreateArea({ className }: Props) {
       if (response.status === 201) {
         toast({
           title: "Tạo khu vực thành công",
-          description: "Khu vực đã được tạo thành công.",
+          description: "Đã tạo thành công.",
         });
         form.reset();
         setIsOpen(false); // Đóng Credenza
+        router.refresh(); // Refresh lại trang
       } else {
         toast({
           title: "Lỗi",
@@ -198,7 +201,7 @@ export function CredenzaCreateArea({ className }: Props) {
             </div>
             <CredenzaFooter>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Đang cập nhập..." : "Cập nhập Khu Vực"}
+                {isSubmitting ? "Đang cập nhập..." : "Cập nhập"}
               </Button>
               <CredenzaClose asChild>
                 <Button

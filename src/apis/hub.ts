@@ -5,16 +5,14 @@ import { httpHomePlus } from "@/lib/http";
 import { TServiceResponse } from "@/schema/service.schema";
 import { TTableResponse } from "@/types/Table";
 
-export const getAllServices = async (params?: any) => {
+export const getAllHubs = async (params?: any) => {
   const response = await httpHomePlus.get<TTableResponse<TServiceResponse>>(
-    `/services`,
+    `/hubs`,
     {
       params,
-      next: { tags: ["services"] },
     }
   );
 
-  console.log("getAllServices Response:", response);
   return response;
 };
 
