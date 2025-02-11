@@ -4,8 +4,8 @@ import React, { Suspense } from "react";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
-import ServiceTable from "@/app/(dashboard)/manager/service/_components/service-table";
-import { CredenzaCreateService } from "@/app/(dashboard)/manager/service/_components/credenza-create-service";
+import ServiceTable from "@/app/(dashboard)/manager/services/_components/service-table";
+import { CredenzaCreateService } from "@/app/(dashboard)/manager/services/_components/credenza-create-service";
 type Props = {
   keyProps: string;
 };

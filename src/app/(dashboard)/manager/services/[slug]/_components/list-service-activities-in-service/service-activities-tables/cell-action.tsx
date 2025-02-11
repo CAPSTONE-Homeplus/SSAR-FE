@@ -8,18 +8,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { TClusterResponse } from "@/schema/cluster.schema";
+import { MoreHorizontal, Trash } from "lucide-react";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface CellActionProps {
-  data: any;
+  data: TClusterResponse;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({data}) => {
+export const CellAction: React.FC<CellActionProps> = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   const onConfirm = async () => {};
 
@@ -31,23 +33,19 @@ export const CellAction: React.FC<CellActionProps> = ({data}) => {
         onConfirm={onConfirm}
         loading={loading}
       />
+
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Xem Chi Tiết</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-          <DropdownMenuItem
-            onClick={() => router.push(`/manager/service-category/${data.id}`)}
-          >
-            <Edit className="mr-2 h-4 w-4" /> Xem chi tiết
-          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Xóa
+            <Trash className="mr-2 h-4 w-4" />Xóa
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -174,7 +174,7 @@ export const adminNavItems: TNavItem[] = [
 export const managerNavItems: TNavItem[] = [
   {
     title: "Phân Loại Dịch Vụ",
-    url: PATHS.manager.serviceCategory,
+    url: PATHS.manager.serviceCategories,
     icon: "package",
     shortcut: ["t", "s"],
     isActive: false,
@@ -188,19 +188,19 @@ export const managerNavItems: TNavItem[] = [
     items: [
       {
         title: "Loại Dịch Vụ",
-        url: PATHS.manager.service,
+        url: PATHS.manager.services,
         icon: "package",
         shortcut: ["t", "s"],
       },
       {
         title: "Hoạt Động Của Dịch Vụ",
-        url: PATHS.admin.areas,
+        url: PATHS.manager.serviceActivities,
         icon: "building",
         shortcut: ["r", "s"],
       },
       {
         title: "Hoạt Động Của Dịch Vụ Phụ",
-        url: PATHS.admin.clusters,
+        url: PATHS.manager.serviceSubActivities,
         icon: "building",
         shortcut: ["r", "s"],
       },

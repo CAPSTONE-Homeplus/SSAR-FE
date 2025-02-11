@@ -4,9 +4,9 @@ import React, { Suspense } from "react";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
-import ServiceCategoryTable from "@/app/(dashboard)/manager/service-category/_components/service-category-table";
-import { CredenzaCreateServiceCategory } from "@/app/(dashboard)/manager/service-category/_components/credenza-create-service-category";
-import ServiceCategoryTableAction from "@/app/(dashboard)/manager/service-category/_components/service-category-tables/service-category-table-action";
+import ServiceCategoryTable from "@/app/(dashboard)/manager/service-categories/_components/service-category-table";
+import { CredenzaCreateServiceCategory } from "@/app/(dashboard)/manager/service-categories/_components/credenza-create-service-category";
+import ServiceCategoryTableAction from "@/app/(dashboard)/manager/service-categories/_components/service-category-tables/service-category-table-action";
 type Props = {
   keyProps: string;
 };
