@@ -17,7 +17,7 @@ const ServiceIndex = ({ keyProps }: Props) => {
       </div> */}
       <div className="space-y-4">
         <div className="flex items-start justify-between">
-          <Heading title="Khu vực" description="Quản lý khu vực " />
+          <Heading title="Dịch Vụ" description="Quản lý dịch vụ" />
           <CredenzaCreateService />
         </div>
         <Separator />
