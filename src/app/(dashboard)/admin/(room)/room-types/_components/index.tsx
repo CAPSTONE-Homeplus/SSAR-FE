@@ -1,13 +1,13 @@
 import React from "react";
 import PageContainer from "@/components/layout/page-container";
-import RoomRender from "./room-render";
+import RoomTypeRender from "./room-type-render";
 type Props = {
   keyProps: string;
 };
-export const RoomIndex = ({ keyProps }: Props) => {
+export const RoomTypeIndex = ({ keyProps }: Props) => {
   return (
     <PageContainer>
-      <RoomRender keyProps={keyProps} />
+      <RoomTypeRender keyProps={keyProps} />
     </PageContainer>
   );
 };

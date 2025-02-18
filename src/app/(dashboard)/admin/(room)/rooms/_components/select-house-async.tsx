@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useBuildings } from "@/hooks/use-buildings";
+import { useHouses } from "@/hooks/use-houses";
 import {
   Select,
   SelectGroup,
@@ -11,19 +11,26 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function SelectBuildingAsync({
+export function SelectHouseAsync({
   value,
   onChange,
+  props,
 }: {
   value?: string;
   onChange: (v: string) => void;
+  props: any;
 }) {
-  const { data, isLoading } = useBuildings();
+  const { data, isLoading } = useHouses();
 
   return (
-    <Select value={value} onValueChange={onChange} disabled={isLoading}>
+    <Select
+      value={value}
+      onValueChange={onChange}
+      disabled={isLoading}
+      {...props}
+    >
       <SelectTrigger>
-        <SelectValue placeholder="Chọn tòa" />
+        <SelectValue placeholder="Chọn căn hộ" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -34,7 +41,7 @@ export function SelectBuildingAsync({
                   value={item.id}
                   className="hover:bg-accent"
                 >
-                  {item.name}
+                  Phòng {item.numberOfRoom}
                 </SelectItem>
               ))
             : Array.from({ length: 5 }).map((_, index) => (

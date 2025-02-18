@@ -14,7 +14,7 @@ type Props = {
   tabs: TabItem[]; // Danh sách các tab được truyền từ bên ngoài
 };
 
-function TabsHouseIndex({ classname, tabs }: Props) {
+function TabsPage({ classname, tabs }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   console.log("Pathname:", pathname);
@@ -51,4 +51,4 @@ function TabsHouseIndex({ classname, tabs }: Props) {
   );
 }
 
-export { TabsHouseIndex };
+export { TabsPage };

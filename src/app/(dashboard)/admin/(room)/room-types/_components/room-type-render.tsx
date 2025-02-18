@@ -1,35 +1,33 @@
 import React, { Suspense } from "react";
-import HouseTypeTable from "./house-type-table";
+import RoomTypeTable from "./room-type-table";
 
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
-import HouseTypeTableAction from "./house-type-tables/house-type-table-action";
-import { CredenzaCreateHouseType } from "./credenza-create-house-type";
+import { CredenzaCreateRoomType } from "./credenza-create-room-type";
+import RoomTypeTableAction from "./room-type-tables/room-type-table-action";
 type Props = {
   keyProps: string;
 };
-const HouseTypeIndex = ({ keyProps }: Props) => {
+const RoomTypeRender = ({ keyProps }: Props) => {
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <Heading
-          title="Các loại căn hộ"
-          description="Quản lý từng loại căn hộ có trong mỗi căn hộ "
-        />
-        <CredenzaCreateHouseType />
+        <Heading title="Loại phòng" description="" />
+        <CredenzaCreateRoomType />
       </div>
+
       <Separator />
 
-      <HouseTypeTableAction />
+      <RoomTypeTableAction />
       <Suspense
         key={keyProps}
         fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
       >
-        <HouseTypeTable />
+        <RoomTypeTable />
       </Suspense>
     </div>
   );
 };
 
-export default HouseTypeIndex;
+export default RoomTypeRender;

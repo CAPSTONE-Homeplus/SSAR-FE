@@ -12,7 +12,7 @@ import { TRoomResponse } from "@/schema/room.schema";
 
 export const getAllRoomTypes = async (params?: any) => {
   const response = await httpHomePlus.get<TTableResponse<TRoomTypeResponse>>(
-    `/room-types`,
+    `/roomtypes`,
     {
       params,
     }
@@ -22,7 +22,7 @@ export const getAllRoomTypes = async (params?: any) => {
 };
 export const getRoomsInRoomType = async (id: string, params?: any) => {
   const response = await httpHomePlus.get<TTableResponse<TRoomResponse>>(
-    `/room-types/${id}/room`,
+    `/roomtypes/${id}/room`,
     {
       params,
     }
@@ -32,7 +32,7 @@ export const getRoomsInRoomType = async (id: string, params?: any) => {
 
 export const getRoomTypeById = async (id: string) => {
   const response = await httpHomePlus.get<TRoomTypeResponse>(
-    `/room-types/${id}`
+    `/roomtypes/${id}`
   );
   console.log("getRoomTypeById Response:", response);
   return response;
@@ -40,7 +40,7 @@ export const getRoomTypeById = async (id: string) => {
 
 export const createRoomType = async (data: Partial<TRoomTypeResponse>) => {
   const response = await httpHomePlus.post<TRoomTypeResponse>(
-    `/room-types`,
+    `/roomtypes`,
     data
   );
   console.log("createRoomType Response:", response);
@@ -52,7 +52,7 @@ export const updateRoomType = async (
   data: TCreateRoomTypeRequest
 ) => {
   const response = await httpHomePlus.patch<TRoomTypeResponse>(
-    `/room-types/${id}`,
+    `/roomtypes/${id}`,
     data
   );
   console.log("updateRoomType Response:", response);
@@ -60,7 +60,7 @@ export const updateRoomType = async (
 };
 
 export const deleteRoomType = async (id: string) => {
-  const response = await httpHomePlus.delete(`/room-types/${id}`);
+  const response = await httpHomePlus.delete(`/roomtypes/${id}`);
   console.log("deleteRoomType Response:", response);
   return response;
 };
