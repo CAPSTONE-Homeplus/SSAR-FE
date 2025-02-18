@@ -207,6 +207,13 @@ export const managerNavItems: TNavItem[] = [
     ]
   },
   {
+    title: "Ca Làm Việc",
+    url: PATHS.manager.timeSlots,
+    icon: "clock",
+    isActive: false,
+    items: [],
+  },
+  {
     title: "Doanh thu",
     url: PATHS.manager.revenue,
     icon: "chart",
