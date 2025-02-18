@@ -8,7 +8,7 @@ import Link from "next/link";
 import { TServiceActivitiesInServiceResponse } from "@/schema/service-activities-in-service.schema";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const columns : ColumnDef<TServiceActivitiesInServiceResponse>[] = [
+export const ServiceActivitycolumns : ColumnDef<TServiceActivitiesInServiceResponse>[] = [
   {
     accessorKey: "name",
     header: "Tên dịch vụ",
@@ -111,9 +111,9 @@ export const columns : ColumnDef<TServiceActivitiesInServiceResponse>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const serviceId = row.original.id;
+      const serviceActivityId = row.original.id;
       return (
-        <Link href={`/manager/service/${serviceId}`}>
+        <Link href={`/manager/services/${serviceActivityId}/service-activity/${serviceActivityId}`}>
           <Edit />
         </Link>
       );

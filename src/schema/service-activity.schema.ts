@@ -6,8 +6,6 @@ export const ServiceActivitySchema = BaseSchema.extend({
   name: z.string().max(255),
   code: z.string().max(50),
   status: z.string().max(20),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
   prorityLevel: z.number().int().min(0),
   estimatedTimePerTask: z.string().max(255),
   safetyMeasures: z.string().max(255),
@@ -35,4 +33,4 @@ export const ServiceActivityUpdateSchema = BaseSchema.extend({
 export type TServiceActivityRequest = z.infer<typeof ServiceActivitySchema>;
 export type TServiceActivityResponse = z.infer<typeof ServiceActivitySchema>;
 export type TServiceActivityCreateRequest = z.infer<typeof ServiceActivityCreateSchema>;
-export type TServiceActivityUpdateRequest = z.infer<typeof ServiceActivityUpdateSchema>;
+export type TServiceActivityUpdateRequest = z.infer<typeof ServiceActivitySchema>;

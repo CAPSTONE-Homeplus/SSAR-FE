@@ -1,12 +1,12 @@
 import { DataTable } from "@/components/table/data-table";
 
 import { searchParamsCache } from "@/lib/searchparams";
-import { getServiceActivitiesInService } from "@/apis/service";
-import { ServiceActivitycolumns } from "@/app/(dashboard)/manager/services/[slug]/_components/list-service-activities-in-service/_components/service-activities-tables/columns";
+import { columns } from "./service-tables/columns";
+import { getServicesInServiceCategory } from "@/apis/service-category";
 type Props = {
   slug: string;
 };
-const ServiceActivitiesDetailTableInService = async ({ slug }: Props) => {
+const ServiceTableInServiceCategory = async ({ slug }: Props) => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
@@ -16,7 +16,7 @@ const ServiceActivitiesDetailTableInService = async ({ slug }: Props) => {
     ...(search && { search }),
   };
 
-  const response = await getServiceActivitiesInService(slug, filters);
+  const response = await getServicesInServiceCategory(slug, filters);
   await new Promise((resolve) => setTimeout(resolve, 4000));
 
   const responsePayload = response.payload;
@@ -24,11 +24,11 @@ const ServiceActivitiesDetailTableInService = async ({ slug }: Props) => {
     <div>
       <DataTable
         data={responsePayload.items}
-        columns={ServiceActivitycolumns}
+        columns={columns}
         totalItems={responsePayload.total}
       />
     </div>
   );
 };
 
-export default ServiceActivitiesDetailTableInService;
+export default ServiceTableInServiceCategory;

@@ -1,12 +1,12 @@
+import { getOptionsInService } from "@/apis/service";
+import { OptionColumns } from "@/app/(dashboard)/manager/services/[slug]/_components/list-options-in-services/options-tables/columns";
 import { DataTable } from "@/components/table/data-table";
 
 import { searchParamsCache } from "@/lib/searchparams";
-import { getServiceActivitiesInService } from "@/apis/service";
-import { ServiceActivitycolumns } from "@/app/(dashboard)/manager/services/[slug]/_components/list-service-activities-in-service/_components/service-activities-tables/columns";
 type Props = {
   slug: string;
 };
-const ServiceActivitiesDetailTableInService = async ({ slug }: Props) => {
+const OptionsTableInService = async ({ slug }: Props) => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
@@ -16,19 +16,18 @@ const ServiceActivitiesDetailTableInService = async ({ slug }: Props) => {
     ...(search && { search }),
   };
 
-  const response = await getServiceActivitiesInService(slug, filters);
-  await new Promise((resolve) => setTimeout(resolve, 4000));
+  const response = await getOptionsInService(slug, filters);
 
   const responsePayload = response.payload;
   return (
     <div>
       <DataTable
         data={responsePayload.items}
-        columns={ServiceActivitycolumns}
+        columns={OptionColumns}
         totalItems={responsePayload.total}
       />
     </div>
   );
 };
 
-export default ServiceActivitiesDetailTableInService;
+export default OptionsTableInService;
