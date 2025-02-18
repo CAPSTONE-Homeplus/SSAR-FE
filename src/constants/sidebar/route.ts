@@ -78,14 +78,14 @@ export const adminNavItems: TNavItem[] = [
     isActive: false,
     items: [],
   },
-  {
-    title: "Quản lý cửa hàng",
-    url: PATHS.admin.stores,
-    icon: "store",
-    shortcut: ["s", "t"],
-    isActive: false,
-    items: [],
-  },
+  // {
+  //   title: "Quản lý cửa hàng",
+  //   url: PATHS.admin.stores,
+  //   icon: "store",
+  //   shortcut: ["s", "t"],
+  //   isActive: false,
+  //   items: [],
+  // },
   {
     title: "Quản lý quản lý",
     url: PATHS.admin.managers,
@@ -204,7 +204,7 @@ export const managerNavItems: TNavItem[] = [
         icon: "building",
         shortcut: ["r", "s"],
       },
-    ]
+    ],
   },
   {
     title: "Doanh thu",

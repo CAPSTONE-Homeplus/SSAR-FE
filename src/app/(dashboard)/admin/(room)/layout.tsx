@@ -10,7 +10,7 @@ const HouseLayout = ({
 }>) => {
   const tabs = [
     {
-      value: "/admin/houses",
+      value: "/admin/rooms",
       label: (
         <>
           <House
@@ -19,12 +19,12 @@ const HouseLayout = ({
             strokeWidth={2}
             aria-hidden="true"
           />
-          Căn hộ
+          Phòng
         </>
       ),
     },
     {
-      value: "/admin/house-types",
+      value: "/admin/room-types",
       label: (
         <>
           <Box
@@ -33,7 +33,7 @@ const HouseLayout = ({
             strokeWidth={2}
             aria-hidden="true"
           />
-          Loại căn hộ
+          Loại phòng
         </>
       ),
     },

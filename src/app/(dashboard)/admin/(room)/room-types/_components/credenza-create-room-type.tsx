@@ -12,47 +12,44 @@ import {
 } from "@/components/ui/credenza";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RoomCreateSchema, TCreateRoomRequest } from "@/schema/room.schema";
+import {
+  RoomTypeCreateSchema,
+  TCreateRoomTypeRequest,
+} from "@/schema/room-type.schema";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createRoom } from "@/apis/room";
+import { createRoomType } from "@/apis/room-type";
 import { useRouter } from "next/navigation";
-import { SelectRoomTypeAsync } from "./select-room-type-async";
 
-export function CredenzaCreateRoom() {
+export function CredenzaCreateRoomType() {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const form = useForm<TCreateRoomRequest>({
-    resolver: zodResolver(RoomCreateSchema),
+  const form = useForm<TCreateRoomTypeRequest>({
+    resolver: zodResolver(RoomTypeCreateSchema),
     defaultValues: {
       name: "",
       description: "",
-      houseId: "",
-      roomTypeId: "",
-      createdBy: "",
-      updatedBy: "",
+      code: "",
     },
   });
 
-  const onSubmit = async (data: TCreateRoomRequest) => {
+  const onSubmit = async (data: TCreateRoomTypeRequest) => {
     try {
-      const response = await createRoom(data);
+      const response = await createRoomType(data);
       if (response.status === 201) {
         toast({
-          title: "Tạo phòng thành công",
-          description: "Phòng đã được tạo thành công.",
+          title: "Tạo loại phòng thành công",
+          description: "Loại phòng đã được tạo thành công.",
         });
         form.reset();
         setIsOpen(false);
@@ -60,14 +57,14 @@ export function CredenzaCreateRoom() {
       } else {
         toast({
           title: "Lỗi",
-          description: "Không thể tạo phòng",
+          description: "Không thể tạo loại phòng",
           variant: "destructive",
         });
       }
     } catch (error: any) {
       toast({
         title: "Lỗi",
-        description: `Có lỗi xảy ra khi tạo phòng: ${error.message}`,
+        description: `Có lỗi xảy ra khi tạo loại phòng: ${error.message}`,
         variant: "destructive",
       });
     }
@@ -77,13 +74,13 @@ export function CredenzaCreateRoom() {
     <Credenza open={isOpen} onOpenChange={setIsOpen}>
       <CredenzaTrigger asChild>
         <Button variant="default" onClick={() => setIsOpen(true)}>
-          Tạo Phòng
+          Tạo Loại Phòng
         </Button>
       </CredenzaTrigger>
       <CredenzaContent className="max-w-4xl">
         <CredenzaHeader>
-          <CredenzaTitle>Tạo Phòng</CredenzaTitle>
-          <CredenzaDescription>Nhập thông tin phòng</CredenzaDescription>
+          <CredenzaTitle>Tạo Loại Phòng</CredenzaTitle>
+          <CredenzaDescription>Nhập thông tin loại phòng</CredenzaDescription>
         </CredenzaHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -93,9 +90,11 @@ export function CredenzaCreateRoom() {
                 name="name"
                 render={({ field }) => (
                   <FormItem className="col-span-3">
-                    <Label htmlFor="name">Tên phòng</Label>
+                    <label className="text-sm font-medium">
+                      Tên loại phòng
+                    </label>
                     <FormControl>
-                      <Input placeholder="Nhập tên phòng..." {...field} />
+                      <Input placeholder="Nhập tên loại phòng..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -106,24 +105,11 @@ export function CredenzaCreateRoom() {
                 name="description"
                 render={({ field }) => (
                   <FormItem className="col-span-3">
-                    <Label htmlFor="description">Mô tả</Label>
+                    <label className="text-sm font-medium">Mô tả</label>
                     <FormControl>
-                      <Input placeholder="Nhập mô tả..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="houseId"
-                render={({ field }) => (
-                  <FormItem className="col-span-3">
-                    <Label htmlFor="houseId">Mã nhà</Label>
-                    <FormControl>
-                      <SelectRoomTypeAsync
-                        value={field.value}
-                        onChange={field.onChange}
+                      <Input
+                        placeholder="Nhập mô tả loại phòng..."
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -132,39 +118,12 @@ export function CredenzaCreateRoom() {
               />
               <FormField
                 control={form.control}
-                name="roomTypeId"
+                name="code"
                 render={({ field }) => (
                   <FormItem className="col-span-3">
-                    <Label htmlFor="roomTypeId">Loại phòng</Label>
-                    <SelectRoomTypeAsync
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="createdBy"
-                render={({ field }) => (
-                  <FormItem className="col-span-3">
-                    <Label htmlFor="createdBy">Người tạo</Label>
+                    <label className="text-sm font-medium">Mã Loại Phòng</label>
                     <FormControl>
-                      <Input placeholder="Nhập người tạo..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="updatedBy"
-                render={({ field }) => (
-                  <FormItem className="col-span-3">
-                    <Label htmlFor="updatedBy">Người cập nhật</Label>
-                    <FormControl>
-                      <Input placeholder="Nhập người cập nhật..." {...field} />
+                      <Input placeholder="Nhập mã loại phòng..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -173,7 +132,7 @@ export function CredenzaCreateRoom() {
             </div>
             <CredenzaFooter>
               <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Đang tạo..." : "Tạo Phòng"}
+                {form.formState.isSubmitting ? "Đang tạo..." : "Tạo Loại Phòng"}
               </Button>
               <CredenzaClose asChild>
                 <Button type="button" variant="outline">
