@@ -1,6 +1,6 @@
 import React from "react";
-import { FormUpdateService } from "@/app/(dashboard)/manager/services/[slug]/_components/update/form-update-service";
 import { getServiceById } from "@/apis/service";
+import { FormUpdateService } from "@/app/(dashboard)/manager/services/[slug]/_components/update/form-update-service";
 
 type Props = {
   slug: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTableSearch } from "@/components/table/data-table-search";
-import { useClusterTableFilters } from "./use-service-activities-table-filters";
+import { useClusterTableFilters } from "./use-service-table-filters";
 // import { DataTableFilterBox } from "@/components/table/data-table-filter-box";
 import { DataTableResetFilter } from "@/components/table/data-table-reset-filter";
 

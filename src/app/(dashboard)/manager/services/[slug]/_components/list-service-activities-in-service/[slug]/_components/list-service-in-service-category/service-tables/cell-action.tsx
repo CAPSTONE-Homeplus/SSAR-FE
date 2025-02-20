@@ -17,8 +17,7 @@ interface CellActionProps {
   data: TClusterResponse;
 }
 
-export const CellAction: React.FC<CellActionProps> = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   // const router = useRouter();
@@ -45,7 +44,7 @@ export const CellAction: React.FC<CellActionProps> = () => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" />Xóa
+            <Trash className="mr-2 h-4 w-4" /> Xóa
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
