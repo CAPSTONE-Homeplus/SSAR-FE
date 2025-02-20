@@ -1,12 +1,12 @@
 import { DataTable } from "@/components/table/data-table";
 
 import { searchParamsCache } from "@/lib/searchparams";
-import { getExtraServicesInService } from "@/apis/service";
-import { ExtraServiceColumns } from "./extra-services-tables/columns";
+import { columns } from "./room-tables/columns";
+import { getRoomsInRoomType } from "@/apis/room-type";
 type Props = {
   slug: string;
 };
-const ExtraServiceTableInService = async ({ slug }: Props) => {
+const RoomTableRoomType = async ({ slug }: Props) => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
@@ -16,18 +16,19 @@ const ExtraServiceTableInService = async ({ slug }: Props) => {
     ...(search && { search }),
   };
 
-  const response = await getExtraServicesInService(slug, filters);
+  const response = await getRoomsInRoomType(slug, filters);
+  await new Promise((resolve) => setTimeout(resolve, 4000));
 
   const responsePayload = response.payload;
   return (
     <div>
       <DataTable
         data={responsePayload.items}
-        columns={ExtraServiceColumns}
+        columns={columns}
         totalItems={responsePayload.total}
       />
     </div>
   );
 };
 
-export default ExtraServiceTableInService;
+export default RoomTableRoomType;

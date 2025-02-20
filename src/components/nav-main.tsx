@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -9,7 +8,6 @@ import {
 } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
-  // SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -37,28 +35,32 @@ export function NavMain({
   }[];
 }) {
   const pathname = usePathname();
+
+  const activeCondition = (url: string) => pathname === url;
+
   return (
     <SidebarGroup>
-      {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
       <SidebarMenu>
         {items.map((item) => {
           const Icon =
             item.icon && Icons[item.icon as keyof typeof Icons]
               ? Icons[item.icon as keyof typeof Icons]
               : Icons.logo;
+          const isActive =
+            activeCondition(item.url) ||
+            (item.items?.some((subItem) => activeCondition(subItem.url)) ??
+              false);
+
           return item?.items && item?.items?.length > 0 ? (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={item.isActive}
+              defaultOpen={isActive}
               className="group/collapsible"
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton
-                    tooltip={item.title}
-                    isActive={pathname === item.url}
-                  >
+                  <SidebarMenuButton tooltip={item.title} isActive={isActive}>
                     {item.icon && <Icon />}
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -70,7 +72,7 @@ export function NavMain({
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton
                           asChild
-                          isActive={pathname === subItem.url}
+                          isActive={activeCondition(subItem.url)}
                         >
                           <Link href={subItem.url}>
                             {subItem.icon && <Icon />}
@@ -88,7 +90,7 @@ export function NavMain({
               <SidebarMenuButton
                 asChild
                 tooltip={item.title}
-                isActive={pathname === item.url}
+                isActive={activeCondition(item.url)}
               >
                 <Link href={item.url}>
                   <Icon />

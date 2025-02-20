@@ -5,6 +5,7 @@ import PageContainer from "@/components/layout/page-container";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ServiceDetailAsync from "./update/service-detail-async";
 import ServiceActivitiesTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-service-activities-in-service/service-activities-table-in-service";
 import ExtraServiceTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-extra-service-in-services/extra-services-table-in-service";
@@ -31,57 +32,50 @@ const ServiceDetailIndex = ({ slug, keyProps }: Props) => {
             <Heading title="Những dịch vụ liên quan" description="Các danh sách dịch vụ" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="col-span-1">
+          <Tabs defaultValue="activities" className="w-full">
+            <TabsList className="grid grid-cols-4">
+              <TabsTrigger value="activities">Hoạt động dịch vụ</TabsTrigger>
+              <TabsTrigger value="extra-services">Dịch vụ bổ sung</TabsTrigger>
+              <TabsTrigger value="options">Lựa chọn</TabsTrigger>
+              <TabsTrigger value="equipment">Trang thiết bị hỗ trợ</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="activities">
               <Card className="p-4">
                 <Heading title="Hoạt động dịch vụ" description="Danh sách các hoạt động dịch vụ" />
-                <Suspense
-                  key={keyProps}
-                  fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
-                >
+                <Suspense key={keyProps} fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}>
                   <ServiceActivitiesTableInService slug={slug} />
                 </Suspense>
               </Card>
-            </div>
+            </TabsContent>
 
-            <div className="col-span-1">
+            <TabsContent value="extra-services">
               <Card className="p-4">
                 <Heading title="Dịch vụ bổ sung" description="Danh sách các dịch vụ bổ sung" />
-                <Suspense
-                  key={keyProps}
-                  fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
-                >
+                <Suspense key={keyProps} fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}>
                   <ExtraServiceTableInService slug={slug} />
                 </Suspense>
               </Card>
-            </div>
+            </TabsContent>
 
-            {/* Bảng 3: Lựa chọn */}
-            <div className="col-span-1">
+            <TabsContent value="options">
               <Card className="p-4">
                 <Heading title="Lựa chọn" description="Danh sách các lựa chọn" />
-                <Suspense
-                  key={keyProps}
-                  fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
-                >
+                <Suspense key={keyProps} fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}>
                   <OptionsTableInService slug={slug} />
                 </Suspense>
               </Card>
-            </div>
+            </TabsContent>
 
-            {/* Bảng 4: Trang thiết bị hỗ trợ */}
-            <div className="col-span-1">
+            <TabsContent value="equipment">
               <Card className="p-4">
-                <Heading title="Trang thiết bị hỗ trợ" description="Danh sách các các thiết bị hô trợ"  />
-                <Suspense
-                  key={keyProps}
-                  fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
-                >
+                <Heading title="Trang thiết bị hỗ trợ" description="Danh sách các thiết bị hỗ trợ" />
+                <Suspense key={keyProps} fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}>
                   <EquipmentSuppliesTableInService slug={slug} />
                 </Suspense>
               </Card>
-            </div>
-          </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </PageContainer>

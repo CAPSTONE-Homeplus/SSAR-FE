@@ -170,5 +170,16 @@ const httpMock = createHttpClient(envConfig.NEXT_PUBLIC_MOCK_API_ENDPOINT);
 const httpHomePlus = createHttpClient(
   envConfig.NEXT_PUBLIC_HOMEPLUS_API_ENDPOINT
 );
+const httpVinWallet = createHttpClient(
+  envConfig.NEXT_PUBLIC_HOMEPLUS_API_ENDPOINT
+);
 
-export { httpLocal, httpBag, httpMock, httpHomePlus, HttpError, EntityError };
+export {
+  httpLocal,
+  httpBag,
+  httpMock,
+  httpHomePlus,
+  httpVinWallet,
+  HttpError,
+  EntityError,
+};
