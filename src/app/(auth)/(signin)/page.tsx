@@ -3,7 +3,7 @@ import SignInViewPage from "../_components/sigin-view";
 
 export const metadata: Metadata = {
   title: "Login Page | HomePlus",
-  description: "Sign In page for authentication.",
+  description: "Sign In page for Authentication.",
 };
 
 export default function Page() {

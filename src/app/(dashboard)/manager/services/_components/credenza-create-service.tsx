@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Credenza,
   CredenzaTrigger,
@@ -27,7 +28,13 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { createService } from "@/apis/service";
 import { Textarea } from "@/components/ui/textarea";
 import { getAllServiceCategories } from "@/apis/service-category";
@@ -43,9 +50,12 @@ type Props = {
 
 export function CredenzaCreateService({ className }: Props) {
   const [serviceCategories, setServiceCategories] = useState<
-  { id: string; name: string }[]
->([]);
-console.log("🚀 ~ CredenzaCreateService ~ serviceCategories:", serviceCategories)
+    { id: string; name: string }[]
+  >([]);
+  console.log(
+    "🚀 ~ CredenzaCreateService ~ serviceCategories:",
+    serviceCategories
+  );
 
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false); // Để kiểm soát đóng Credenza
@@ -68,12 +78,18 @@ console.log("🚀 ~ CredenzaCreateService ~ serviceCategories:", serviceCategori
   const { isSubmitting } = form.formState;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getAllServiceCategory = async () => {
-    const response = await getAllServiceCategories();
-    setServiceCategories(response.payload.items);
-    console.log("11111 Response:", setServiceCategories);
-    return response;
-  };
+  useEffect(() => {
+    const fetchServiceCategories = async () => {
+      try {
+        const response = await getAllServiceCategories();
+        setServiceCategories(response.payload.items);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh mục dịch vụ:", error);
+      }
+    };
+
+    fetchServiceCategories();
+  }, []);
 
   const onSubmit = async (data: TServiceCreateRequest) => {
     try {
@@ -278,23 +294,26 @@ console.log("🚀 ~ CredenzaCreateService ~ serviceCategories:", serviceCategori
                 render={({ field }) => (
                   <FormItem>
                     <Label htmlFor="serviceCategoryId">Danh Mục Dịch Vụ</Label>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Chọn danh mục dịch vụ" />
                         </SelectTrigger>
-                        <SelectContent>
-                          {serviceCategories.map((category) => (
+                      </FormControl>
+                      <SelectContent>
+                        {serviceCategories.length > 0 ? (
+                          serviceCategories.map((category) => (
                             <SelectItem key={category.id} value={category.id}>
                               {category.name}
                             </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
+                          ))
+                        ) : (
+                          <div className="p-2 text-gray-500">
+                            Không có danh mục dịch vụ
+                          </div>
+                        )}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

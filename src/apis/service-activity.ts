@@ -5,6 +5,7 @@
 import { httpHomePlus } from "@/lib/http";
 import { TServiceActivityResponse, TServiceActivityUpdateRequest } from "@/schema/service-activity.schema";
 import { TServiceCategoryResponse } from "@/schema/service-category.schema";
+import { TServiceSubActivitiesResponse } from "@/schema/service-sub-activity.schema";
 import { TTableResponse } from "@/types/Table";
 
 export const getAllServiceCategories = async (params?: any) => {
@@ -18,10 +19,19 @@ export const getAllServiceCategories = async (params?: any) => {
   return response;
 };
 
-
 export const getServiceActivityById = async (id: string) => {
   const response = await httpHomePlus.get<TServiceActivityResponse>(`/service-activities/${id}`);
 //   console.log("Service Activity Response:", response);
+  return response;
+};
+
+export const getServiceSubActivitiesInServiceActivities = async (id: string, params?: any) => {
+  const response = await httpHomePlus.get<TTableResponse<TServiceSubActivitiesResponse>>(
+    `/service-activities/${id}/service-sub-activities`,
+    {
+      params,
+    }
+  );
   return response;
 };
 

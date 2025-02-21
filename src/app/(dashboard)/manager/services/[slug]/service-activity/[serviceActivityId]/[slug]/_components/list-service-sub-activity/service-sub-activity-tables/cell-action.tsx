@@ -8,13 +8,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { TServiceActivityResponse } from "@/schema/service-activity.schema";
+import { TServiceSubActivitiesResponse } from "@/schema/service-sub-activity.schema";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 interface CellActionProps {
-  data: TServiceActivityResponse;
+  data: TServiceSubActivitiesResponse;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {

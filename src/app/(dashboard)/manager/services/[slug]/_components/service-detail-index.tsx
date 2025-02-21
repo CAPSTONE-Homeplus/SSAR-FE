@@ -19,7 +19,7 @@ type Props = {
 const ServiceDetailIndex = ({ slug, keyProps }: Props) => {
   return (
     <PageContainer>
-      <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4 p-4">
+      <div className="grid grid-cols-12 md:grid-cols-6 lg:grid-cols-12 gap-4 p-4">
         <Card className="p-4 col-span-12 md:col-span-12 lg:col-span-12">
           <Suspense fallback={<Skeleton className=" w-full h-full" />}>
             <ServiceDetailAsync slug={slug} />

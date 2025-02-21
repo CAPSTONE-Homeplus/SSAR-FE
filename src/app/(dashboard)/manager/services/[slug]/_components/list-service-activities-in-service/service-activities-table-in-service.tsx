@@ -17,7 +17,7 @@ const ServiceActivitiesDetailTableInService = async ({ slug }: Props) => {
   };
 
   const response = await getServiceActivitiesInService(slug, filters);
-  await new Promise((resolve) => setTimeout(resolve, 20000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const responsePayload = response.payload;
   return (

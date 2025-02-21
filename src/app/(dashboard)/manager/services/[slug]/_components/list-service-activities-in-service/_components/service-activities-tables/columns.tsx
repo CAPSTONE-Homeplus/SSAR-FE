@@ -112,11 +112,13 @@ export const ServiceActivitycolumns : ColumnDef<TServiceActivitiesInServiceRespo
     id: "actions",
     cell: ({ row }) => {
       const serviceActivityId = row.original.id;
+      const serviceId = row.original.serviceId;
       return (
-        <Link href={`/manager/services/${serviceActivityId}/service-activity/${serviceActivityId}`}>
+        <Link href={`/manager/services/${serviceId}/service-activity/${serviceActivityId}`}>
           <Edit />
         </Link>
       );
     },
   },
+
 ];

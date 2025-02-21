@@ -1,11 +1,11 @@
 "use client";
 
 import { DataTableSearch } from "@/components/table/data-table-search";
-import { useClusterTableFilters } from "./use-service-table-filters";
 // import { DataTableFilterBox } from "@/components/table/data-table-filter-box";
 import { DataTableResetFilter } from "@/components/table/data-table-reset-filter";
+import { useServiceSubActivityTableFilters } from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/_components/list-service-sub-activity/service-sub-activity-tables/use-service-sub-activity-table-filters";
 
-export default function ClusterTableAction() {
+export default function ServiceSubActivityTableAction() {
   const {
     // categoriesFilter,
     // setCategoriesFilter,
@@ -14,7 +14,7 @@ export default function ClusterTableAction() {
     searchQuery,
     setPage,
     setSearchQuery,
-  } = useClusterTableFilters();
+  } = useServiceSubActivityTableFilters();
   return (
     <div className="flex flex-wrap items-center gap-4">
       <DataTableSearch

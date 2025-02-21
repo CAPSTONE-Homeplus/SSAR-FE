@@ -14,4 +14,4 @@ const ServiceCategoryDetail = async (props: pageProps) => {
   return <ServiceCategoryDetailIndex slug={(await props.params).slug} keyProps={key} />;
 };
 
-export default ServiceCategoryDetail;
+export default ServiceCategoryDetail; 
