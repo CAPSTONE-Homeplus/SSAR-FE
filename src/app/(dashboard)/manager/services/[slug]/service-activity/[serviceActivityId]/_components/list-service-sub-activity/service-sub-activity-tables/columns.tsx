@@ -11,10 +11,10 @@ import {
 import { format } from "date-fns";
 import { Edit } from "lucide-react";
 import Link from "next/link";
-import { TServiceResponse } from "@/schema/service.schema";
 import { statusOptions } from "@/constants/config";
+import { TServiceSubActivitiesResponse } from "@/schema/service-sub-activity.schema";
 
-export const columns: ColumnDef<TServiceResponse>[] = [
+export const columns: ColumnDef<TServiceSubActivitiesResponse>[] = [
   {
     accessorKey: "name",
     header: "Tên dịch vụ",
@@ -41,15 +41,6 @@ export const columns: ColumnDef<TServiceResponse>[] = [
     ),
   },
   {
-    accessorKey: "serviceCode",
-    header: "Mã hệ thống",
-    cell: ({ row }) => (
-      <Badge variant="outline" className="text-sm font-mono px-2 py-1">
-        {row.getValue("serviceCode")}
-      </Badge>
-    ),
-  },
-  {
     accessorKey: "status",
     header: "Trạng thái",
     cell: ({ row }) => {
@@ -65,20 +56,6 @@ export const columns: ColumnDef<TServiceResponse>[] = [
         </Badge>
       );
     },
-  },
-  {
-    accessorKey: "price",
-    header: "Giá dịch vụ",
-    cell: ({ row }) => (
-      <span className="text-sm">{(row.getValue("price") as string).toLocaleString()} đ</span>
-    ),
-  },
-  {
-    accessorKey: "discount",
-    header: "Giảm giá (%)",
-    cell: ({ row }) => (
-      <span className="text-sm">{row.getValue("discount")} %</span>
-    ),
   },
   {
     accessorKey: "createdAt",
@@ -99,20 +76,21 @@ export const columns: ColumnDef<TServiceResponse>[] = [
     ),
   },
   {
-    accessorKey: "serviceCategoryId",
-    header: "Mã danh mục",
+    accessorKey: "serviceActivityId",
+    header: "Mã hoạt động dịch vụ",
     cell: ({ row }) => (
       <Badge variant="outline" className="text-sm font-mono px-2 py-1">
-        {row.getValue("serviceCategoryId")}
+        {row.getValue("serviceActivityId")}
       </Badge>
     ),
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const serviceId = row.original.id;
+      const serviceSubActivityId = row.original.id;
+      // const serviceActivityId = row.original.serviceActivityId;
       return (
-        <Link href={`/manager/service-category/${serviceId}/services`}>
+        <Link href={`${window.location.pathname}/service-sub-activity/${serviceSubActivityId}`}>
           <Edit />
         </Link>
       );

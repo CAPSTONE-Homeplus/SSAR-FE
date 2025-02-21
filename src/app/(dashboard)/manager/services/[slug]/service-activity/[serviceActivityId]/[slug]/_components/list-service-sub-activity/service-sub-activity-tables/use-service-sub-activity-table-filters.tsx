@@ -14,7 +14,7 @@ import { useCallback, useMemo } from "react";
 //   { value: "Jewelry", label: "Jewelry" },
 //   { value: "Beauty Clusters", label: "Beauty Clusters" },
 // ];
-export function useClusterTableFilters() {
+export function useServiceSubActivityTableFilters() {
   const [searchQuery, setSearchQuery] = useQueryState(
     "search",
     searchParams.search

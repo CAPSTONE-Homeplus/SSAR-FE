@@ -24,7 +24,7 @@ type Props = {
   initialData: TServiceActivityUpdateRequest;
 };
 
-export function FormUpdateServiceActivity({ initialData }: Props) {
+export function FormUpdateServiceSubActivity({ initialData }: Props) {
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm<TServiceActivityUpdateRequest>({

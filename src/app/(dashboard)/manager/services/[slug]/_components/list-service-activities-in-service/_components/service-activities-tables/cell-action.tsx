@@ -8,10 +8,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { TClusterResponse } from "@/schema/cluster.schema";
 import { TServiceActivityResponse } from "@/schema/service-activity.schema";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface CellActionProps {

@@ -1,12 +1,14 @@
 import { DataTable } from "@/components/table/data-table";
 
 import { searchParamsCache } from "@/lib/searchparams";
-import { columns } from "./service-tables/columns";
-import { getServicesInServiceCategory } from "@/apis/service-category";
+import { columns } from "./service-sub-activity-tables/columns";
+import { getServiceSubActivitiesInServiceActivities } from "@/apis/service-activity";
+
 type Props = {
   slug: string;
 };
-const ServiceTableInServiceCategory = async ({ slug }: Props) => {
+
+const ServiceSubActivityTable = async ({ slug }: Props) => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
@@ -16,7 +18,7 @@ const ServiceTableInServiceCategory = async ({ slug }: Props) => {
     ...(search && { search }),
   };
 
-  const response = await getServicesInServiceCategory(slug, filters);
+  const response = await getServiceSubActivitiesInServiceActivities(slug, filters);
   await new Promise((resolve) => setTimeout(resolve, 4000));
 
   const responsePayload = response.payload;
@@ -31,4 +33,4 @@ const ServiceTableInServiceCategory = async ({ slug }: Props) => {
   );
 };
 
-export default ServiceTableInServiceCategory;
+export default ServiceSubActivityTable;
