@@ -7,7 +7,7 @@ type Props = {
 };
 const ServiceActivityDetailAsync = async ({ slug }: Props) => {
   const response = await getServiceActivityById(slug);
-  console.log("🚀 ~ ServiceActivityDetailAsync ~ response:", slug)
+  // console.log("🚀 ~ ServiceActivityDetailAsync ~ response:", slug)
 
   return <FormUpdateServiceActivity initialData={response.payload} />;
 };

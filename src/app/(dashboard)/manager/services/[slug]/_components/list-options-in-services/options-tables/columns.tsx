@@ -111,9 +111,12 @@ export const OptionColumns : ColumnDef<TOptionsInServiceResponse>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const serviceId = row.original.id;
+      const optionId = row.original.id;
+      const serviceId = row.original.serviceId;
       return (
-        <Link href={`/manager/service/${serviceId}`}>
+        <Link
+          href={`/manager/services/${serviceId}/option/${optionId}`}
+        >
           <Edit />
         </Link>
       );

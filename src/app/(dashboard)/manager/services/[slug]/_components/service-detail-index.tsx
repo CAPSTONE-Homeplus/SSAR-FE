@@ -9,8 +9,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ServiceDetailAsync from "./update/service-detail-async";
 import ServiceActivitiesTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-service-activities-in-service/service-activities-table-in-service";
 import ExtraServiceTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-extra-service-in-services/extra-services-table-in-service";
-import OptionsTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-options-in-services/extra-services-table-in-service";
 import EquipmentSuppliesTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-equipment-supplies-in-services/extra-services-table-in-service";
+import OptionsTableInService from "@/app/(dashboard)/manager/services/[slug]/_components/list-options-in-services/options-table-in-service";
 
 type Props = {
   slug: string;
