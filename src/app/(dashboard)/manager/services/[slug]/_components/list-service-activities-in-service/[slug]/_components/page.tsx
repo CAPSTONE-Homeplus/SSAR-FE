@@ -6,7 +6,7 @@ type pageProps = {
   searchParams: Promise<SearchParams>;
   params: Promise<{ slug: string }>;
 };
-const ServiceActivityDetail = async (props: pageProps) => {
+const ServiceDetail = async (props: pageProps) => {
   const searchParams = await props.searchParams;
   searchParamsCache.parse(searchParams);
 
@@ -14,4 +14,4 @@ const ServiceActivityDetail = async (props: pageProps) => {
   return <ServiceDetailIndex slug={(await props.params).slug} keyProps={key} />;
 };
 
-export default ServiceActivityDetail; 
+export default ServiceDetail;

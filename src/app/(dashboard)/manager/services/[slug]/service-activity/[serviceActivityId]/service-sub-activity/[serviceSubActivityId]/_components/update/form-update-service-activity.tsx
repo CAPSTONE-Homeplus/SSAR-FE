@@ -14,27 +14,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { updateServiceActivity } from "@/apis/service-activity";
-import {
-  ServiceActivitySchema,
-  TServiceActivityUpdateRequest,
-} from "@/schema/service-activity.schema";
+import { SubServiceActivitySchema, TServiceSubActivityUpdateRequest } from "@/schema/service-sub-activity.schema";
+import { updateSubServiceActivity } from "@/apis/service-sub-activity";
 
 type Props = {
-  initialData: TServiceActivityUpdateRequest;
+  initialData: TServiceSubActivityUpdateRequest;
 };
 
 export function FormUpdateServiceSubActivity({ initialData }: Props) {
   const { toast } = useToast();
   const router = useRouter();
-  const form = useForm<TServiceActivityUpdateRequest>({
-    resolver: zodResolver(ServiceActivitySchema),
+  const form = useForm<TServiceSubActivityUpdateRequest>({
+    resolver: zodResolver(SubServiceActivitySchema),
     defaultValues: initialData,
   });
 
-  const onSubmit = async (data: TServiceActivityUpdateRequest) => {
+  const onSubmit = async (data: TServiceSubActivityUpdateRequest) => {
     try {
-      const response = await updateServiceActivity(initialData.id, data);
+      const response = await updateSubServiceActivity(initialData.id, data);
       if (response.status === 200) {
         toast({
           title: "Cập nhập thành công",
@@ -63,6 +60,21 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
+          {/* ID */}
+          <FormField
+            control={form.control}
+            name="id"
+            render={({ field }) => (
+              <FormItem>
+                <Label htmlFor="id">ID</Label>
+                <FormControl>
+                  <Input {...field} disabled />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           {/* Tên */}
           <FormField
             control={form.control}
@@ -150,72 +162,20 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
             )}
           />
 
-          {/* Mức độ ưu tiên */}
+          {/* ID Hoạt động dịch vụ */}
           <FormField
             control={form.control}
-            name="prorityLevel"
+            name="serviceActivityId"
             render={({ field }) => (
               <FormItem>
-                <Label htmlFor="prorityLevel">Mức Độ Ưu Tiên</Label>
-                <FormControl>
-                  <Input type="number" {...field} disabled={isSubmitting} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Thời gian ước tính */}
-          <FormField
-            control={form.control}
-            name="estimatedTimePerTask"
-            render={({ field }) => (
-              <FormItem>
-                <Label htmlFor="estimatedTimePerTask">Thời Gian Ước Tính</Label>
-                <FormControl>
-                  <Input
-                    placeholder="Nhập thời gian ước tính..."
-                    {...field}
-                    disabled={isSubmitting}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Biện pháp an toàn */}
-          <FormField
-            control={form.control}
-            name="safetyMeasures"
-            render={({ field }) => (
-              <FormItem>
-                <Label htmlFor="safetyMeasures">Biện Pháp An Toàn</Label>
-                <FormControl>
-                  <Input
-                    placeholder="Nhập biện pháp an toàn..."
-                    {...field}
-                    disabled={isSubmitting}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* <FormField
-            control={form.control}
-            name="serviceId"
-            render={({ field }) => (
-              <FormItem>
-                <Label htmlFor="serviceId">ID Dịch Vụ</Label>
+                <Label htmlFor="serviceActivityId">ID Hoạt Động Dịch Vụ</Label>
                 <FormControl>
                   <Input {...field} disabled />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
         </div>
 
         <Button type="submit" disabled={isSubmitting}>
