@@ -14,17 +14,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { updateServiceActivity } from "@/apis/service-activity";
 import {
   ServiceActivitySchema,
   TServiceActivityUpdateRequest,
 } from "@/schema/service-activity.schema";
+import { updateServiceActivity } from "@/apis/service-activity";
 
 type Props = {
   initialData: TServiceActivityUpdateRequest;
 };
 
-export function FormUpdateServiceActivityInService({ initialData }: Props) {
+export function FormUpdateServiceActivity({ initialData }: Props) {
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm<TServiceActivityUpdateRequest>({
@@ -63,6 +63,21 @@ export function FormUpdateServiceActivityInService({ initialData }: Props) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
+          {/* ID */}
+          <FormField
+            control={form.control}
+            name="id"
+            render={({ field }) => (
+              <FormItem>
+                <Label htmlFor="id">ID</Label>
+                <FormControl>
+                  <Input {...field} disabled />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           {/* Tên */}
           <FormField
             control={form.control}
@@ -156,7 +171,7 @@ export function FormUpdateServiceActivityInService({ initialData }: Props) {
             name="prorityLevel"
             render={({ field }) => (
               <FormItem>
-                <Label htmlFor="prorityLevel">Mức Độ Ưu Tiên</Label>
+                <Label htmlFor="prorityLevel">Mức độ ưu tiên</Label>
                 <FormControl>
                   <Input type="number" {...field} disabled={isSubmitting} />
                 </FormControl>
@@ -165,13 +180,13 @@ export function FormUpdateServiceActivityInService({ initialData }: Props) {
             )}
           />
 
-          {/* Thời gian ước tính */}
+          {/* Thời gian ước tính mỗi công việc */}
           <FormField
             control={form.control}
             name="estimatedTimePerTask"
             render={({ field }) => (
               <FormItem>
-                <Label htmlFor="estimatedTimePerTask">Thời Gian Ước Tính</Label>
+                <Label htmlFor="estimatedTimePerTask">Thời gian ước tính</Label>
                 <FormControl>
                   <Input
                     placeholder="Nhập thời gian ước tính..."
@@ -190,7 +205,7 @@ export function FormUpdateServiceActivityInService({ initialData }: Props) {
             name="safetyMeasures"
             render={({ field }) => (
               <FormItem>
-                <Label htmlFor="safetyMeasures">Biện Pháp An Toàn</Label>
+                <Label htmlFor="safetyMeasures">Biện pháp an toàn</Label>
                 <FormControl>
                   <Input
                     placeholder="Nhập biện pháp an toàn..."
@@ -203,7 +218,8 @@ export function FormUpdateServiceActivityInService({ initialData }: Props) {
             )}
           />
 
-          {/* <FormField
+          {/* ID Dịch vụ */}
+          <FormField
             control={form.control}
             name="serviceId"
             render={({ field }) => (
@@ -215,7 +231,7 @@ export function FormUpdateServiceActivityInService({ initialData }: Props) {
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
         </div>
 
         <Button type="submit" disabled={isSubmitting}>

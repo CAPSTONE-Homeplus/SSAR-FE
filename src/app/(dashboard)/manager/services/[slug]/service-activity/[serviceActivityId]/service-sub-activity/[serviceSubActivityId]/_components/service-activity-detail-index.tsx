@@ -2,8 +2,7 @@ import React, { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import PageContainer from "@/components/layout/page-container";
-import ServiceSubActivityDetailAsync from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/[slug]/_components/update/service-activity-detail-async";
-
+import ServiceSubActivityDetailAsync from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/service-sub-activity/[serviceSubActivityId]/_components/update/service-activity-detail-async";
 
 type Props = {
   slug: string;
@@ -25,8 +24,8 @@ const ServiceSubActivityDetailIndex = ({ slug }: Props) => {
 
           <div className="py-4">
             <Heading
-              title="Danh sách dịch vụ trong phân loại dịch vụ"
-              description="Danh sách dịch vụ trong phân loại dịch vụ"
+              title="Danh sách dịch vụ phụ"
+              description="Danh sách dịch vụ phụ trong các hoạt động của dịch vụ"
             />
           </div>
 
