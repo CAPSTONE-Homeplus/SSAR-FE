@@ -22,14 +22,12 @@ export const ExtraServiceSchema = BaseSchema.extend({
   serviceId: z.string().uuid(),
 });
 
-
-
 export const ExtraServiceCreateSchema = BaseSchema.extend({
-  name: z.string().max(255),
-  description: z.string().optional(),
-  price: z.number().positive(),
-  createdBy: z.string().max(50),
-  updatedBy: z.string().max(50),
+  name: z.string().min(1, "Tên không được để trống"),
+  price: z.coerce.number().min(0, "Giá không được nhỏ hơn 0"),
+  extraTime: z.coerce.number().min(0, "Thời gian không được nhỏ hơn 0"),
+  code: z.string().min(1, "Mã không được để trống"),
+  serviceId: z.string().uuid("serviceId phải là UUID hợp lệ"),
 });
 
 export type TExtraServiceRequest = z.infer<typeof ExtraServiceSchema>;

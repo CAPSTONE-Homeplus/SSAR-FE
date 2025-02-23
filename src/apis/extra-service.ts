@@ -10,12 +10,10 @@ export const getExtraServiceById = async (id: string) => {
   return response;
 };
 
-
-// export const createServiceCategory = async (data: Partial<TServiceCategoryResponse>) => {
-//   const response = await httpHomePlus.post<TServiceCategoryResponse>(`/service-categories`, data);
-// //   console.log("create Services Response:", response);
-//   return response;
-// };
+export const createExtraService = async (data: Partial<TExtraServiceResponse>) => {
+  const response = await httpHomePlus.post<TExtraServiceResponse>(`/extra-services`, data);
+  return response;
+};
 
 export const updateExtraService = async (id: string, data: TExtraServiceUpdateRequest) => {
   const response = await httpHomePlus.patch<TExtraServiceResponse>(

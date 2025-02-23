@@ -83,9 +83,12 @@ export const EquipmentSuppliesColumns : ColumnDef<TEquipmentSuppliesInServiceRes
   {
     id: "actions",
     cell: ({ row }) => {
-      const eqipmentSuppliesId = row.original.id;
+      const equipmentSupplyId = row.original.id;
+      const serviceId = row.original.serviceId;
       return (
-        <Link href={`/manager/services/${eqipmentSuppliesId}`}>
+        <Link
+          href={`/manager/services/${serviceId}/equipment-supply/${equipmentSupplyId}`}
+        >
           <Edit />
         </Link>
       );
