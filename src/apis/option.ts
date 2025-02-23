@@ -11,11 +11,11 @@ export const getOptionById = async (id: string) => {
 };
 
 
-// export const createServiceCategory = async (data: Partial<TServiceCategoryResponse>) => {
-//   const response = await httpHomePlus.post<TServiceCategoryResponse>(`/service-categories`, data);
-// //   console.log("create Services Response:", response);
-//   return response;
-// };
+export const createOption = async (data: Partial<TOptionResponse>) => {
+  const response = await httpHomePlus.post<TOptionResponse>(`/options`, data);
+  // console.log("create Services Response:", response);
+  return response;
+};
 
 export const updateOption = async (id: string, data: TOptionUpdateRequest) => {
   const response = await httpHomePlus.patch<TOptionResponse>(

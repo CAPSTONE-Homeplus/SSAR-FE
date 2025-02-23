@@ -42,7 +42,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Sidebar {...props} className="w-80">
+      <Sidebar {...props} className="w-auto">
         <SidebarHeader>
           <TeamSwitcher teams={data.teams} />
         </SidebarHeader>

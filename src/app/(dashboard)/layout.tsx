@@ -11,7 +11,7 @@ const DashboardLayout = ({
     <>
       <AppSidebar variant="floating" collapsible="icon" />
       <SidebarInset>
-        <HeaderMain className="sticky top-0 z-50 w-full" />
+        <HeaderMain className="sticky top-0 z-auto w-full" />
         {children}
       </SidebarInset>
     </>
