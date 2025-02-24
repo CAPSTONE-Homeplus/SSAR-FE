@@ -9,7 +9,7 @@ export const SubServiceActivitySchema = BaseSchema.extend({
   serviceActivityId: z.string().uuid(),
 });
 
-export const SubServiceActivityCreateSchema = BaseSchema.extend({
+export const ServiceSubActivityCreateSchema = BaseSchema.extend({
   name: z.string().max(255),
   code: z.string().max(50),
   serviceActivityId: z.string().uuid(),
@@ -18,5 +18,5 @@ export const SubServiceActivityCreateSchema = BaseSchema.extend({
 
 export type TServiceSubActivityRequest = z.infer<typeof SubServiceActivitySchema>;
 export type TServiceSubActivitiesResponse = z.infer<typeof SubServiceActivitySchema>;
-export type TServiceSubActivityCreateRequest = z.infer<typeof SubServiceActivityCreateSchema>;
+export type TServiceSubActivityCreateRequest = z.infer<typeof ServiceSubActivityCreateSchema>;
 export type TServiceSubActivityUpdateRequest = z.infer<typeof SubServiceActivitySchema>;

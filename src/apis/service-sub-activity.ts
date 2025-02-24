@@ -10,6 +10,12 @@ export const getServiceSubActivityById = async (id: string) => {
   return response;
 };
 
+export const createServiceSubActivity= async (data: Partial<TServiceSubActivitiesResponse>) => {
+  const response = await httpHomePlus.post<TServiceSubActivitiesResponse>(`/service-sub-activities`, data);
+  // console.log("create Services Response:", response);
+  return response;
+};
+
 export const updateSubServiceActivity = async (id: string, data: TServiceSubActivityUpdateRequest) => {
   const response = await httpHomePlus.patch<TServiceSubActivitiesResponse>(
     `/service-sub-activities/${id}`,

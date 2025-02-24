@@ -14,6 +14,7 @@ import OptionsTableInService from "@/app/(dashboard)/manager/services/[slug]/_co
 import { CredenzaCreateEquipmentSupply } from "@/app/(dashboard)/manager/services/[slug]/_components/list-equipment-supplies-in-services/credenza-create-equipment-supply";
 import { CredenzaCreateOption } from "@/app/(dashboard)/manager/services/[slug]/_components/list-options-in-services/credenza-create-option";
 import { CredenzaCreateExtraService } from "@/app/(dashboard)/manager/services/[slug]/_components/list-extra-service-in-services/credenza-create-extra-service";
+import { CredenzaCreateServiceActivity } from "@/app/(dashboard)/manager/services/[slug]/_components/list-service-activities-in-service/credenza-create-service-activity";
 
 type Props = {
   slug: string;
@@ -47,11 +48,16 @@ const ServiceDetailIndex = ({ slug, keyProps }: Props) => {
             </TabsList>
 
             <TabsContent value="activities">
-              <Card className="p-4">
-                <Heading
-                  title="Hoạt động dịch vụ"
-                  description="Danh sách các hoạt động dịch vụ"
-                />
+              <Card className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                  <Heading
+                    title="Hoạt động dịch vụ"
+                    description="Danh sách các hoạt động dịch vụ"
+                  />
+                  <div className="flex justify-end">
+                    <CredenzaCreateServiceActivity  />
+                  </div>
+                </div>
                 <Suspense
                   key={keyProps}
                   fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
@@ -59,7 +65,7 @@ const ServiceDetailIndex = ({ slug, keyProps }: Props) => {
                   <ServiceActivitiesTableInService slug={slug} />
                 </Suspense>
               </Card>
-            </TabsContent>  
+            </TabsContent>
 
             <TabsContent value="extra-services">
               <Card className="p-6 space-y-6">

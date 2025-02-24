@@ -8,6 +8,8 @@ import { Heading } from "@/components/ui/headling";
 import ServiceSubActivityTableAction from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/_components/list-service-sub-activity/service-sub-activity-tables/service-sub-activity-table-action";
 import ServiceSubActivityTable from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/_components/list-service-sub-activity/service-sub-activity-table";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { CredenzaCreateServiceSubActivity } from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/credenza-create-service-sub-activity";
 
 type Props = {
   slug: string;
@@ -19,7 +21,7 @@ const ServiceActivityDetailIndex = ({ slug, keyProps }: Props) => {
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-16 col-span-12">
           <Suspense fallback={<Skeleton className="" />}>
-          {/* <p>hi</p> */}
+            {/* <p>hi</p> */}
             <ServiceActivityDetailAsync slug={slug} />
           </Suspense>
         </Card>
@@ -28,19 +30,27 @@ const ServiceActivityDetailIndex = ({ slug, keyProps }: Props) => {
           <Separator />
           <ServiceSubActivityTableAction />
 
-          <div className="py-4">
-            <Heading
-              title="Danh sách dịch vụ phụ"
-              description="Danh sách dịch vụ phụ trong các hoạt động của dịch vụ"
-            />
-          </div>
-
-          <Suspense
-            key={keyProps}
-            fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
-          >
-            <ServiceSubActivityTable slug={slug} />
-          </Suspense>
+          <Tabs defaultValue="activities" className="w-full">
+            <TabsContent value="activities">
+              <Card className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                  <Heading
+                    title="Danh sách dịch vụ phụ"
+                    description="Danh sách dịch vụ phụ trong các hoạt động của dịch vụ"
+                  />
+                  <div className="flex justify-end">
+                    <CredenzaCreateServiceSubActivity />
+                  </div>
+                </div>
+                <Suspense
+                  key={keyProps}
+                  fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
+                >
+                  <ServiceSubActivityTable slug={slug} />
+                </Suspense>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </PageContainer>
