@@ -34,25 +34,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ExtraServiceCreateSchema, TExtraServiceCreateRequest } from "@/schema/extra-service.schema";
-import { createExtraService } from "@/apis/extra-service";
+import {
+  ServiceActivityCreateSchema,
+  TServiceActivityCreateRequest,
+} from "@/schema/service-activity.schema";
+import { createServiceActivity } from "@/apis/service-activity";
 
 type Props = {
   className?: string;
 };
 
-export function CredenzaCreateExtraService({ className }: Props) {
+export function CredenzaCreateServiceActivity({ className }: Props) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [services, setServices] = useState<{ id: string; name: string }[]>([]);
 
-  const form = useForm<TExtraServiceCreateRequest>({
-    resolver: zodResolver(ExtraServiceCreateSchema),
+  const form = useForm<TServiceActivityCreateRequest>({
+    resolver: zodResolver(ServiceActivityCreateSchema),
     defaultValues: {
       name: "",
-      price: 0,
-      extraTime: 0,
       code: "",
+      prorityLevel: 0,
+      estimatedTimePerTask: "",
+      safetyMeasures: "",
       serviceId: "",
     },
   });
@@ -72,11 +76,11 @@ export function CredenzaCreateExtraService({ className }: Props) {
     fetchAllServices();
   }, []);
 
-  const onSubmit = async (data: TExtraServiceCreateRequest) => {
-    console.log("Dữ liệu gửi đi:", data); // Kiểm tra dữ liệu trước khi gửi
+  const onSubmit = async (data: TServiceActivityCreateRequest) => {
+    console.log("Dữ liệu gửi đi:", data);
 
     try {
-      const response = await createExtraService(data);
+      const response = await createServiceActivity(data);
       if (response.status === 201) {
         toast({
           title: "Tạo thành công",
@@ -132,48 +136,6 @@ export function CredenzaCreateExtraService({ className }: Props) {
                 )}
               />
 
-              {/* Price */}
-              <FormField
-                control={form.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <Label htmlFor="price">Giá</Label>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Nhập giá..."
-                        {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Extra Time */}
-              <FormField
-                control={form.control}
-                name="extraTime"
-                render={({ field }) => (
-                  <FormItem>
-                    <Label htmlFor="extraTime">Thời Gian Thêm</Label>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Nhập thời gian thêm..."
-                        {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               {/* Code */}
               <FormField
                 control={form.control}
@@ -184,6 +146,68 @@ export function CredenzaCreateExtraService({ className }: Props) {
                     <FormControl>
                       <Input
                         placeholder="Nhập mã..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Priority Level */}
+              <FormField
+                control={form.control}
+                name="prorityLevel"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="priorityLevel">Mức độ ưu tiên</Label>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Nhập mức độ ưu tiên..."
+                        {...field}
+                        value={field.value ?? 0}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Estimated Time Per Task */}
+              <FormField
+                control={form.control}
+                name="estimatedTimePerTask"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="estimatedTimePerTask">
+                      Thời gian ước tính
+                    </Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập thời gian..."
+                        {...field}
+                        disabled={isSubmitting}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Safety Measures */}
+              <FormField
+                control={form.control}
+                name="safetyMeasures"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label htmlFor="safetyMeasures">Biện pháp an toàn</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Nhập biện pháp an toàn..."
                         {...field}
                         disabled={isSubmitting}
                       />

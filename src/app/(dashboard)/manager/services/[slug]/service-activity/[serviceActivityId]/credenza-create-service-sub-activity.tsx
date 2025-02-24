@@ -25,58 +25,47 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-
-import { getAllServices } from "@/apis/service";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { ExtraServiceCreateSchema, TExtraServiceCreateRequest } from "@/schema/extra-service.schema";
-import { createExtraService } from "@/apis/extra-service";
+  ServiceSubActivityCreateSchema,
+  TServiceSubActivityCreateRequest,
+} from "@/schema/service-sub-activity.schema";
+import { createServiceSubActivity } from "@/apis/service-sub-activity";
 
 type Props = {
   className?: string;
 };
 
-export function CredenzaCreateExtraService({ className }: Props) {
+export function CredenzaCreateServiceSubActivity({ className }: Props) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const [services, setServices] = useState<{ id: string; name: string }[]>([]);
+  const [selectedServiceActivityId, setSelectedServiceActivityId] = useState("");
 
-  const form = useForm<TExtraServiceCreateRequest>({
-    resolver: zodResolver(ExtraServiceCreateSchema),
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const parts = window.location.pathname.split("/");
+      const serviceActivityId = parts[parts.length - 1]; // Lấy giá trị cuối cùng từ URL
+      setSelectedServiceActivityId(serviceActivityId);
+      form.setValue("serviceActivityId", serviceActivityId);
+    }
+  }, []);
+
+  const form = useForm<TServiceSubActivityCreateRequest>({
+    resolver: zodResolver(ServiceSubActivityCreateSchema),
     defaultValues: {
       name: "",
-      price: 0,
-      extraTime: 0,
       code: "",
-      serviceId: "",
+      serviceActivityId: "",
     },
   });
 
   const { isSubmitting } = form.formState;
 
-  useEffect(() => {
-    const fetchAllServices = async () => {
-      try {
-        const response = await getAllServices();
-        setServices(response.payload.items);
-      } catch (error) {
-        console.error("Lỗi khi lấy danh mục dịch vụ:", error);
-      }
-    };
-
-    fetchAllServices();
-  }, []);
-
-  const onSubmit = async (data: TExtraServiceCreateRequest) => {
-    console.log("Dữ liệu gửi đi:", data); // Kiểm tra dữ liệu trước khi gửi
+  const onSubmit = async (data: TServiceSubActivityCreateRequest) => {
+    console.log("Dữ liệu gửi đi:", data);
 
     try {
-      const response = await createExtraService(data);
+      const response = await createServiceSubActivity(data);
       if (response.status === 201) {
         toast({
           title: "Tạo thành công",
@@ -132,48 +121,6 @@ export function CredenzaCreateExtraService({ className }: Props) {
                 )}
               />
 
-              {/* Price */}
-              <FormField
-                control={form.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <Label htmlFor="price">Giá</Label>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Nhập giá..."
-                        {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Extra Time */}
-              <FormField
-                control={form.control}
-                name="extraTime"
-                render={({ field }) => (
-                  <FormItem>
-                    <Label htmlFor="extraTime">Thời Gian Thêm</Label>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Nhập thời gian thêm..."
-                        {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        disabled={isSubmitting}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               {/* Code */}
               <FormField
                 control={form.control}
@@ -193,28 +140,15 @@ export function CredenzaCreateExtraService({ className }: Props) {
                 )}
               />
 
-              {/* Service ID */}
               <FormField
                 control={form.control}
-                name="serviceId"
-                render={({ field }) => (
+                name="serviceActivityId"
+                render={() => (
                   <FormItem>
-                    <Label htmlFor="serviceId">Dịch Vụ</Label>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Chọn dịch vụ" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {services.map((service) => (
-                          <SelectItem key={service.id} value={service.id}>
-                            {service.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                    <Label>ID Dịch Vụ</Label>
+                    <FormControl>
+                      <Input value={selectedServiceActivityId} disabled />
+                    </FormControl>
                   </FormItem>
                 )}
               />
