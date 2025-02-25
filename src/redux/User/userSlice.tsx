@@ -1,13 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { isClient } from "@/lib/http";
-
-type TUser = {
-  role: string | null;
-  accessToken: string | null;
-};
-
+import { TAuthResponse } from "@/schema/auth.schema";
 interface UserState {
-  user: TUser | null;
+  user: TAuthResponse | null;
   isAuthenticated: boolean;
 }
 

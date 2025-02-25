@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function LoginForm({
   className,
@@ -18,7 +18,12 @@ export function LoginForm({
       <div className="grid gap-6">
         <div className="grid gap-2">
           <Label htmlFor="username">Username</Label>
-          <Input id="username" type="text" placeholder="Please write your correct username" required />
+          <Input
+            id="username"
+            type="text"
+            placeholder="Please write your correct username"
+            required
+          />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
@@ -57,5 +62,5 @@ export function LoginForm({
         </a>
       </div>
     </form>
-  )
+  );
 }

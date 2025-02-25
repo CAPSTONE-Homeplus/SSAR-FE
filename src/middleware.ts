@@ -26,20 +26,16 @@ export function middleware(request: NextRequest) {
   }
 
   // Role-based path checks
-  if (user?.role === "admin") {
+  if (user?.role === "Admin") {
     if (!pathname.startsWith("/admin")) {
       return NextResponse.redirect(new URL("/logout", request.url));
     }
-  } else if (user?.role === "manager") {
+  } else if (user?.role === "Manager") {
     if (!pathname.startsWith("/manager")) {
       return NextResponse.redirect(new URL("/logout", request.url));
     }
-  } else if (user?.role === "store") {
+  } else if (user?.role === "Store") {
     if (!pathname.startsWith("/store")) {
-      return NextResponse.redirect(new URL("/logout", request.url));
-    }
-  } else if (user?.role === "staff") {
-    if (!pathname.startsWith("/staff")) {
       return NextResponse.redirect(new URL("/logout", request.url));
     }
   } else {
