@@ -2,8 +2,8 @@ import z from "zod";
 
 export const LoginSchema = z
   .object({
-    username: z.string().min(2, {
-      message: "Tài khoản hoặc Email sai",
+    phoneNumber: z.string().regex(/^(\+84|0)[0-9]{9,10}$/, {
+      message: "Số điện thoại không hợp lệ.",
     }),
     password: z.string().min(1, {
       message: "Mật khẩu không được trống.",
@@ -15,10 +15,10 @@ export const AuthResponseSchema = z.object({
   refreshToken: z
     .string()
     .min(1, { message: "Refresh token không được trống." }),
-  userId: z.string().uuid(),
+  userId: z.string().min(1, { message: "User ID không được trống." }),
   fullName: z.string().min(1, { message: "Họ và tên không được trống." }),
-  status: z.string().min(1, { message: "Trạng thái không được trống." }),
-  role: z.string().min(1, { message: "Vai trò không được trống." }),
+  status: z.enum(["Active", "InActive", "Banned"]).default("Active"),
+  role: z.enum(["Manager", "Admin"]).default("Manager"),
 });
 export type TLoginRequest = z.TypeOf<typeof LoginSchema>;
 export type TAuthResponse = z.TypeOf<typeof AuthResponseSchema>;

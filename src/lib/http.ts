@@ -12,7 +12,7 @@ interface CustomOptions
   params?: Record<string, string>;
 }
 
-interface HttpResponse<T> {
+export interface HttpResponse<T> {
   status: number;
   payload: T;
 }

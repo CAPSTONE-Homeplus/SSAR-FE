@@ -35,6 +35,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   totalItems: number;
+  onRowClick?: (row: TData) => void;
   pageSizeOptions?: number[];
 }
 
@@ -42,6 +43,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   totalItems,
+  onRowClick,
   pageSizeOptions = [5, 10, 20, 30, 40, 50],
 }: DataTableProps<TData, TValue>) {
   const [currentPage, setCurrentPage] = useQueryState(
@@ -116,6 +118,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onRowClick && onRowClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

@@ -17,7 +17,7 @@ import {
 import {
   adminNavItems,
   managerNavItems,
-  staffNavItems,
+  // staffNavItems,
   data,
 } from "@/constants/sidebar/route";
 import { RootState } from "@/redux/store";
@@ -29,12 +29,10 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   // Dữ liệu sidebar theo role.
   const getNavItemsByRole = () => {
     switch (user?.role) {
-      case "admin":
+      case "Admin":
         return adminNavItems;
-      case "manager":
+      case "Manager":
         return managerNavItems;
-      case "staff":
-        return staffNavItems;
       default:
         return [];
     }
