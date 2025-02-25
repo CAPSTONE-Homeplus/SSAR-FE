@@ -4,6 +4,7 @@ import UserAuthForm from "./user-auth-form";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/mode-toggle";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -23,10 +24,22 @@ export default function SignInViewPage() {
         Login
       </Link>
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
-        <div className="absolute inset-0 bg-zinc-900" />
-        <div className="relative z-20 flex items-center text-lg font-medium">
+        <Image
+          src="/image/login_img.webp"
+          alt="Background"
+          className="absolute inset-0 h-full w-full object-cover backdrop-blur-0 dark:backdrop-blur-xl"
+          width={1920} // Bạn có thể đặt kích thước phù hợp
+          height={1080}
+        />
+        <div className="relative z-20 flex items-center text-lg font-medium text-red-400">
+          <Image
+            src="/image/homeplus-logo.svg"  
+            alt="Home Plus Logo"
+            width={80}
+            height={80}
+
+          />
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -37,19 +50,20 @@ export default function SignInViewPage() {
           >
             <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
           </svg>
-          Logo
+          HOMEPLUS - SERVICE FOR ALL YOUR NEEDS
         </div>
         <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-lg">
+          <blockquote className="space-y-2 text-xl font-bold">
+            <p className="text-chart-1 text-amber-600 dark:text-white text-2xl">
               &ldquo;This library has saved me countless hours of work and
               helped me deliver stunning designs to my clients faster than ever
               before.&rdquo;
             </p>
-            <footer className="text-sm">Sofia Davis</footer>
+            {/* <footer className="text-lg font-extrabold text-blue-500">Home Plus</footer> */}
           </blockquote>
         </div>
       </div>
+
       <ModeToggle className="absolute top-4 right-4 z-50" />
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -62,10 +76,10 @@ export default function SignInViewPage() {
             </p>
           </div>
           <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-          <span className="relative z-10 bg-background px-2 text-muted-foreground">
-            Continue with form
-          </span>
-        </div>
+            <span className="relative z-10 bg-background px-2 text-muted-foreground">
+              Continue with form
+            </span>
+          </div>
           <UserAuthForm />
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{" "}

@@ -1,23 +1,23 @@
 export const items = [
     {
-      title: "Thiết Kế Túi",
-      img: "https://product.hstatic.net/200000060906/product/photo1711114221_ec365197a59748fcb9d2a7f96b11a74d_master.jpeg",
+      title: "Tại sao chọn HomePlus?",
+      img: "/image/aboutus_1.webp",
       description:
-        "Chúng tôi mang đến dịch vụ thiết kế túi độc đáo và cá nhân hóa theo đúng sở thích của bạn. Với bất kỳ dòng túi nào, bạn đều có thể thoải mái thể hiện phong cách riêng qua những sản phẩm chất lượng, bền đẹp mà chúng tôi cung cấp",
+        "HomePlus cung cấp dịch vụ dọn dẹp chuyên nghiệp với đội ngũ nhân viên tận tâm, được đào tạo bài bản. Chúng tôi cam kết mang đến không gian sạch sẽ, thơm mát và thoải mái nhất cho gia đình bạn.",
       link: "/design",
     },
     {
-      title: "Sản Phẩm",
-      img: "/images/2.webp",
+      title: "Gói dịch vụ linh hoạt – Đáp ứng mọi nhu cầu",
+      img: "/image/aboutus_2.webp",
       description:
-        "Tìm hiểu các dòng sản phẩm túi xanh của KalBan, được thiết kế để bảo vệ môi trường và đáp ứng nhu cầu hàng ngày của bạn.",
+        "Cho dù bạn cần dọn dẹp nhà định kỳ, vệ sinh tổng thể hay chăm sóc nội thất, HomePlus đều có các gói dịch vụ phù hợp. Đặt lịch nhanh chóng chỉ với vài cú click chuột!",
       link: "/products",
     },
     {
-      title: "Contact Us",
-      img: "/images/3.webp",
+      title: "Khách hàng nói gì về HomePlus?",
+      img: "/image/aboutus_3.webp",
       description:
-        "Nếu bạn có bất kỳ thắc mắc nào về sản phẩm, dịch vụ, hoặc cần hỗ trợ thêm thông tin, hãy liên hệ chúng tôi. Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn.",
+        "Hàng nghìn khách hàng đã tin tưởng và hài lòng với dịch vụ của chúng tôi. Hãy xem những đánh giá chân thực từ khách hàng để hiểu vì sao HomePlus là lựa chọn hàng đầu cho ngôi nhà của bạn!",
       link: "/about",
     },
   ];

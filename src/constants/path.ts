@@ -1,4 +1,4 @@
-import cluster from "cluster";
+// import cluster from "cluster";
 
 export const RootPath = {
   admin: "/admin",
@@ -24,10 +24,11 @@ export const PATHS = {
     settings: `${RootPath.admin}/settings`,
   },
   manager: {
-    serviceCategory: `${RootPath.manager}/service-category`,
-    service: `${RootPath.manager}/service`,
-    serviceActivity: `${RootPath.manager}/service-activity`,
-    serviceSubActivity: `${RootPath.manager}/service-sub-activity`,
+    serviceCategories: `${RootPath.manager}/service-categories`,
+    services: `${RootPath.manager}/services`,
+    serviceActivities: `${RootPath.manager}/service-activities`,
+    serviceSubActivities: `${RootPath.manager}/service-sub-activities`,
+    timeSlots: `${RootPath.manager}/time-slots`,
     revenue: `${RootPath.manager}/revenue`,
   },
   staff: {

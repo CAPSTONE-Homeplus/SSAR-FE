@@ -14,7 +14,7 @@ const DesignIntroduction = () => {
   const sectionStyle = isDesktop
     ? {}
     : {
-        backgroundImage: "url('/images/bag-1.jpg')",
+        backgroundImage: "url('/image/resident_home.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       };
@@ -54,9 +54,9 @@ const DesignIntroduction = () => {
       </div>
       <div className="flex-shrink-0 mt-8 md:mt-0 hidden md:block">
         <Image
-          src="/images/bag-1.jpg"
+          src="/image/resident_home.jpg"
           alt="bag-1"
-          width={400}
+          width={300}
           height={400}
           className="object-contain"
         />
