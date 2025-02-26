@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React from "react";
@@ -99,7 +100,7 @@ const UserAuthForm = () => {
         router.push(
           response.payload.role === "Admin"
             ? "/admin/overview"
-            : "/manager/revenue"
+            : "/manager/services"
         );
       }
     } catch (error) {
