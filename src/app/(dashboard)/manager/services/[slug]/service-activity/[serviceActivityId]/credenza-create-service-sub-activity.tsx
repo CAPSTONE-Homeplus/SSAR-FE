@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 "use client";
@@ -30,6 +31,8 @@ import {
   TServiceSubActivityCreateRequest,
 } from "@/schema/service-sub-activity.schema";
 import { createServiceSubActivity } from "@/apis/service-sub-activity";
+import { getServiceActivityById } from "@/apis/service-activity";
+import { useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -38,15 +41,15 @@ type Props = {
 export function CredenzaCreateServiceSubActivity({ className }: Props) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const [selectedServiceActivityName, setSelectedServiceActivityName] = useState("");
   const [selectedServiceActivityId, setSelectedServiceActivityId] = useState("");
-
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const parts = window.location.pathname.split("/");
-      const serviceActivityId = parts[parts.length - 1]; // Lấy giá trị cuối cùng từ URL
+      const serviceActivityId = parts[parts.length - 1]; // Lấy giá trị cuối từ URL
       setSelectedServiceActivityId(serviceActivityId);
-      form.setValue("serviceActivityId", serviceActivityId);
     }
   }, []);
 
@@ -59,10 +62,32 @@ export function CredenzaCreateServiceSubActivity({ className }: Props) {
     },
   });
 
+  useEffect(() => {
+    if (selectedServiceActivityId) {
+      form.setValue("serviceActivityId", selectedServiceActivityId);
+    }
+  }, [selectedServiceActivityId]);
+
+  useEffect(() => {
+    const fetchServiceActivity = async () => {
+      if (!selectedServiceActivityId) return;
+
+      try {
+        const response = await getServiceActivityById(selectedServiceActivityId);
+        if (response?.payload) {
+          setSelectedServiceActivityName(response.payload.name);
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy thông tin công việc chính:", error);
+      }
+    };
+
+    fetchServiceActivity();
+  }, [selectedServiceActivityId]);
+
   const { isSubmitting } = form.formState;
 
   const onSubmit = async (data: TServiceSubActivityCreateRequest) => {
-    console.log("Dữ liệu gửi đi:", data);
 
     try {
       const response = await createServiceSubActivity(data);
@@ -73,6 +98,7 @@ export function CredenzaCreateServiceSubActivity({ className }: Props) {
         });
         form.reset();
         setIsOpen(false);
+        router.refresh();
       } else {
         toast({
           title: "Lỗi",
@@ -140,14 +166,15 @@ export function CredenzaCreateServiceSubActivity({ className }: Props) {
                 )}
               />
 
+              {/* Service Activity ID */}
               <FormField
                 control={form.control}
                 name="serviceActivityId"
                 render={() => (
                   <FormItem>
-                    <Label>ID Dịch Vụ</Label>
+                    <Label>Công Việc Chính</Label>
                     <FormControl>
-                      <Input value={selectedServiceActivityId} disabled />
+                      <Input value={selectedServiceActivityName} disabled />
                     </FormControl>
                   </FormItem>
                 )}

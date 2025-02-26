@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +19,7 @@ import {
   TServiceActivityUpdateRequest,
 } from "@/schema/service-activity.schema";
 import { updateServiceActivity } from "@/apis/service-activity";
+import { getAllServices } from "@/apis/service";
 
 type Props = {
   initialData: TServiceActivityUpdateRequest;
@@ -27,10 +28,37 @@ type Props = {
 export function FormUpdateServiceActivity({ initialData }: Props) {
   const { toast } = useToast();
   const router = useRouter();
+  const [serviceName, setServiceName] = React.useState<string | null>(null);
+
   const form = useForm<TServiceActivityUpdateRequest>({
     resolver: zodResolver(ServiceActivitySchema),
     defaultValues: initialData,
   });
+
+  useEffect(() => {
+    const fetchServiceName = async () => {
+      try {
+        const response = await getAllServices();
+        if (response?.payload?.items) {
+          const service = response.payload.items.find(
+            (s) => s.id === initialData.serviceId
+          );
+          if (service) {
+            setServiceName(service.name);
+          } else {
+            setServiceName("Không tìm thấy dịch vụ");
+          }
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách dịch vụ:", error);
+        setServiceName("Lỗi tải dịch vụ");
+      }
+    };
+
+    if (initialData.serviceId) {
+      fetchServiceName();
+    }
+  }, [initialData.serviceId]);
 
   const onSubmit = async (data: TServiceActivityUpdateRequest) => {
     try {
@@ -40,6 +68,8 @@ export function FormUpdateServiceActivity({ initialData }: Props) {
           title: "Cập nhập thành công",
           description: "Đã cập nhật thành công.",
         });
+        router.refresh(); 
+
       } else {
         toast({
           title: "Lỗi",
@@ -63,22 +93,6 @@ export function FormUpdateServiceActivity({ initialData }: Props) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
-          {/* ID */}
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormItem>
-                <Label htmlFor="id">ID</Label>
-                <FormControl>
-                  <Input {...field} disabled />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Tên */}
           <FormField
             control={form.control}
             name="name"
@@ -218,15 +232,15 @@ export function FormUpdateServiceActivity({ initialData }: Props) {
             )}
           />
 
-          {/* ID Dịch vụ */}
           <FormField
             control={form.control}
             name="serviceId"
-            render={({ field }) => (
+            render={(
+            ) => (
               <FormItem>
-                <Label htmlFor="serviceId">ID Dịch Vụ</Label>
+                <Label htmlFor="serviceId">Dịch Vụ</Label>
                 <FormControl>
-                  <Input {...field} disabled />
+                  <Input value={serviceName || "Đang tải..."} disabled />
                 </FormControl>
                 <FormMessage />
               </FormItem>

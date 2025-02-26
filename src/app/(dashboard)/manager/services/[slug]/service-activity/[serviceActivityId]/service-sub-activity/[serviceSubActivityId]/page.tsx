@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchParams } from "nuqs";
 import { searchParamsCache, serialize } from "@/lib/searchparams";
-import ServiceSubActivityDetailIndex from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/service-sub-activity/[serviceSubActivityId]/_components/service-activity-detail-index";
+import ServiceSubActivityDetailIndex from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/service-sub-activity/[serviceSubActivityId]/_components/service-sub-activity-detail-index";
 type pageProps = {
   searchParams: Promise<SearchParams>;
   params: Promise<{ serviceSubActivityId: string }>;

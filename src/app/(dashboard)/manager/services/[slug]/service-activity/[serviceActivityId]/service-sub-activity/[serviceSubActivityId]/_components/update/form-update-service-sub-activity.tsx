@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,12 +17,15 @@ import {
 import { useRouter } from "next/navigation";
 import { SubServiceActivitySchema, TServiceSubActivityUpdateRequest } from "@/schema/service-sub-activity.schema";
 import { updateSubServiceActivity } from "@/apis/service-sub-activity";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getServiceActivityById } from "@/apis/service-activity";
 
 type Props = {
   initialData: TServiceSubActivityUpdateRequest;
+  onClose: () => void;
 };
 
-export function FormUpdateServiceSubActivity({ initialData }: Props) {
+export function FormUpdateServiceSubActivity({ initialData, onClose }: Props) {
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm<TServiceSubActivityUpdateRequest>({
@@ -29,53 +33,49 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
     defaultValues: initialData,
   });
 
+  const [serviceActivityName, setServiceActivityName] = useState("Đang tải...");
+  const [serviceActivities, setServiceActivities] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    const fetchServiceActivity = async () => {
+      try {
+        const response = await getServiceActivityById(initialData.serviceActivityId);
+        if (response?.payload) {
+          setServiceActivityName(response.payload.name || "Không tìm thấy hoạt động dịch vụ");
+          setServiceActivities([response.payload]); // Lưu lại danh sách nếu cần
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy hoạt động dịch vụ:", error);
+        setServiceActivityName("Lỗi tải hoạt động dịch vụ");
+      }
+    };
+
+    if (initialData.serviceActivityId) {
+      fetchServiceActivity();
+    }
+  }, [initialData.serviceActivityId]);
+
   const onSubmit = async (data: TServiceSubActivityUpdateRequest) => {
     try {
       const response = await updateSubServiceActivity(initialData.id, data);
       if (response.status === 200) {
-        toast({
-          title: "Cập nhập thành công",
-          description: "Đã cập nhật thành công.",
-        });
+        toast({ title: "Cập nhật thành công", description: "Đã cập nhật thành công." });
+        onClose();        
       } else {
-        toast({
-          title: "Lỗi",
-          description: "Không thể cập nhật",
-          variant: "destructive",
-        });
+        toast({ title: "Lỗi", description: "Không thể cập nhật", variant: "destructive" });
       }
       router.refresh();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast({
-        title: "Lỗi",
-        description: `Có lỗi xảy ra khi cập nhật ${error.message}`,
-        variant: "destructive",
-      });
+      toast({ title: "Lỗi", description: `Có lỗi xảy ra khi cập nhật ${error.message}`, variant: "destructive" });
     }
   };
+  
   const { isSubmitting } = form.formState;
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-4 py-0 px-4 md:px-0 md:py-4">
-          {/* ID */}
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormItem>
-                <Label htmlFor="id">ID</Label>
-                <FormControl>
-                  <Input {...field} disabled />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Tên */}
           <FormField
             control={form.control}
             name="name"
@@ -83,11 +83,7 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
               <FormItem>
                 <Label htmlFor="name">Tên</Label>
                 <FormControl>
-                  <Input
-                    placeholder="Nhập tên..."
-                    {...field}
-                    disabled={isSubmitting}
-                  />
+                  <Input placeholder="Nhập tên..." {...field} disabled={isSubmitting} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,11 +98,7 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
               <FormItem>
                 <Label htmlFor="code">Mã Code</Label>
                 <FormControl>
-                  <Input
-                    placeholder="Nhập mã code..."
-                    {...field}
-                    disabled={isSubmitting}
-                  />
+                  <Input placeholder="Nhập mã code..." {...field} disabled={isSubmitting} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,11 +113,7 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
               <FormItem>
                 <Label htmlFor="status">Trạng Thái</Label>
                 <FormControl>
-                  <Input
-                    placeholder="Nhập trạng thái..."
-                    {...field}
-                    disabled={isSubmitting}
-                  />
+                  <Input placeholder="Nhập trạng thái..." {...field} disabled={isSubmitting} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -162,15 +150,26 @@ export function FormUpdateServiceSubActivity({ initialData }: Props) {
             )}
           />
 
-          {/* ID Hoạt động dịch vụ */}
+          {/* Hoạt động dịch vụ (Select thay vì Input) */}
           <FormField
             control={form.control}
             name="serviceActivityId"
             render={({ field }) => (
               <FormItem>
-                <Label htmlFor="serviceActivityId">ID Hoạt Động Dịch Vụ</Label>
+                <Label htmlFor="serviceActivityId">Hoạt Động Dịch Vụ</Label>
                 <FormControl>
-                  <Input {...field} disabled />
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder={serviceActivityName} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {serviceActivities.map((activity) => (
+                        <SelectItem key={activity.id} value={activity.id}>
+                          {activity.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

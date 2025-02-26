@@ -9,10 +9,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { format } from "date-fns";
-import { Edit } from "lucide-react";
-import Link from "next/link";
+
 import { statusOptions } from "@/constants/config";
 import { TServiceSubActivitiesResponse } from "@/schema/service-sub-activity.schema";
+import UpdateServiceSubActivityPopup from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/_components/list-service-sub-activity/service-sub-activity-tables/UpdateServiceSubActivityPopup ";
 
 export const columns: ColumnDef<TServiceSubActivitiesResponse>[] = [
   {
@@ -75,25 +75,17 @@ export const columns: ColumnDef<TServiceSubActivitiesResponse>[] = [
       </span>
     ),
   },
-  {
-    accessorKey: "serviceActivityId",
-    header: "Mã hoạt động dịch vụ",
-    cell: ({ row }) => (
-      <Badge variant="outline" className="text-sm font-mono px-2 py-1">
-        {row.getValue("serviceActivityId")}
-      </Badge>
-    ),
-  },
+  // {
+  //   accessorKey: "serviceActivityId",
+  //   header: "Mã hoạt động dịch vụ",
+  //   cell: ({ row }) => (
+  //     <Badge variant="outline" className="text-sm font-mono px-2 py-1">
+  //       {row.getValue("serviceActivityId")}
+  //     </Badge>
+  //   ),
+  // },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const serviceSubActivityId = row.original.id;
-      // const serviceActivityId = row.original.serviceActivityId;
-      return (
-        <Link href={`${window.location.pathname}/service-sub-activity/${serviceSubActivityId}`}>
-          <Edit />
-        </Link>
-      );
-    },
+    cell: ({ row }) => <UpdateServiceSubActivityPopup data={row.original} />,
   },
 ];
