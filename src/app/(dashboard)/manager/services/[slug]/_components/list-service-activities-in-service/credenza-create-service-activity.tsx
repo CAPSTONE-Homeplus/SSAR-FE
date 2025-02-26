@@ -28,17 +28,11 @@ import {
 
 import { getAllServices } from "@/apis/service";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   ServiceActivityCreateSchema,
   TServiceActivityCreateRequest,
 } from "@/schema/service-activity.schema";
 import { createServiceActivity } from "@/apis/service-activity";
+import { useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -47,7 +41,18 @@ type Props = {
 export function CredenzaCreateServiceActivity({ className }: Props) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const [services, setServices] = useState<{ id: string; name: string }[]>([]);
+  const [selectedServiceName, setSelectedServiceName] = useState("");
+  const [selectedServiceId, setSelectedServiceId] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const parts = window.location.pathname.split("/");
+      const serviceId = parts[parts.length - 1]; // Lấy giá trị cuối cùng từ URL
+      setSelectedServiceId(serviceId);
+      form.setValue("serviceId", serviceId);
+    }
+  }, []);
 
   const form = useForm<TServiceActivityCreateRequest>({
     resolver: zodResolver(ServiceActivityCreateSchema),
@@ -67,14 +72,21 @@ export function CredenzaCreateServiceActivity({ className }: Props) {
     const fetchAllServices = async () => {
       try {
         const response = await getAllServices();
-        setServices(response.payload.items);
+        const service = response.payload.items.find(
+          (s) => s.id === selectedServiceId
+        );
+        if (service) {
+          setSelectedServiceName(service.name);
+        }
       } catch (error) {
-        console.error("Lỗi khi lấy danh mục dịch vụ:", error);
+        console.error("Lỗi khi lấy danh sách dịch vụ:", error);
       }
     };
 
-    fetchAllServices();
-  }, []);
+    if (selectedServiceId) {
+      fetchAllServices();
+    }
+  }, [selectedServiceId]);
 
   const onSubmit = async (data: TServiceActivityCreateRequest) => {
     console.log("Dữ liệu gửi đi:", data);
@@ -88,6 +100,7 @@ export function CredenzaCreateServiceActivity({ className }: Props) {
         });
         form.reset();
         setIsOpen(false);
+        router.refresh(); // Refresh lại trang để cập nhật dữ liệu mới
       } else {
         toast({
           title: "Lỗi",
@@ -217,28 +230,15 @@ export function CredenzaCreateServiceActivity({ className }: Props) {
                 )}
               />
 
-              {/* Service ID */}
               <FormField
                 control={form.control}
                 name="serviceId"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
-                    <Label htmlFor="serviceId">Dịch Vụ</Label>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Chọn dịch vụ" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {services.map((service) => (
-                          <SelectItem key={service.id} value={service.id}>
-                            {service.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                    <Label>Tên Dịch Vụ</Label>
+                    <FormControl>
+                      <Input value={selectedServiceName} disabled />
+                    </FormControl>
                   </FormItem>
                 )}
               />

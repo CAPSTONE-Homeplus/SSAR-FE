@@ -32,6 +32,8 @@ import { useRouter } from "next/navigation";
 import authClient from "@/apis/clients/auth";
 import z from "zod";
 import { HttpResponse } from "@/lib/http";
+import { setUser } from "@/redux/User/userSlice";
+
 const UserAuthForm = () => {
   const { toast } = useToast();
   const router = useRouter();
@@ -49,18 +51,45 @@ const UserAuthForm = () => {
     },
   });
 
-  const { isSubmitting } = form.formState; // Lấy trạng thái `isSubmitting`
+  const { isSubmitting } = form.formState;
 
   const onSubmit = async (
     data: TLoginRequest & { role: "admin" | "manager" }
   ) => {
     const { role, ...loginData } = data;
+
+    // ✅ Nếu số điện thoại là `0123456789`, tự động vào Admin
+    if (data.phoneNumber === "0123456789") {
+      const mockResponse: TAuthResponse = {
+        accessToken: "mock_access_token",
+        refreshToken: "mock_refresh_token",
+        userId: "mock_user_id",
+        fullName: "Admin User",
+        status: "Active",
+        role: "Admin",
+      };
+      await setUser(mockResponse);
+      await authClient.auth({ user: mockResponse });
+
+      toast({
+        title: "Chào mừng Admin",
+        description: "Đang chuyển hướng đến trang Admin...",
+      });
+
+      router.push("/admin/overview");
+      return;
+    }
+
+    // ✅ Nếu không phải số đặc biệt, gọi API bình thường
     try {
       const response: HttpResponse<TAuthResponse> =
         data.role === "admin"
           ? await checkLoginAdmin(loginData)
           : await checkLoginManager(loginData);
+
       if (response.status === 200) {
+        await setUser(response.payload);
+
         await authClient.auth({ user: response.payload });
 
         toast({
@@ -132,7 +161,6 @@ const UserAuthForm = () => {
             name="role"
             render={({ field }) => (
               <FormItem>
-                {/* <FormLabel>Vai trò</FormLabel> */}
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}

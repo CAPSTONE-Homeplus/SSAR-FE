@@ -39,6 +39,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 type Props = {
   className?: string;
@@ -48,6 +49,18 @@ export function CredenzaCreateEquipmentSupply({ className }: Props) {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [services, setServices] = useState<{ id: string; name: string }[]>([]);
+  const [selectedServiceName, setSelectedServiceName] = useState("");
+  const [selectedServiceId, setSelectedServiceId] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const parts = window.location.pathname.split("/");
+      const serviceId = parts[parts.length - 1]; // Lấy giá trị cuối cùng từ URL
+      setSelectedServiceId(serviceId);
+      form.setValue("serviceId", serviceId);
+    }
+  }, []);
 
   const form = useForm<TEquipmentSupplyCreateRequest>({
     resolver: zodResolver(EquipmentSupplyCreateSchema),
@@ -80,14 +93,21 @@ export function CredenzaCreateEquipmentSupply({ className }: Props) {
     const fetchAllServices = async () => {
       try {
         const response = await getAllServices();
-        setServices(response.payload.items);
+        const service = response.payload.items.find(
+          (s) => s.id === selectedServiceId
+        );
+        if (service) {
+          setSelectedServiceName(service.name);
+        }
       } catch (error) {
-        console.error("Lỗi khi lấy danh mục dịch vụ:", error);
+        console.error("Lỗi khi lấy danh sách dịch vụ:", error);
       }
     };
 
-    fetchAllServices();
-  }, []);
+    if (selectedServiceId) {
+      fetchAllServices();
+    }
+  }, [selectedServiceId]);
 
   const onSubmit = async (data: TEquipmentSupplyCreateRequest) => {
     try {
@@ -99,6 +119,7 @@ export function CredenzaCreateEquipmentSupply({ className }: Props) {
         });
         form.reset();
         setIsOpen(false);
+        router.refresh();
       } else {
         toast({
           title: "Lỗi",
@@ -213,30 +234,12 @@ export function CredenzaCreateEquipmentSupply({ className }: Props) {
               <FormField
                 control={form.control}
                 name="serviceId"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
-                    <Label htmlFor="serviceCategoryId">Danh Mục Dịch Vụ</Label>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Chọn danh mục dịch vụ" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {services.length > 0 ? (
-                          services.map((service) => (
-                            <SelectItem key={service.id} value={service.id}>
-                              {service.name}
-                            </SelectItem>
-                          ))
-                        ) : (
-                          <div className="p-2 text-gray-500">
-                            Không có danh mục dịch vụ
-                          </div>
-                        )}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                    <Label>Tên Dịch Vụ</Label>
+                    <FormControl>
+                      <Input value={selectedServiceName} disabled />
+                    </FormControl>
                   </FormItem>
                 )}
               />
