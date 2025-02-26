@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React from "react";
@@ -171,19 +172,23 @@ export function CredenzaCreateEquipmentSupply({ className }: Props) {
                 name="base64Image"
                 render={({ field }) => (
                   <FormItem>
-                    <Label htmlFor="base64Image">URL Ảnh Thiết Bị</Label>
+                    <Label htmlFor="base64Image">Ảnh Thiết Bị</Label>
                     <FormControl>
                       <Input
-                        placeholder="Nhập URL ảnh..."
+                        type="file"
+                        accept="image/*"
                         disabled={isSubmitting}
                         onChange={async (e) => {
-                          const url = e.target.value;
-                          if (url) {
+                          const file = e.target.files?.[0];
+                          if (file) {
                             try {
-                              const base64Image = await convertImageToBase64(
-                                url
-                              );
-                              field.onChange(base64Image);
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                field.onChange(
+                                  reader.result?.toString().split(",")[1]
+                                ); // Lấy phần base64
+                              };
+                              reader.readAsDataURL(file);
                             } catch (error) {
                               console.error("Lỗi khi chuyển đổi ảnh:", error);
                             }
