@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import PageContainer from "@/components/layout/page-container";
-import ServiceSubActivityDetailAsync from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/service-sub-activity/[serviceSubActivityId]/_components/update/service-activity-detail-async";
+import ServiceSubActivityDetailAsync from "@/app/(dashboard)/manager/services/[slug]/service-activity/[serviceActivityId]/service-sub-activity/[serviceSubActivityId]/_components/update/service-sub-activity-detail-async";
 
 type Props = {
   slug: string;
