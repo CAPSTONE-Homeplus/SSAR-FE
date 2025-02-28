@@ -4,7 +4,7 @@ import {
   SidebarMenuSkeleton,
 } from "./ui/sidebar";
 
-const NavProjectsSkeleton = () => {
+const SidebarSkeleton = () => {
   return (
     <SidebarMenu>
       {Array.from({ length: 5 }).map((_, index) => (
@@ -16,4 +16,4 @@ const NavProjectsSkeleton = () => {
   );
 };
 
-export default NavProjectsSkeleton;
+export default SidebarSkeleton;

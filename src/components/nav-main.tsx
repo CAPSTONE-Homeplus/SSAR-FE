@@ -46,21 +46,33 @@ export function NavMain({
             item.icon && Icons[item.icon as keyof typeof Icons]
               ? Icons[item.icon as keyof typeof Icons]
               : Icons.logo;
-          const isActive =
-            activeCondition(item.url) ||
-            (item.items?.some((subItem) => activeCondition(subItem.url)) ??
-              false);
+
+          // ✅ Kiểm tra nếu một trong các mục con đang active
+          const isChildActive = item.items?.some((subItem) =>
+            activeCondition(subItem.url)
+          );
+
+          // ✅ Mục cha chỉ active nếu chính nó được chọn
+          const isActive = activeCondition(item.url);
 
           return item?.items && item?.items?.length > 0 ? (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={isActive}
+              defaultOpen={isChildActive}
               className="group/collapsible"
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title} isActive={isActive}>
+                  <SidebarMenuButton
+                    tooltip={item.title}
+                    isActive={isActive} // ✅ Không active mục cha nếu mục con active
+                    className={`${
+                      isChildActive && !isActive
+                        ? "bg-[hsl(var(--sidebar-accent-blur))]/80 backdrop-blur-lg dark:bg-sidebar-accent"
+                        : ""
+                    }`}
+                  >
                     {item.icon && <Icon />}
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -73,6 +85,7 @@ export function NavMain({
                         <SidebarMenuSubButton
                           asChild
                           isActive={activeCondition(subItem.url)}
+                          size="md"
                         >
                           <Link href={subItem.url}>
                             {subItem.icon && <Icon />}
@@ -90,7 +103,7 @@ export function NavMain({
               <SidebarMenuButton
                 asChild
                 tooltip={item.title}
-                isActive={activeCondition(item.url)}
+                isActive={isActive}
               >
                 <Link href={item.url}>
                   <Icon />

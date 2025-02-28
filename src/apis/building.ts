@@ -41,7 +41,6 @@ export const createBuilding = async (data: Partial<TBuildingResponse>) => {
     `/buildings`,
     data
   );
-  console.log("createBuilding Response:", response);
   return response;
 };
 
