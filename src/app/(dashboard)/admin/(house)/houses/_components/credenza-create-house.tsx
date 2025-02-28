@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
 import { SelectBuildingAsync } from "./select-building-async";
 import { SelectHouseTypeAsync } from "./select-house-type-async";
+import { handleErrorApi } from "@/lib/utils";
 
 type Props = {
   className?: string;
@@ -72,18 +73,10 @@ export function CredenzaCreateHouse({ className }: Props) {
         form.reset();
         setIsOpen(false);
         router.refresh();
-      } else {
-        toast({
-          title: "Lỗi",
-          description: "Không thể tạo nhà",
-          variant: "destructive",
-        });
       }
     } catch (error: any) {
-      toast({
-        title: "Lỗi",
-        description: `Có lỗi xảy ra khi tạo nhà: ${error.message}`,
-        variant: "destructive",
+      handleErrorApi({
+        error,
       });
     }
   };

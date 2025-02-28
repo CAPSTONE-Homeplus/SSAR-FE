@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { redirect } from "next/navigation";
 import NextFetchRequestConfig from "next/types";
 import envConfig from "@/schema/config";
@@ -98,7 +100,11 @@ const createHttpClient = (defaultBaseUrl: string) => {
         } else if (response.status === 422) {
           throw new EntityError(data.errors);
         } else {
-          throw new HttpError(response.status, data);
+          if (response.status !== 500) {
+            throw new Error(JSON.stringify(data));
+          } else {
+            throw new HttpError(response.status, data);
+          }
         }
       }
 
