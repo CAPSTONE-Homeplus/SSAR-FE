@@ -28,14 +28,14 @@ export default function SignInViewPage() {
           src="/image/login_img.webp"
           alt="Background"
           className="absolute inset-0 h-full w-full object-cover backdrop-blur-0 dark:backdrop-blur-xl"
-          width={1920} // Bạn có thể đặt kích thước phù hợp
-          height={1080}
+          width={2000} // Bạn có thể đặt kích thước phù hợp
+          height={2080}
         />
         <div className="relative z-20 flex items-center text-lg font-medium text-red-400">
           <Image
             src="/image/homeplus-logo.svg"  
             alt="Home Plus Logo"
-            width={80}
+            width={250}
             height={80}
 
           />
@@ -53,14 +53,7 @@ export default function SignInViewPage() {
           HOMEPLUS - SERVICE FOR ALL YOUR NEEDS
         </div>
         <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2 text-xl font-bold">
-            <p className="text-chart-1 text-amber-600 dark:text-white text-2xl">
-              &ldquo;This library has saved me countless hours of work and
-              helped me deliver stunning designs to my clients faster than ever
-              before.&rdquo;
-            </p>
-            {/* <footer className="text-lg font-extrabold text-blue-500">Home Plus</footer> */}
-          </blockquote>
+          
         </div>
       </div>
 
