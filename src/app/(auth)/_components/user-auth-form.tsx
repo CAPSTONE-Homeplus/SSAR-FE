@@ -33,11 +33,12 @@ import authClient from "@/apis/clients/auth";
 import z from "zod";
 import { HttpResponse } from "@/lib/http";
 import { setUser } from "@/redux/User/userSlice";
+import { useDispatch } from "react-redux";
 
 const UserAuthForm = () => {
   const { toast } = useToast();
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const form = useForm<TLoginRequest & { role: "admin" | "manager" }>({
     resolver: zodResolver(
       LoginSchema.extend({
@@ -58,39 +59,36 @@ const UserAuthForm = () => {
   ) => {
     const { role, ...loginData } = data;
 
-    // ✅ Nếu số điện thoại là `0123456789`, tự động vào Admin
-    if (data.phoneNumber === "0123456789") {
-      const mockResponse: TAuthResponse = {
-        accessToken: "mock_access_token",
-        refreshToken: "mock_refresh_token",
-        userId: "mock_user_id",
-        fullName: "Admin User",
-        status: "Active",
-        role: "Admin",
-      };
-      await setUser(mockResponse);
-      await authClient.auth({ user: mockResponse });
-
-      toast({
-        title: "Chào mừng Admin",
-        description: "Đang chuyển hướng đến trang Admin...",
-      });
-
-      router.push("/admin/overview");
-      return;
-    }
-
-    // ✅ Nếu không phải số đặc biệt, gọi API bình thường
     try {
-      const response: HttpResponse<TAuthResponse> =
-        data.role === "admin"
-          ? await checkLoginAdmin(loginData)
-          : await checkLoginManager(loginData);
+      let response: HttpResponse<TAuthResponse>;
+
+      if (data.phoneNumber === "0123456789") {
+        // ✅ User mock
+        response = {
+          status: 200,
+          payload: {
+            accessToken: "mock_access_token",
+            refreshToken: "mock_refresh_token",
+            userId: "mock_user_id",
+            fullName: "Admin User",
+            status: "Active",
+            role: "Admin",
+          },
+        };
+      } else {
+        // ✅ Gọi API đăng nhập thật
+        response =
+          data.role === "admin"
+            ? await checkLoginAdmin(loginData)
+            : await checkLoginManager(loginData);
+      }
 
       if (response.status === 200) {
-        await setUser(response.payload);
+        await authClient.auth(response.payload);
+        const userData = response.payload;
 
-        await authClient.auth({ user: response.payload });
+        // ✅ Cập nhật Redux ngay lập tức
+        dispatch(setUser(userData));
 
         toast({
           title: "Chào mừng bạn trở lại",
@@ -98,9 +96,7 @@ const UserAuthForm = () => {
         });
 
         router.push(
-          response.payload.role === "Admin"
-            ? "/admin/overview"
-            : "/manager/services"
+          userData.role === "Admin" ? "/admin/overview" : "/manager/services"
         );
       }
     } catch (error) {

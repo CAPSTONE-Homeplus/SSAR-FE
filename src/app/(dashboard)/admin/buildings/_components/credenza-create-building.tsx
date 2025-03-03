@@ -31,6 +31,7 @@ import {
 import { createBuilding } from "@/apis/building";
 import { useRouter } from "next/navigation";
 import { SelectClusterAsync } from "./select-cluster-async";
+import { handleErrorApi } from "@/lib/utils";
 
 type Props = {
   className?: string;
@@ -64,18 +65,10 @@ export function CredenzaCreateBuilding({ className }: Props) {
         form.reset();
         setIsOpen(false);
         router.refresh();
-      } else {
-        toast({
-          title: "Lỗi",
-          description: "Không thể tạo Tòa nhà",
-          variant: "destructive",
-        });
       }
     } catch (error: any) {
-      toast({
-        title: "Lỗi",
-        description: `Có lỗi xảy ra khi tạo Tòa nhà: ${error.message}`,
-        variant: "destructive",
+      handleErrorApi({
+        error,
       });
     }
   };

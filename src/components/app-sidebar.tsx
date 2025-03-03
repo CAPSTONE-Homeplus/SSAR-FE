@@ -18,54 +18,44 @@ import {
   managerNavItems,
   data,
 } from "@/constants/sidebar/route";
-import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton UI
+import SidebarSkeleton from "./sidebar-sekeleton";
+import { TNavItem } from "@/types/SideBar";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const user = useSelector((state: RootState) => state.user.user);
+  const [navItems, setNavItems] = useState<TNavItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 🔹 Khi Redux cập nhật `user`, tắt trạng thái loading
   useEffect(() => {
-    if (user !== null) {
+    if (user) {
+      switch (user.role) {
+        case "Admin":
+          setNavItems(adminNavItems);
+          break;
+        case "Manager":
+          setNavItems(managerNavItems);
+          break;
+        default:
+          setNavItems([]);
+      }
       setIsLoading(false);
     }
   }, [user]);
 
-  // ✅ Hiển thị Skeleton nếu đang loading
-  if (isLoading) {
-    return (
-      <div className="w-64 h-screen p-4">
-        <Skeleton className="h-10 w-full mb-4" />
-        <Skeleton className="h-6 w-3/4 mb-2" />
-        <Skeleton className="h-6 w-1/2 mb-2" />
-        <Skeleton className="h-6 w-2/3 mb-2" />
-        <Skeleton className="h-10 w-full mt-4" />
-      </div>
-    );
+  if (isLoading || !user) {
+    return <SidebarSkeleton />;
   }
 
-  // ✅ Chọn navigation items theo role
-  const getNavItemsByRole = () => {
-    switch (user?.role) {
-      case "Admin":
-        return adminNavItems;
-      case "Manager":
-        return managerNavItems;
-      default:
-        return [];
-    }
-  };
-
   return (
-    <Sidebar {...props} className="w-auto">
+    <Sidebar {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={getNavItemsByRole()} />
+        <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

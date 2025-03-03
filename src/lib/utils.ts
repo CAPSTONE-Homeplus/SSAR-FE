@@ -2,10 +2,27 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import { format } from "date-fns";
+import { toast } from "@/hooks/use-toast";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const handleErrorApi = ({
+  error,
+  duration,
+}: {
+  error: Error;
+  duration?: number;
+}) => {
+  const parseError = JSON.parse(error.message);
+  toast({
+    title: "Uh oh! Có lỗi xảy ra rồi",
+    description: parseError.description ?? "Lỗi không xác định",
+    variant: "destructive",
+    duration: duration ?? 5000,
+  });
+};
 
 /**
  * Xóa đi ký tự `/` đầu tiên của path
