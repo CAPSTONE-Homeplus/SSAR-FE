@@ -8,7 +8,7 @@ export const ServiceSchema = BaseSchema.extend({
   description: z.string().optional(),
   status: z.string().max(20, { message: "Trạng thái không được quá 20 ký tự" }),
   prorityLevel: z.number().int({ message: "Mức độ ưu tiên phải là số nguyên" }),
-  price: z.number().min(0, { message: "Giá không được nhỏ hơn 0" }),
+  price: z.coerce.number().min(0, { message: "Giá không được nhỏ hơn 0" }),
   discount: z.number()
     .min(0, { message: "Giảm giá không được nhỏ hơn 0%" })
     .max(100, { message: "Giảm giá không được lớn hơn 100%" }),

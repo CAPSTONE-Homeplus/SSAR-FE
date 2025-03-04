@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { TServiceCategoryResponse } from "@/schema/service-category.schema";
+import { CheckCircle, XCircle } from "lucide-react";
 
 export const columns: ColumnDef<TServiceCategoryResponse>[] = [
   {
@@ -21,7 +22,19 @@ export const columns: ColumnDef<TServiceCategoryResponse>[] = [
   {
     accessorKey: "status",
     header: "Trạng Thái",
-    cell: ({ row }) => <div>{row.getValue("status")}</div>,
+    cell: ({ row }) => {
+      const status = row.getValue<string>("status"); // Ép kiểu tránh lỗi unknown
+      return (
+        <div className="flex items-center gap-2">
+          {status === "Active" ? (
+            <CheckCircle className="text-green-500" size={20} />
+          ) : (
+            <XCircle className="text-red-500" size={20} />
+          )}
+          <span>{status === "Active" ? "Hoạt động" : "Không hoạt động"}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "createAt",

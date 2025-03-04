@@ -14,13 +14,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import {
   LoginSchema,
@@ -39,28 +32,22 @@ const UserAuthForm = () => {
   const { toast } = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
-  const form = useForm<TLoginRequest & { role: "admin" | "manager" }>({
-    resolver: zodResolver(
-      LoginSchema.extend({
-        role: z.string().min(1, { message: "Vui lòng chọn vai trò." }),
-      })
-    ),
+  const form = useForm<TLoginRequest>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       phoneNumber: "",
       password: "",
-      role: "manager",
     },
   });
 
   const { isSubmitting } = form.formState;
 
-  const onSubmit = async (
-    data: TLoginRequest & { role: "admin" | "manager" }
-  ) => {
-    const { role, ...loginData } = data;
-
+  const onSubmit = async (data: TLoginRequest) => {
     try {
       let response: HttpResponse<TAuthResponse>;
+
+      // Xác định role dựa trên số điện thoại
+      const role = data.phoneNumber.startsWith("0123") ? "admin" : "manager";
 
       if (data.phoneNumber === "0123456789") {
         // ✅ User mock
@@ -78,9 +65,9 @@ const UserAuthForm = () => {
       } else {
         // ✅ Gọi API đăng nhập thật
         response =
-          data.role === "admin"
-            ? await checkLoginAdmin(loginData)
-            : await checkLoginManager(loginData);
+          role === "admin"
+            ? await checkLoginAdmin(data)
+            : await checkLoginManager(data);
       }
 
       if (response.status === 200) {
@@ -150,38 +137,10 @@ const UserAuthForm = () => {
           )}
         />
 
-        <div className="flex gap-2">
-          {/* Role Select */}
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  disabled={isSubmitting}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Chọn vai trò" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="manager">Manager</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Submit Button */}
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
-          </Button>
-        </div>
+        {/* Submit Button */}
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
+        </Button>
       </form>
     </Form>
   );

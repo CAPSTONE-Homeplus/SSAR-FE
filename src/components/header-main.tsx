@@ -1,9 +1,9 @@
 import React from "react";
-
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/mode-toggle";
-// import { DynamicBreadcrumb } from "./dynamic-breadcumbs";
+import NotificationBell from "./NotificationBell"; // Import component NotificationBell
+
 interface HeaderMainProps {
   className?: string;
 }
@@ -20,7 +20,10 @@ const HeaderMain = ({ className }: HeaderMainProps) => {
         <Separator orientation="vertical" className="mr-2 h-4" />
         {/* <DynamicBreadcrumb className="flex items-center gap-2" /> */}
       </div>
-      <ModeToggle className="ml-auto" />
+      <div className="flex items-center gap-4 ml-auto">
+        <NotificationBell /> {/* Thêm chuông thông báo */}
+        <ModeToggle />
+      </div>
     </header>
   );
 };
