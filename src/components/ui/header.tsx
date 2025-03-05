@@ -26,10 +26,16 @@ export default function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
-            <Link href="/" prefetch={false}>
-              <Icon className="h-10 w-90 dark:filter dark:invert" />
+            <Link
+              id="home"
+              href="/homeplus"
+              className="mr-6 hidden lg:flex"
+              prefetch={false}
+            >
+              <Icon className="h-30 w-20 dark:filter dark:invert" />
               <span className="sr-only">ShadCN</span>
             </Link>
+
             <div className="grid gap-2 py-6">
               {headerPaths.map((path, index) => (
                 <Link
@@ -45,7 +51,11 @@ export default function Header() {
           </SheetContent>
         </Sheet>
 
-        <Link href="/homeplus " className="mr-6 hidden lg:flex" prefetch={false}>
+        <Link
+          href="/homeplus "
+          className="mr-6 hidden lg:flex"
+          prefetch={false}
+        >
           <Icon className="h-30 w-20 dark:filter dark:invert" />
           <span className="sr-only">ShadCN</span>
         </Link>
@@ -68,10 +78,13 @@ export default function Header() {
           </NavigationMenu>
         </div>
 
-        {/* Login/Join Buttons */}
-        <div className="ml-auto flex gap-2">
-          <ModeToggle />
-          <UserHeader />
+        <div className="flex gap-4">
+          <div id="dark-mode">
+            <ModeToggle />
+          </div>
+          <div id="avatar">
+            <UserHeader />
+          </div>
         </div>
       </header>
     </div>
@@ -103,16 +116,16 @@ function Icon(props: any) {
   return (
     <div className="flex items-center">
       {/* <Link href={item.link}> */}
-        <Image
-          priority
-          src="/image/homeplus-logo.svg"
-          height={0}
-          width={0}
-          alt="HomePlus-logo"
-          {...props}
-          // href=""
-        />
-        <p className="text-lg font-semibold lig">HOMEPLUS</p>
+      <Image
+        priority
+        src="/image/homeplus-logo.svg"
+        height={0}
+        width={0}
+        alt="HomePlus-logo"
+        {...props}
+        // href=""
+      />
+      <p className="text-lg font-semibold lig">HOMEPLUS</p>
       {/* </Link> */}
     </div>
   );

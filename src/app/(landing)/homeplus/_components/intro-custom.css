@@ -1,0 +1,54 @@
+/* intro-custom.css */
+.introjs-tooltip {
+    background-color: #1e293b !important; /* Màu nền xanh đậm */
+    color: #f1f5f9 !important; /* Màu chữ sáng */
+    border-radius: 10px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .introjs-tooltip-title {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #facc15 !important; /* Màu vàng */
+  }
+  
+  .introjs-tooltiptext {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  
+  .introjs-button {
+    background-color: #3b82f6 !important; /* Màu xanh dương */
+    color: white !important;
+    border-radius: 5px !important;
+    padding: 6px 12px !important;
+  }
+  
+  .introjs-button:hover {
+    background-color: #2563eb !important;
+  }
+  
+  .introjs-prevbutton {
+    background-color: #ef4444 !important; /* Màu đỏ */
+  }
+  
+  .introjs-prevbutton:hover {
+    background-color: #dc2626 !important;
+  }
+  
+  .introjs-skipbutton {
+    background-color: #4b5563 !important; /* Màu xám */
+  }
+  
+  .introjs-bullets ul {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .introjs-bullets li {
+    background-color: #facc15 !important; /* Chấm tròn màu vàng */
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+  }
+  
