@@ -14,9 +14,8 @@ export async function POST(request: Request) {
       }
     );
   }
-  // Tính toán thời gian hết hạn cho cookie (3 tháng)
-  const threeMonthsInMs = 3 * 30 * 24 * 60 * 60 * 1000; // 3 tháng tính bằng milliseconds
-  const expiresDate = new Date(Date.now() + threeMonthsInMs).toUTCString(); // Thời gian hết hạn của cookie
+  const threeMonthsInMs = 3 * 30 * 24 * 60 * 60 * 1000; 
+  const expiresDate = new Date(Date.now() + threeMonthsInMs).toUTCString(); 
   const setCookieHeader = [
     `accessToken=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Secure; Expires=${expiresDate}`,
     `user=${user}; Path=/; SameSite=Lax; Secure; Expires=${expiresDate}`,

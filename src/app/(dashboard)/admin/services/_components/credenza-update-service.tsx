@@ -17,10 +17,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  ServiceUpdateSchema,
-  TServiceUpdateRequest,
-} from "@/schema/service.schema"; // Use correct schema for update service
-import {
   Form,
   FormControl,
   FormField,
@@ -28,19 +24,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ServiceSchema, TUpdateServiceRequest } from "@/schema/service.schema";
 type Props = {
   className?: string;
-  initialData: TServiceUpdateRequest; // Data passed to update form
+  initialData: TUpdateServiceRequest; // Data passed to update form
 };
 
 export function CredenzaUpdateService({ className, initialData }: Props) {
   const { toast } = useToast();
-  const form = useForm<TServiceUpdateRequest>({
-    resolver: zodResolver(ServiceUpdateSchema),
+  const form = useForm<TUpdateServiceRequest>({
+    resolver: zodResolver(ServiceSchema),
     defaultValues: initialData, // Setting mock data as the default form values
   });
 
-  const onSubmit = async (data: TServiceUpdateRequest) => {
+  const onSubmit = async (data: TUpdateServiceRequest) => {
     console.log("Updated data: ", data); // Log the updated data
     toast({
       title: "Cập nhật dịch vụ thành công",
@@ -272,7 +269,11 @@ export function CredenzaUpdateService({ className, initialData }: Props) {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Checkbox {...field} />
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            ref={field.ref}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -292,7 +293,11 @@ export function CredenzaUpdateService({ className, initialData }: Props) {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Checkbox {...field} />
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            ref={field.ref}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

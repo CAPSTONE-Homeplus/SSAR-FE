@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import { useHouses } from "@/hooks/use-houses";
@@ -14,21 +16,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function SelectHouseAsync({
   value,
   onChange,
-  props,
+  disabled,
 }: {
   value?: string;
   onChange: (v: string) => void;
-  props: any;
+  disabled?: boolean;
 }) {
+
   const { data, isLoading } = useHouses();
 
   return (
-    <Select
-      value={value}
-      onValueChange={onChange}
-      disabled={isLoading}
-      {...props}
-    >
+    <Select value={value} onValueChange={onChange} disabled={disabled || isLoading}>
       <SelectTrigger>
         <SelectValue placeholder="Chọn căn hộ" />
       </SelectTrigger>

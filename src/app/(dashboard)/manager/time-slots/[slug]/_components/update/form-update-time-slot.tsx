@@ -21,7 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { statusOptions } from "@/constants/config";
 import {
   TimesSlotSchema,
   TTimesSlotUpdateRequest,
@@ -96,7 +95,7 @@ export function FormUpdateTimeSlot({ initialData }: Props) {
                 <FormControl>
                   <Input
                     type="time"
-                    value={field.value || ""} // Đảm bảo luôn có giá trị hợp lệ
+                    value={field.value ? String(field.value) : ""} // Chuyển giá trị thành chuỗi nếu có
                     onChange={(e) => field.onChange(e.target.value)}
                     disabled={isSubmitting}
                   />
@@ -115,7 +114,7 @@ export function FormUpdateTimeSlot({ initialData }: Props) {
                 <FormControl>
                   <Input
                     type="time"
-                    value={field.value || ""} // Đảm bảo luôn có giá trị hợp lệ
+                    value={field.value ? String(field.value) : ""}
                     onChange={(e) => field.onChange(e.target.value)}
                     disabled={isSubmitting}
                   />

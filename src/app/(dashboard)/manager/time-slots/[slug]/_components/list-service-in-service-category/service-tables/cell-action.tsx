@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { AlertModal } from "@/components/modal/alert-modal";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,7 @@ interface CellActionProps {
   data: TClusterResponse;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+export const CellAction: React.FC<CellActionProps> = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   // const router = useRouter();

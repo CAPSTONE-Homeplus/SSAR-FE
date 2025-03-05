@@ -74,6 +74,7 @@ export function CredenzaCreateHouse({ className }: Props) {
         setIsOpen(false);
         router.refresh();
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       handleErrorApi({
         error,

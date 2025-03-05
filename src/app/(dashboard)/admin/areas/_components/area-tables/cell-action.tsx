@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { AlertModal } from "@/components/modal/alert-modal";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,6 @@ import { TAreaResponse } from "@/schema/area.schema";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CredenzaUpdateArea } from "../credenza-update-area";
 
 interface CellActionProps {
   data: TAreaResponse;

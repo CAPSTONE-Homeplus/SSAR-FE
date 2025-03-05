@@ -22,21 +22,21 @@ import {
   CredenzaFooter,
   CredenzaClose,
 } from "@/components/ui/credenza";
-import { SubServiceActivityUpdateSchema, TSubServiceActivityUpdateRequest } from "@/schema/service-sub-activity.schema";
+import { SubServiceActivitySchema, TServiceSubActivityUpdateRequest } from "@/schema/service-sub-activity.schema";
 
 
 type Props = {
-  subServiceActivityData: TSubServiceActivityUpdateRequest; // Data passed to update form
+  subServiceActivityData: TServiceSubActivityUpdateRequest; // Data passed to update form
 };
 
 export function UpdateServiceSubActivity({ subServiceActivityData }: Props) {
   const { toast } = useToast();
-  const form = useForm<TSubServiceActivityUpdateRequest>({
-    resolver: zodResolver(SubServiceActivityUpdateSchema),
+  const form = useForm<TServiceSubActivityUpdateRequest>({
+    resolver: zodResolver(SubServiceActivitySchema),
     defaultValues: subServiceActivityData,
   });
 
-  const onSubmit = async (data: TSubServiceActivityUpdateRequest) => {
+  const onSubmit = async (data: TServiceSubActivityUpdateRequest) => {
     console.log("Sub Service Activity Updated: ", data);
     toast({
       title: "Cập nhật hoạt động phụ thành công",
