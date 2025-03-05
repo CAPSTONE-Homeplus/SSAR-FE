@@ -243,7 +243,7 @@ export function ChatMessageListDemo() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 flex flex-col items-end gap-2">
+    <div id="chat-box" className="fixed bottom-5 right-5 flex flex-col items-end gap-2">
       {showWelcome && (
         <div
           className="absolute -top-6 left-[-170px] bg-gradient-to-r from-purple-500 to-pink-500 
