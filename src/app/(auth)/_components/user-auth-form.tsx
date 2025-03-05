@@ -20,10 +20,13 @@ import {
   TAuthResponse,
   TLoginRequest,
 } from "@/schema/auth.schema";
-import { checkLoginManager, checkLoginAdmin } from "@/apis/authencation";
+import {
+  checkLoginManager,
+  checkLoginAdmin,
+  checkLoginStaff,
+} from "@/apis/authencation";
 import { useRouter } from "next/navigation";
 import authClient from "@/apis/clients/auth";
-import z from "zod";
 import { HttpResponse } from "@/lib/http";
 import { setUser } from "@/redux/User/userSlice";
 import { useDispatch } from "react-redux";
@@ -32,6 +35,7 @@ const UserAuthForm = () => {
   const { toast } = useToast();
   const router = useRouter();
   const dispatch = useDispatch();
+
   const form = useForm<TLoginRequest>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -43,14 +47,12 @@ const UserAuthForm = () => {
   const { isSubmitting } = form.formState;
 
   const onSubmit = async (data: TLoginRequest) => {
+    const isAdmin = data.phoneNumber === "0123456789" && data.password === "0123456789";
     try {
       let response: HttpResponse<TAuthResponse>;
 
-      // Xác định role dựa trên số điện thoại
-      const role = data.phoneNumber.startsWith("0123") ? "admin" : "manager";
-
-      if (data.phoneNumber === "0123456789") {
-        // ✅ User mock
+      if (isAdmin) {
+        // ✅ Fake login cho admin
         response = {
           status: 200,
           payload: {
@@ -62,19 +64,29 @@ const UserAuthForm = () => {
             role: "Admin",
           },
         };
-      } else {
-        // ✅ Gọi API đăng nhập thật
-        response =
-          role === "admin"
-            ? await checkLoginAdmin(data)
-            : await checkLoginManager(data);
+      }else {
+        const responses = await Promise.allSettled([
+          checkLoginAdmin(data),
+          checkLoginManager(data),
+          checkLoginStaff(data),
+        ]);
+      
+        const successResponse = responses.find(
+          (res): res is PromiseFulfilledResult<HttpResponse<TAuthResponse>> =>
+            res.status === "fulfilled" && res.value.status === 200
+        );        
+      
+        if (successResponse) {
+          response = successResponse.value;
+        } else {
+          throw new Error("Tất cả các API đều thất bại.");
+        }
       }
 
       if (response.status === 200) {
         await authClient.auth(response.payload);
         const userData = response.payload;
 
-        // ✅ Cập nhật Redux ngay lập tức
         dispatch(setUser(userData));
 
         toast({
@@ -82,9 +94,20 @@ const UserAuthForm = () => {
           description: "Đang chuyển hướng...",
         });
 
-        router.push(
-          userData.role === "Admin" ? "/admin/overview" : "/manager/services"
-        );
+        // ✅ Điều hướng theo role
+        switch (userData.role?.toLowerCase()) {
+          case "admin":
+            router.push("/admin/overview");
+            break;
+          case "manager":
+            router.push("/manager/services");
+            break;
+          case "staff":
+            router.push("/homeplus");
+            break;
+          default:
+            router.push("/homeplus");
+        }
       }
     } catch (error) {
       console.error("Login error: ", error);

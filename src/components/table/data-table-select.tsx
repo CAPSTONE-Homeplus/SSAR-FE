@@ -16,11 +16,11 @@ interface DataTableSelectProps {
   selectValue: string;
   setSelectValue: (
     value: string | ((old: string) => string | null) | null,
-    options?: Options<any> | undefined
+    options?: Options | undefined
   ) => Promise<URLSearchParams>;
-  setPage: <Shallow>(
+  setPage: (
     value: number | ((old: number) => number | null) | null,
-    options?: Options<Shallow> | undefined
+    options?: Options | undefined
   ) => Promise<URLSearchParams>;
   options: {
     label: string;

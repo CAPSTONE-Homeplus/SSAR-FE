@@ -2,16 +2,13 @@ import React, { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import PageContainer from "@/components/layout/page-container";
-import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { Heading } from "@/components/ui/headling";
-import { Separator } from "@/components/ui/separator";
 import HouseDetailAsync from "./update/house-detail-async";
-import RoomTableHouse from "./list-room-in-house/room-table-house";
 
 type Props = {
   slug: string;
   keyProps: string;
 };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const HouseDetailIndex = ({ slug, keyProps }: Props) => {
   return (
     <PageContainer>

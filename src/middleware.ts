@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -34,8 +35,8 @@ export function middleware(request: NextRequest) {
     if (!pathname.startsWith("/manager")) {
       return NextResponse.redirect(new URL("/logout", request.url));
     }
-  } else if (user?.role === "Store") {
-    if (!pathname.startsWith("/store")) {
+  } else if (user?.role === "Staff") {
+    if (!pathname.startsWith("/homeplus")) {
       return NextResponse.redirect(new URL("/logout", request.url));
     }
   } else {

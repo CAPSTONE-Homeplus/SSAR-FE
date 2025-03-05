@@ -1,7 +1,5 @@
 import PageContainer from "@/components/layout/page-container";
 import React, { Suspense } from "react";
-import StoreTable from "./store-table";
-
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { Heading } from "@/components/ui/headling";
 import { Separator } from "@/components/ui/separator";
@@ -32,7 +30,7 @@ const StoreIndex = () => {
           // key={key}
           fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
         >
-          <StoreTable />
+          {/* <StoreTable /> */}
         </Suspense>
       </div>
     </PageContainer>

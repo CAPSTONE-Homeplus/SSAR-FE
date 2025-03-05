@@ -14,14 +14,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function SelectRoomTypeAsync({
   value,
   onChange,
+  disabled,
 }: {
   value?: string;
   onChange: (v: string) => void;
+  disabled?: boolean;
 }) {
   const { data, isLoading } = useRoomTypes();
 
   return (
-    <Select value={value} onValueChange={onChange} disabled={isLoading}>
+    <Select
+      value={value}
+      onValueChange={onChange}
+      disabled={disabled || isLoading}
+    >
       <SelectTrigger>
         <SelectValue placeholder="Chọn loại căn hộ" />
       </SelectTrigger>

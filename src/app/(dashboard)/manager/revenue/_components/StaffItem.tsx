@@ -1,6 +1,12 @@
 import { useDraggable } from "@dnd-kit/core";
 
-export default function StaffItem( { staff }) {
+interface Staff {
+  id: number;
+  name: string;
+  status: "free" | "busy";
+}
+
+export default function StaffItem({ staff }: { staff: Staff }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: staff.id,
   });

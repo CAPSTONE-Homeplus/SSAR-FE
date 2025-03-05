@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { format, parseISO } from "date-fns";
 import { vi, enUS } from "date-fns/locale";
 export const formatDate = (

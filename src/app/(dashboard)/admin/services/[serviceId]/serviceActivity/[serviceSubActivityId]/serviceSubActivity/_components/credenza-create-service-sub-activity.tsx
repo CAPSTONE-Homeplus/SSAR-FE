@@ -22,13 +22,13 @@ import {
   CredenzaFooter,
   CredenzaClose,
 } from "@/components/ui/credenza";
-import { SubServiceActivityCreateSchema, TSubServiceActivityCreateRequest } from "@/schema/service-sub-activity.schema";
+import { SubServiceActivitySchema, TServiceSubActivityCreateRequest } from "@/schema/service-sub-activity.schema";
 
 
 export function CreateServiceSubActivity() {
   const { toast } = useToast();
-  const form = useForm<TSubServiceActivityCreateRequest>({
-    resolver: zodResolver(SubServiceActivityCreateSchema),
+  const form = useForm<TServiceSubActivityCreateRequest>({
+    resolver: zodResolver(SubServiceActivitySchema),
     defaultValues: {
       name: "",
       code: "",
@@ -36,7 +36,7 @@ export function CreateServiceSubActivity() {
     },
   });
 
-  const onSubmit = async (data: TSubServiceActivityCreateRequest) => {
+  const onSubmit = async (data: TServiceSubActivityCreateRequest) => {
     console.log("New Service Sub-Activity Created: ", data);
     toast({
       title: "Tạo hoạt động dịch vụ phụ thành công",
