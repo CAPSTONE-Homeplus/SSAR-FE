@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
     console.error("Error parsing user cookie:", error);
     user = null;
   }
-
+console.log("eeeeeeeeeee:" , user);
   // Allow access to `/` and `/logout` without checks
   if (pathname === "/" || pathname === "/logout") {
     return NextResponse.next();

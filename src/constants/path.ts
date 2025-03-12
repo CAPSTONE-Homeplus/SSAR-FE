@@ -10,7 +10,7 @@ export const PATHS = {
   admin: {
     overview: `${RootPath.admin}/overview`,
     stores: `${RootPath.admin}/stores`,
-    managers: `${RootPath.admin}/managers`,
+    groups: `${RootPath.admin}/groups`,
     areas: `${RootPath.admin}/areas`,
     clusters: `${RootPath.admin}/clusters`,
     buildings: `${RootPath.admin}/buildings`,

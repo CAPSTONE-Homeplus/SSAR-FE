@@ -87,8 +87,8 @@ export const adminNavItems: TNavItem[] = [
   //   items: [],
   // },
   {
-    title: "Quản lý quản lý",
-    url: PATHS.admin.managers,
+    title: "Quản lý nhóm",
+    url: PATHS.admin.groups,
     icon: "truck",
     shortcut: ["s", "h"],
     isActive: false,
