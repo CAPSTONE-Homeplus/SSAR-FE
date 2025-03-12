@@ -52,10 +52,6 @@ export function CredenzaCreateService({ className }: Props) {
   const [serviceCategories, setServiceCategories] = useState<
     { id: string; name: string }[]
   >([]);
-  console.log(
-    "🚀 ~ CredenzaCreateService ~ serviceCategories:",
-    serviceCategories
-  );
 
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false); // Để kiểm soát đóng Credenza
