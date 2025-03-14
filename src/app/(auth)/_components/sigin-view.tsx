@@ -27,7 +27,6 @@ export default function SignInViewPage() {
   };
 
   useEffect(() => {
-    // Add optional background animation or initial effects here
     const container = containerRef.current;
     if (container) {
       container.classList.add("loaded");
@@ -35,63 +34,65 @@ export default function SignInViewPage() {
   }, []);
 
   return (
-    <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      {/* Background image section */}
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r overflow-hidden">
+    <div className="relative h-screen flex flex-col lg:grid lg:grid-cols-12 lg:gap-0">
+      {/* Header for logo - visible on all screens */}
+      <div className="absolute top-4 right-4 z-50 flex items-center gap-4">
+        <ModeToggle />
+      </div>
+
+      {/* Background image section - 6 cols */}
+      <div className="relative hidden lg:flex h-full flex-col bg-muted lg:col-span-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/30 z-10" />
         <Image
           src="/image/login_img.webp"
           alt="Background"
-          className="absolute inset-0 h-full w-full object-cover transition-all duration-500 transform hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover transition-all duration-500"
           width={2000}
           height={2080}
           priority
         />
-        <div className="relative z-20 flex items-center text-lg font-medium">
+
+        {/* Logo and tagline positioned at top left of image area */}
+        <div className="relative z-20 p-8">
           <div className="flex flex-col items-start">
-            <Image 
-              src="/image/homeplus-logo.svg" 
-              alt="Home Plus Logo" 
-              width={220} 
-              height={70}
-              className="mb-3" 
+            <Image
+              src="/image/homeplus-logo.svg"
+              alt="Home Plus Logo"
+              width={180}
+              height={60}
+              className="mb-3"
             />
-            <span className="text-xl font-bold text-white">
+            <span className="text-xl font-bold text-white mt-2">
               DỊCH VỤ CHO MỌI NHU CẦU CỦA BẠN
             </span>
           </div>
         </div>
-        <div className="mt-auto relative z-20">
+
+        {/* Quote at bottom of image area */}
+        <div className="mt-auto relative z-20 p-8">
           <blockquote className="space-y-2">
-            <p className="text-lg">
-              &ldquo;Chúng tôi mang đến dịch vụ chất lượng, tiện lợi dành cho ngôi nhà của bạn.&rdquo;
+            <p className="text-lg text-white">
+              &ldquo;Chúng tôi mang đến dịch vụ chất lượng, tiện lợi dành cho
+              ngôi nhà của bạn.&rdquo;
             </p>
-            <footer className="text-sm opacity-70">Homeplus Team</footer>
+            <footer className="text-sm text-white/70">Homeplus Team</footer>
           </blockquote>
         </div>
       </div>
 
-      {/* Form section */}
-      <ModeToggle className="absolute top-4 right-4 z-50" />
-      <div ref={containerRef} className="flex h-full items-center justify-center p-4 lg:p-8 overflow-hidden">
-        <motion.div 
+      {/* Form section - 6 cols */}
+      <div
+        ref={containerRef}
+        className="flex h-full items-center justify-center p-4 lg:p-8 lg:col-span-6"
+      >
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]"
         >
-          {/* Logo for mobile */}
-          <div className="flex justify-center lg:hidden mb-6">
-            <Image 
-              src="/image/homeplus-logo.svg" 
-              alt="Home Plus Logo" 
-              width={180} 
-              height={60} 
-            />
-          </div>
-
           <div className="flex items-center justify-between">
-            <motion.div 
+            <motion.div
               key={`title-${isAdmin}`}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -103,17 +104,19 @@ export default function SignInViewPage() {
                 {isAdmin ? "Đăng nhập Admin" : "Chào mừng bạn quay trở lại"}
               </h1>
               <p className="text-sm text-muted-foreground">
-                {isAdmin 
-                  ? "Vui lòng đăng nhập vào tài khoản Admin." 
+                {isAdmin
+                  ? "Vui lòng đăng nhập vào tài khoản Admin."
                   : "Vui lòng đăng nhập vào tài khoản của bạn."}
               </p>
             </motion.div>
-            
+
             {/* Toggle icon */}
-            <div 
+            <div
               onClick={toggleForm}
               className={`flex items-center justify-center w-12 h-12 rounded-full cursor-pointer transition-all duration-300 ${
-                isAdmin ? "bg-red-100 text-red-500" : "bg-blue-100 text-blue-500"
+                isAdmin
+                  ? "bg-red-100 text-red-500"
+                  : "bg-blue-100 text-blue-500"
               } hover:shadow-md`}
             >
               <motion.div
@@ -148,8 +151,13 @@ export default function SignInViewPage() {
               <span className="text-sm text-muted-foreground">
                 {isAdmin ? "Không phải Admin?" : "Chưa có tài khoản?"}
               </span>
-              <Link href={isAdmin ? "#" : "/register"} 
-                className={`text-sm font-medium ${isAdmin ? "text-blue-600 hover:text-blue-500" : "text-primary hover:text-primary/90"}`}
+              <Link
+                href={isAdmin ? "#" : "/register"}
+                className={`text-sm font-medium ${
+                  isAdmin
+                    ? "text-blue-600 hover:text-blue-500"
+                    : "text-primary hover:text-primary/90"
+                }`}
                 onClick={isAdmin ? toggleForm : undefined}
               >
                 {isAdmin ? "Đăng nhập Người dùng" : "Liên hệ với chúng tôi"}
@@ -159,11 +167,17 @@ export default function SignInViewPage() {
 
           <p className="px-4 text-center text-xs text-muted-foreground">
             Bằng cách tiếp tục, bạn đồng ý với{" "}
-            <Link href="/terms" className="underline underline-offset-4 hover:text-primary">
+            <Link
+              href="/terms"
+              className="underline underline-offset-4 hover:text-primary"
+            >
               Điều khoản dịch vụ
             </Link>{" "}
             và{" "}
-            <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
+            <Link
+              href="/privacy"
+              className="underline underline-offset-4 hover:text-primary"
+            >
               Chính sách bảo mật
             </Link>
             .

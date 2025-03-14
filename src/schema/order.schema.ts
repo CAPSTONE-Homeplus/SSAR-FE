@@ -40,5 +40,13 @@ export const OrderSchema = BaseSchema.extend({
   options: z.array(z.string()).default([]),
 });
 
+
+export const AssignStaffToOrderSchema = BaseSchema.extend({
+  orderId: z.string().uuid(),
+  staffId: z.string().uuid(),
+});
+
 export type TOrderRequest = z.TypeOf<typeof OrderSchema>;
 export type TOrderResponse = z.TypeOf<typeof OrderSchema>;
+export type TAssignStaffToOrderRequest = z.TypeOf<typeof AssignStaffToOrderSchema>;
+
