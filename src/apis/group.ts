@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+/* eslint-disable @typescript-eslint/no-explicit-any */ 
 "use server";
 
 import { httpHomePlus } from "@/lib/http";
@@ -16,7 +15,12 @@ export const getAllGroups = async (params?: any) => {
   return response;
 };
 
+export const getGroupById = async (id: string) => {
+  const response = await httpHomePlus.get<{ payload: TGroupResponse; status: number; message: string }>(`/groups/${id}`);
+  return response;
+};
+
 export const createGroup = async (data: Partial<TGroupResponse>) => {
-  const response = await httpHomePlus.post<TGroupResponse>(`/groups`, data);
+  const response = await httpHomePlus.post(`/groups`, data);
   return response;
 };

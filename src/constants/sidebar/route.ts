@@ -205,6 +205,14 @@ export const managerNavItems: TNavItem[] = [
   //   items: [],
   // },
   {
+    title: "Quản Lí Nhóm",
+    url: PATHS.manager.groups,
+    icon: "staff",
+    isActive: false,
+    items: [],
+  },
+  
+  {
     title: "Ca Làm Việc",
     url: PATHS.manager.timeSlots,
     icon: "clock",
@@ -212,15 +220,14 @@ export const managerNavItems: TNavItem[] = [
     items: [],
   },
   {
-    title: "Doanh thu",
+    title: "Trạng Thái Đơn Hàng",
     url: PATHS.manager.revenue,
-    icon: "chart",
+    icon: "tasks",
     isActive: false,
     items: [],
   },
 ];
 
-// **Navigation cho Staff**
 export const staffNavItems: TNavItem[] = [
   {
     title: "Nhiệm vụ của tôi",

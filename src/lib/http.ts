@@ -181,7 +181,7 @@ const httpHomePlus = createHttpClient(
   envConfig.NEXT_PUBLIC_HOMEPLUS_API_ENDPOINT
 );
 const httpVinWallet = createHttpClient(
-  envConfig.NEXT_PUBLIC_HOMEPLUS_API_ENDPOINT
+  envConfig.NEXT_PUBLIC_VINWALLET_API_ENDPOINT
 );
 
 export {
