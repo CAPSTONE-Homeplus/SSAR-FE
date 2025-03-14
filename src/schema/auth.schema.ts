@@ -10,6 +10,18 @@ export const LoginSchema = z
     }),
   })
   .strict();
+
+export const LoginAdminSchema = z
+  .object({
+    username: z.string().min(1, {
+      message: "Tên đăng nhập không được trống.",
+    }),
+    password: z.string().min(1, {
+      message: "Mật khẩu không được trống.",
+    }),
+  })
+  .strict();
+
 export const AuthResponseSchema = z.object({
   accessToken: z.string().min(1, { message: "Access token không được trống." }),
   refreshToken: z
@@ -22,3 +34,4 @@ export const AuthResponseSchema = z.object({
 });
 export type TLoginRequest = z.TypeOf<typeof LoginSchema>;
 export type TAuthResponse = z.TypeOf<typeof AuthResponseSchema>;
+export type TLoginAdminRequest = z.TypeOf<typeof LoginAdminSchema>;

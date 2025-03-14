@@ -28,6 +28,7 @@ export const PATHS = {
     services: `${RootPath.manager}/services`,
     serviceActivities: `${RootPath.manager}/service-activities`,
     serviceSubActivities: `${RootPath.manager}/service-sub-activities`,
+    groups: `${RootPath.manager}/groups`,
     timeSlots: `${RootPath.manager}/time-slots`,
     revenue: `${RootPath.manager}/revenue`,
   },
