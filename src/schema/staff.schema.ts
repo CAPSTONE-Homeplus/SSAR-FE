@@ -31,12 +31,12 @@ export const StaffStatusArraySchema = z.object({
 });
 
 export const StaffStatusReadySchema = BaseSchema.extend({
-    staffId: z.string().uuid(),
-    status: z.string().max(255),
-    lastUpdated: z.string().datetime(),
-  });
+  staffId: z.string().uuid(),
+  status: z.string().max(255),
+  lastUpdated: z.string().datetime(),
+  fullName: z.string().max(255).optional(),
+});
 
-export const StaffStatusReadyArraySchema = z.array(StaffStatusReadySchema);
 
 export type TStaffRequest = z.TypeOf<typeof StaffSchema>;
 export type TStaffResponse = z.TypeOf<typeof StaffSchema>;
@@ -44,4 +44,4 @@ export type TStaffResponse = z.TypeOf<typeof StaffSchema>;
 export type TStaffStatus = z.TypeOf<typeof StaffStatusSchema>;
 export type TStaffStatusArrayResponse = z.TypeOf<typeof StaffStatusArraySchema>;
 export type TStaffStatusReady = z.TypeOf<typeof StaffStatusReadySchema>;
-export type TStaffStatusReadyArrayResponse = z.TypeOf<typeof StaffStatusReadyArraySchema>;
+export type TStaffStatusReadyResponse = z.TypeOf<typeof StaffStatusReadySchema>;

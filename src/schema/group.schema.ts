@@ -8,8 +8,8 @@ export const GroupSchema = BaseSchema.extend({
   status: z.string().optional(),
   areaId: z.string().uuid(),
   managerId: z.string().uuid(),
-  clusterIds: z.array(z.string().uuid()).nonempty(), // Mảng chứa ít nhất 1 phần tử
-  serviceIds: z.array(z.string().uuid()).nonempty(), // Mảng chứa ít nhất 1 phần tử
+  clusterIds: z.array(z.string().uuid()).nonempty(), 
+  serviceId: z.string().uuid(), 
 });
 
 export const GroupCreateSchema = BaseSchema.extend({
@@ -18,7 +18,7 @@ export const GroupCreateSchema = BaseSchema.extend({
   areaId: z.string().uuid(),
   managerId: z.string().uuid(),
   clusterIds: z.array(z.string().uuid()).min(1).optional(), 
-  serviceIds: z.array(z.string().uuid()).min(1).optional(),
+  serviceId: z.string().uuid().optional(),
 });
 
 export type TGroupRequest = z.TypeOf<typeof GroupSchema>;

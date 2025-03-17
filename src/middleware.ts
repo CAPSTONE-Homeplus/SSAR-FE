@@ -15,7 +15,25 @@ export function middleware(request: NextRequest) {
     console.error("Error parsing user cookie:", error);
     user = null;
   }
-console.log("eeeeeeeeeee:" , user);
+  console.log("eeeeeeeeeee:", user);
+
+  const requestHeaders = new Headers(request.headers);
+
+  // Set the groupId in the headers if it exists
+  if (user?.groupId) {
+    requestHeaders.set('x-group-id', user.groupId);
+  }
+
+  // Allow access to `/` and `/logout` without checks
+  if (pathname === "/" || pathname === "/logout") {
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
+
+
   // Allow access to `/` and `/logout` without checks
   if (pathname === "/" || pathname === "/logout") {
     return NextResponse.next();
@@ -44,8 +62,11 @@ console.log("eeeeeeeeeee:" , user);
     return NextResponse.redirect(new URL("/logout", request.url));
   }
 
-  return NextResponse.next();
-}
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });}
 
 export const config = {
   matcher: [

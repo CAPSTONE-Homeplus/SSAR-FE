@@ -73,7 +73,7 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
       areaId: "",
       managerId: "",
       clusterIds: [],
-      serviceIds: [],
+      serviceId: "",
     },
   });
 
@@ -94,13 +94,6 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
           )
         );
       }
-      if (name === "serviceIds" || name === undefined) {
-        setSelectedServices(
-          (value.serviceIds || []).filter(
-            (id): id is string => id !== undefined
-          )
-        );
-      }
     });
     return () => subscription.unsubscribe();
   }, [form.watch]);
@@ -108,8 +101,17 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const [areasResponse, managersResponse, servicesResponse, clustersResponse] =
-        await Promise.all([getAllAreas(), getAllManagers(),getAllServices(), getAllClusters()]);
+      const [
+        areasResponse,
+        managersResponse,
+        servicesResponse,
+        clustersResponse,
+      ] = await Promise.all([
+        getAllAreas(),
+        getAllManagers(),
+        getAllServices(),
+        getAllClusters(),
+      ]);
 
       if (areasResponse?.payload?.items) {
         setAreaOptions(areasResponse.payload.items);
@@ -123,7 +125,6 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
           }))
         );
       }
-      
 
       if (servicesResponse?.payload?.items) {
         setServiceOptions(servicesResponse.payload.items);
@@ -132,7 +133,6 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
       if (clustersResponse?.payload?.items) {
         setClusterOptions(clustersResponse.payload.items);
       }
-
     } catch (error: any) {
       console.error("Lỗi khi lấy dữ liệu:", error);
       toast({
@@ -157,10 +157,7 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
           data.clusterIds && data.clusterIds.length > 0
             ? (data.clusterIds as [string, ...string[]])
             : undefined,
-        serviceIds:
-          data.serviceIds && data.serviceIds.length > 0
-            ? (data.serviceIds as [string, ...string[]])
-            : undefined,
+
       };
 
       const response = await createGroup(formattedData);
@@ -200,12 +197,6 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
   const removeCluster = (id: string) => {
     const newValues = selectedClusters.filter((clusterId) => clusterId !== id);
     form.setValue("clusterIds", newValues, { shouldValidate: true });
-  };
-
-  // Xóa một service đã chọn
-  const removeService = (id: string) => {
-    const newValues = selectedServices.filter((serviceId) => serviceId !== id);
-    form.setValue("serviceIds", newValues, { shouldValidate: true });
   };
 
   return (
@@ -350,11 +341,49 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
                         </FormItem>
                       )}
                     />
+
+                    <FormField
+                      control={form.control}
+                      name="serviceId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Label>Dịch Vụ</Label>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            disabled={isLoading}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="bg-white">
+                                <SelectValue placeholder="Chọn loại dịch vụ" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {serviceOptions.length === 0 ? (
+                                <SelectItem value="loading" disabled>
+                                  Không có dữ liệu quản lý
+                                </SelectItem>
+                              ) : (
+                                serviceOptions.map((service) => (
+                                  <SelectItem
+                                    key={service.id}
+                                    value={service.id}
+                                  >
+                                    {service.name}
+                                  </SelectItem>
+                                ))
+                              )}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </Card>
 
                 {/* Cụm khu vực */}
-                <Card className="p-4 bg-slate-50">
+                <Card className="p-4 col-span-1 sm:col-span-2 bg-slate-50">
                   <FormField
                     control={form.control}
                     name="clusterIds"
@@ -439,93 +468,6 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
                     )}
                   />
                 </Card>
-
-                {/* Dịch vụ */}
-                <Card className="p-4 bg-slate-50">
-                  <FormField
-                    control={form.control}
-                    name="serviceIds"
-                    render={() => (
-                      <FormItem>
-                        <Label className="flex items-center gap-1">
-                          <Briefcase className="h-4 w-4" />
-                          Dịch Vụ
-                        </Label>
-
-                        {/* Hiển thị các service đã chọn */}
-                        <div className="flex flex-wrap gap-2 mb-2 min-h-8">
-                          {selectedServices.length > 0 ? (
-                            selectedServices.map((id) => (
-                              <Badge
-                                key={id}
-                                variant="secondary"
-                                className="flex items-center gap-1 bg-green-100"
-                              >
-                                {getNameById(id, serviceOptions)}
-                                <X
-                                  size={14}
-                                  className="cursor-pointer hover:text-red-500 transition-colors"
-                                  onClick={() => removeService(id)}
-                                />
-                              </Badge>
-                            ))
-                          ) : (
-                            <span className="text-sm text-gray-500 italic">
-                              Chưa chọn dịch vụ nào
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="border rounded-md bg-white p-2 max-h-40 overflow-y-auto shadow-sm">
-                          {serviceOptions.length === 0 ? (
-                            <div className="text-sm text-center py-2 text-gray-500">
-                              {isLoading
-                                ? "Đang tải..."
-                                : "Không có dữ liệu dịch vụ"}
-                            </div>
-                          ) : (
-                            serviceOptions.map((service) => (
-                              <div
-                                key={service.id}
-                                className="flex items-center space-x-2 my-1.5 hover:bg-slate-100 p-1 rounded"
-                              >
-                                <Checkbox
-                                  id={`service-${service.id}`}
-                                  checked={selectedServices.includes(
-                                    service.id
-                                  )}
-                                  onCheckedChange={(checked) => {
-                                    const currentValue =
-                                      form.getValues("serviceIds") || [];
-                                    const newValue = checked
-                                      ? [...currentValue, service.id]
-                                      : currentValue.filter(
-                                          (id) => id !== service.id
-                                        );
-                                    form.setValue("serviceIds", newValue, {
-                                      shouldValidate: true,
-                                    });
-                                  }}
-                                  disabled={isLoading}
-                                />
-                                <Label
-                                  htmlFor={`service-${service.id}`}
-                                  className="cursor-pointer text-sm flex-1"
-                                >
-                                  {service.name}
-                                </Label>
-                              </div>
-                            ))
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1.5">
-                          Chọn một hoặc nhiều dịch vụ
-                        </p>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </Card>
               </div>
 
               <Separator className="my-2" />
@@ -547,4 +489,3 @@ export function CredenzaCreateGroup({ className }: { className?: string }) {
     </Credenza>
   );
 }
-

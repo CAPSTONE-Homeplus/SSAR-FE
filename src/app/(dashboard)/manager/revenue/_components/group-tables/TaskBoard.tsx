@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import OrderDetailsPopup from "@/app/(dashboard)/manager/revenue/_components/group-tables/OrderDetail";
 import { TOrderResponse } from "@/schema/order.schema";
@@ -13,29 +13,43 @@ export type OrderType = TOrderResponse;
 
 interface TaskBoardProps {
   orders: TOrderResponse[];
+  groupId?: string;
 }
 
 // Helper functions for card styling
 const getStatusColor = (status: string): string => {
   switch (status) {
-    case "Draft": return "border-gray-300";
-    case "Pending": return "border-yellow-400";
-    case "Accepted": return "border-blue-500";
-    case "Completed": return "border-green-500";
-    default: return "border-gray-300";
+    case "Draft":
+      return "border-gray-300";
+    case "Pending":
+      return "border-yellow-400";
+    case "Accepted":
+      return "border-blue-500";
+    case "Completed":
+      return "border-green-500";
+    default:
+      return "border-gray-300";
   }
 };
 
 const getPriorityColor = (priority: string): string => {
   switch (priority.toLowerCase()) {
-    case "high": return "text-red-600 bg-red-50";
-    case "medium": return "text-orange-600 bg-orange-50";
-    case "low": return "text-green-600 bg-green-50";
-    default: return "text-gray-600 bg-gray-50";
+    case "high":
+      return "text-red-600 bg-red-50";
+    case "medium":
+      return "text-orange-600 bg-orange-50";
+    case "low":
+      return "text-green-600 bg-green-50";
+    default:
+      return "text-gray-600 bg-gray-50";
   }
 };
 
-const TaskCard: React.FC<{ order: TOrderResponse; onRefresh?: () => void }> = ({ order, onRefresh }) => {
+const TaskCard: React.FC<{
+  order: TOrderResponse;
+  onRefresh?: () => void;
+  groupId?: string;
+}> = ({ order, onRefresh, groupId }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [{ isDragging }, drag] = useDrag({
@@ -60,21 +74,25 @@ const TaskCard: React.FC<{ order: TOrderResponse; onRefresh?: () => void }> = ({
   const priorityClass = getPriorityColor(order.priorityLevel || "medium");
 
   return (
-    <div 
-      ref={ref} 
+    <div
+      ref={ref}
       onClick={handleClick}
       className={`p-3 my-2 bg-white border ${statusClass} rounded-lg shadow-sm cursor-move 
-        hover:shadow-md transition-all duration-200 ${isDragging ? 'opacity-50 scale-95' : 'opacity-100'}`}
+        hover:shadow-md transition-all duration-200 ${
+          isDragging ? "opacity-50 scale-95" : "opacity-100"
+        }`}
     >
       <div className="flex justify-between items-start mb-2">
-        <span className="text-sm font-semibold text-gray-700">{order.code}</span>
+        <span className="text-sm font-semibold text-gray-700">
+          {order.code}
+        </span>
         <span className={`text-xs px-2 py-1 rounded-full ${priorityClass}`}>
           {order.priorityLevel || "Medium"}
         </span>
       </div>
-      
+
       <h3 className="text-md font-medium mb-1 truncate">{order.userId}</h3>
-      
+
       <div className="flex justify-between text-xs text-gray-500 mb-2">
         <span>{new Date(order.createdAt).toLocaleDateString()}</span>
         <span>{order.totalAmount?.toLocaleString()} đ</span>
@@ -85,62 +103,68 @@ const TaskCard: React.FC<{ order: TOrderResponse; onRefresh?: () => void }> = ({
           {order.serviceId || 0} SP
         </span>
         <span className="text-gray-600 truncate">
-          {order.employeeId || 'Chưa gán'}
+          {order.employeeId || "Chưa gán"}
         </span>
       </div>
-      
+
       {isPopupOpen && (
-        <OrderDetailsPopup 
-          order={order} 
-          isOpen={isPopupOpen} 
-          onClose={() => setIsPopupOpen(false)} 
-          onOrderUpdate={onRefresh} 
-        />
+        <OrderDetailsPopup
+          order={order}
+          isOpen={isPopupOpen}
+          onClose={() => setIsPopupOpen(false)}
+          onOrderUpdate={onRefresh}
+          groupId={groupId}
+          />
       )}
     </div>
   );
 };
 
 // Status configuration for columns
-const statusConfig: Record<BoardStatus, { label: string; bgColor: string; textColor: string; headerBg: string }> = {
+const statusConfig: Record<
+  BoardStatus,
+  { label: string; bgColor: string; textColor: string; headerBg: string }
+> = {
   Draft: {
     label: "Đơn mới",
     bgColor: "bg-gray-50",
     textColor: "text-gray-700",
-    headerBg: "bg-gray-200"
+    headerBg: "bg-gray-200",
   },
   Pending: {
     label: "Chờ xử lý",
     bgColor: "bg-yellow-50",
     textColor: "text-yellow-700",
-    headerBg: "bg-yellow-200"
+    headerBg: "bg-yellow-200",
   },
   Accepted: {
     label: "Đang thực hiện",
     bgColor: "bg-blue-50",
     textColor: "text-blue-700",
-    headerBg: "bg-blue-200"
+    headerBg: "bg-blue-200",
   },
   Completed: {
     label: "Hoàn thành",
     bgColor: "bg-green-50",
     textColor: "text-green-700",
-    headerBg: "bg-green-200"
-  }
+    headerBg: "bg-green-200",
+  },
 };
 
-export const TaskBoard: React.FC<TaskBoardProps> = ({ orders }) => {
+export const TaskBoard: React.FC<TaskBoardProps> = ({ orders, groupId  }) => {
   // Group orders by status
-  const [boardData, setBoardData] = useState<Record<BoardStatus, TOrderResponse[]>>(() => {
+  const [boardData, setBoardData] = useState<
+    Record<BoardStatus, TOrderResponse[]>
+  >(() => {
     const initialBoard: Record<BoardStatus, TOrderResponse[]> = {
       Draft: [],
       Pending: [],
       Accepted: [],
-      Completed: []
+      Completed: [],
     };
-    
+
     // Distribute orders to their respective columns
-    orders.forEach(order => {
+    orders.forEach((order) => {
       const status = order.status as BoardStatus;
       if (initialBoard[status]) {
         initialBoard[status].push(order);
@@ -148,28 +172,33 @@ export const TaskBoard: React.FC<TaskBoardProps> = ({ orders }) => {
         initialBoard.Draft.push(order);
       }
     });
-    
+
     return initialBoard;
   });
-  
+
   // Function to move an order to a different status column
   const moveOrder = (order: OrderType, newStatus: BoardStatus) => {
-    setBoardData(prev => {
+    setBoardData((prev) => {
       // Create copies of the data
       const newData = { ...prev };
-      
+
       // Remove from current status
-      Object.keys(newData).forEach(status => {
-        newData[status as BoardStatus] = newData[status as BoardStatus].filter(o => o.id !== order.id);
+      Object.keys(newData).forEach((status) => {
+        newData[status as BoardStatus] = newData[status as BoardStatus].filter(
+          (o) => o.id !== order.id
+        );
       });
-      
+
       // Add to new status
-      newData[newStatus] = [...newData[newStatus], { ...order, status: newStatus }];
-      
+      newData[newStatus] = [
+        ...newData[newStatus],
+        { ...order, status: newStatus },
+      ];
+
       return newData;
     });
   };
-  
+
   // Add a refresh function
   const refreshData = () => {
     // This function will be called when an order is updated
@@ -181,13 +210,14 @@ export const TaskBoard: React.FC<TaskBoardProps> = ({ orders }) => {
     <DndProvider backend={HTML5Backend}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {Object.entries(boardData).map(([status, orders]) => (
-          <Column 
-            key={status} 
-            status={status as BoardStatus} 
-            orders={orders} 
+          <Column
+            key={status}
+            status={status as BoardStatus}
+            orders={orders}
             moveOrder={moveOrder}
             config={statusConfig[status as BoardStatus]}
             onRefresh={refreshData}
+            groupId={groupId}
           />
         ))}
       </div>
@@ -199,11 +229,17 @@ const Column: React.FC<{
   status: BoardStatus;
   orders: TOrderResponse[];
   moveOrder: (order: OrderType, newStatus: BoardStatus) => void;
-  config: { label: string; bgColor: string; textColor: string; headerBg: string };
+  config: {
+    label: string;
+    bgColor: string;
+    textColor: string;
+    headerBg: string;
+  };
   onRefresh?: () => void;
-}> = ({ status, orders, moveOrder, config, onRefresh }) => {
+  groupId?: string;
+}> = ({ status, orders, moveOrder, config, onRefresh, groupId  }) => {
   const ref = useRef<HTMLDivElement>(null);
-  
+
   const [{ isOver }, drop] = useDrop({
     accept: "ORDER",
     drop: (item: OrderType) => {
@@ -213,16 +249,18 @@ const Column: React.FC<{
       isOver: !!monitor.isOver(),
     }),
   });
-  
+
   drop(ref);
 
   return (
-    <div 
-      ref={ref} 
+    <div
+      ref={ref}
       className={`${config.bgColor} border rounded-lg shadow-sm overflow-hidden 
-        transition-all duration-200 ${isOver ? 'ring-2 ring-blue-400' : ''}`}
+        transition-all duration-200 ${isOver ? "ring-2 ring-blue-400" : ""}`}
     >
-      <div className={`${config.headerBg} ${config.textColor} p-3 font-medium flex justify-between items-center`}>
+      <div
+        className={`${config.headerBg} ${config.textColor} p-3 font-medium flex justify-between items-center`}
+      >
         <span>{config.label}</span>
         <span className="text-xs bg-white bg-opacity-80 px-2 py-1 rounded-full">
           {orders.length}
@@ -236,7 +274,12 @@ const Column: React.FC<{
           </div>
         ) : (
           orders.map((order) => (
-            <TaskCard key={order.id} order={order} onRefresh={onRefresh} />
+            <TaskCard
+              key={order.id}
+              order={order}
+              onRefresh={onRefresh}
+              groupId={groupId} // Add this
+            />
           ))
         )}
       </div>
