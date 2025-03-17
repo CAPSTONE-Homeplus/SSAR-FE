@@ -39,6 +39,7 @@ import {
 import { getAllStaffStatusReady } from "@/apis/staff";
 import { toast } from "@/hooks/use-toast";
 import { assignStaffToOrder } from "@/apis/order";
+import { getUserFromCookie } from "@/lib/user";
 
 type OrderType = z.infer<typeof OrderSchema>;
 
@@ -46,7 +47,8 @@ interface OrderDetailsPopupProps {
   order: OrderType | null;
   isOpen: boolean;
   onClose: () => void;
-  onOrderUpdate?: () => void; // Callback for when order is updated
+  onOrderUpdate?: () => void;
+  groupId?: string; // Add this new prop
 }
 
 // Staff type definition based on the schema
@@ -109,20 +111,37 @@ export const OrderDetailsPopup: React.FC<OrderDetailsPopupProps> = ({
   isOpen,
   onClose,
   onOrderUpdate,
+  groupId, // Add groupId to props
 }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [availableStaffs, setAvailableStaffs] = useState<Staff[]>([]);
+  const user = getUserFromCookie();
+  const effectiveGroupId = groupId || user?.groupId;
+  // Define the StaffAssignment type
+  interface StaffAssignment {
+    orderId: string;
+    staffId: string;
+  }
+  
+  const [staffAssignments, setStaffAssignments] = useState<StaffAssignment[]>([]);
   const [selectedStaffId, setSelectedStaffId] = useState<string>("");
   const [isAssigning, setIsAssigning] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch available staff members when popup opens
   useEffect(() => {
-    if (isOpen && order?.id) {
-      fetchAvailableStaffs(order.id);
+    if (isOpen) {
+      if (!effectiveGroupId) {
+        console.error("GroupId is missing");
+        toast({
+          title: "Lỗi",
+          description: "Không thể tải danh sách nhân viên: groupId không xác định",
+          variant: "destructive",
+        });
+        return;
+      }
+      fetchAvailableStaffs(effectiveGroupId);
     }
-  }, [isOpen, order]);
-
+  }, [isOpen, effectiveGroupId]);
   // Set selected staff if order already has one assigned
   useEffect(() => {
     if (order?.employeeId) {
@@ -135,17 +154,28 @@ export const OrderDetailsPopup: React.FC<OrderDetailsPopupProps> = ({
   const fetchAvailableStaffs = async (groupId: string) => {
     setIsLoading(true);
     try {
-      const staffsData = await getAllStaffStatusReady(groupId);
+      const staffData = await getAllStaffStatusReady(groupId);
+      console.log("Fetching staff with groupId:", groupId);
+      console.log("Staff data received:", staffData);
 
-      // Map data to include fullName if available
-      const staffsWithNames = staffsData.map((staff: any) => ({
+      // Ensure staffData is always an array
+      const staffArray = Array.isArray(staffData) ? staffData : [staffData];
+      
+      // Store the original staff data for display
+      const staffsWithNames = staffArray.map((staff: any) => ({
         staffId: staff.staffId,
         status: staff.status,
         lastUpdated: staff.lastUpdated,
-        fullName: staff.fullName || "Nhân viên", // Use fullName if available
+        fullName: staff.fullName || `Staff ${staff.staffId.substring(0, 8)}`
       }));
-
       setAvailableStaffs(staffsWithNames);
+      
+      // Create the transformed data structure for assignments
+      const assignments = staffArray.map((staff: any) => ({
+        orderId: order?.id || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        staffId: staff.staffId
+      }));
+      setStaffAssignments(assignments);
     } catch (error) {
       console.error("Error fetching available staffs:", error);
       toast({
@@ -167,13 +197,20 @@ export const OrderDetailsPopup: React.FC<OrderDetailsPopupProps> = ({
       });
       return;
     }
-
+  
     setIsAssigning(true);
     try {
-      await assignStaffToOrder(order.id, {
-        staffId: selectedStaffId,
-        orderId: order.id,
-      });
+      // Find the staff assignment with the selected staffId
+      const staffAssignment = staffAssignments.find(
+        assignment => assignment.staffId === selectedStaffId
+      );
+      
+      // Update the orderId to the current order's id
+      const assignmentData = staffAssignment ? 
+        { ...staffAssignment, orderId: order.id } : 
+        { staffId: selectedStaffId, orderId: order.id };
+      
+      await assignStaffToOrder(order.id, assignmentData);
       toast({
         title: "Thành công",
         description: "Đã phân công nhân viên thành công",

@@ -3,7 +3,9 @@
 
 import { httpHomePlus } from "@/lib/http";
 import { TGroupResponse } from "@/schema/group.schema";
+import { TOrderResponse } from "@/schema/order.schema";
 import { TTableResponse } from "@/types/Table";
+// import { getCookie } from "cookies-next";
 
 export const getAllGroups = async (params?: any) => {
   const response = await httpHomePlus.get<TTableResponse<TGroupResponse>>(
@@ -15,12 +17,30 @@ export const getAllGroups = async (params?: any) => {
   return response;
 };
 
+export const getAllOrdersByGroupId = async (groupId: string) => {
+  try {
+    if (!groupId) {
+      throw new Error("Group ID không tồn tại");
+    }
+
+    // Gọi API để lấy danh sách đơn hàng theo groupId
+    const response = await httpHomePlus.get<TTableResponse<TOrderResponse>>(
+      `/groups/${groupId}/order`
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Lỗi khi lấy đơn hàng theo Group ID:", error);
+    throw error;
+  }
+};
+
 export const getGroupById = async (id: string) => {
   const response = await httpHomePlus.get<{ payload: TGroupResponse; status: number; message: string }>(`/groups/${id}`);
   return response;
 };
 
 export const createGroup = async (data: Partial<TGroupResponse>) => {
-  const response = await httpHomePlus.post(`/groups`, data);
+  const response = await httpHomePlus.post(`/v2/groups`, data);
   return response;
 };

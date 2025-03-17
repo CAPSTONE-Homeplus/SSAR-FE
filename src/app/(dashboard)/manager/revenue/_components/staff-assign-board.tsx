@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAllOrders } from "@/apis/order";
+import { getAllOrdersByGroupId } from "@/apis/group"; // Changed from getAllOrders
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { TaskBoard } from "@/app/(dashboard)/manager/revenue/_components/group-tables/TaskBoard";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { getCookie } from "cookies-next"; // Added to get cookies
 
 const today = format(new Date(), "EEEE, dd/MM/yyyy", { locale: vi });
 
@@ -62,19 +64,52 @@ const StaffAssignBoard = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [groupId, setGroupId] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const userRaw = getCookie("user");
+      if (userRaw) {
+        const user = JSON.parse(userRaw as string);
+        if (user?.groupId) {
+          setGroupId(user.groupId);
+          console.log("Found groupId from cookie:", user.groupId);
+        } else {
+          console.error("groupId not found in user cookie");
+          setError("Không tìm thấy thông tin nhóm của bạn");
+        }
+      } else {
+        console.error("User cookie not found");
+        setError("Không tìm thấy thông tin người dùng");
+      }
+    } catch (error) {
+      console.error("Error parsing user cookie:", error);
+      setError("Lỗi khi đọc thông tin người dùng");
+    }
+  }, []);
+
+  // Load data when groupId is available
+  useEffect(() => {
+    if (groupId) {
+      loadData();
+    }
+  }, [groupId]);
 
   const loadData = async (pageParam = 1, sizeParam = 10, searchParam = "") => {
+    if (!groupId) {
+      setError("Không tìm thấy thông tin nhóm để tải dữ liệu");
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     const page = pageParam;
     const size = sizeParam;
     const search = searchParam;
 
-    const filters = { page, size, ...(search && { search }) };
-
-    setIsLoading(true);
-
     try {
-      const orderResponse = await getAllOrders(filters);
+      // Use the getAllOrdersByGroupId function instead of getAllOrders
+      const orderResponse = await getAllOrdersByGroupId(groupId);
       const orderPayload = orderResponse?.payload || {
         items: [],
         totalPages: 0,
@@ -139,24 +174,19 @@ const StaffAssignBoard = () => {
         };
       });
 
-      console.log(`Đã xử lý ${enhancedItems.length} đơn hàng`);
+      console.log(`Đã xử lý ${enhancedItems.length} đơn hàng từ nhóm ${groupId}`);
       setOrdersData({
         items: enhancedItems,
         totalPages: orderPayload.totalPages,
       });
       setError(null);
     } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu đơn hàng:", error);
+      console.error(`Lỗi khi lấy dữ liệu đơn hàng cho nhóm ${groupId}:`, error);
       setError("Đã xảy ra lỗi khi tải dữ liệu đơn hàng");
     } finally {
       setIsLoading(false);
     }
   };
-
-  // Load data when component mounts
-  useEffect(() => {
-    loadData();
-  }, []);
 
   // Handle manual refresh
   const handleRefresh = () => {
@@ -237,8 +267,7 @@ const StaffAssignBoard = () => {
           </p>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="text-gray-600 font-medium">{today}</span>{" "}
-          {/* Hiển thị ngày tháng */}
+          <span className="text-gray-600 font-medium">{today}</span>
           <Button
             onClick={handleRefresh}
             variant="outline"
