@@ -79,7 +79,7 @@ const UserAuthForm = () => {
           redirectUrl = "/admin/buildings";
           message = "Đang chuyển đến trang quản lí";
         } else if (userData.role?.toLowerCase() === "manager") {
-          redirectUrl = "/manager/service-categories";
+          redirectUrl = "/manager/groups";
           message = "Đang chuyển đến trang quản lý dịch vụ.";
         } else if (userData.role?.toLowerCase() === "staff") {
           redirectUrl = "/homeplus";

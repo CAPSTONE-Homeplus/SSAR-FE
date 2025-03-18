@@ -71,25 +71,9 @@ export const data = {
 // **Navigation cho Admin**
 export const adminNavItems: TNavItem[] = [
   {
-    title: "Tổng quan",
-    url: PATHS.admin.overview,
-    icon: "dashboard",
-    shortcut: ["d", "d"],
-    isActive: false,
-    items: [],
-  },
-  // {
-  //   title: "Quản lý cửa hàng",
-  //   url: PATHS.admin.stores,
-  //   icon: "store",
-  //   shortcut: ["s", "t"],
-  //   isActive: false,
-  //   items: [],
-  // },
-  {
     title: "Quản lý nhóm",
     url: PATHS.admin.groups,
-    icon: "truck",
+    icon: "users",
     shortcut: ["s", "h"],
     isActive: false,
     items: [],
@@ -134,76 +118,28 @@ export const adminNavItems: TNavItem[] = [
   },
 
   {
-    title: "Dịch vụ",
-    url: PATHS.admin.services,
-    icon: "package",
-    isActive: false,
-    items: [],
-  },
-  {
-    title: "Doanh thu",
+    title: "Dịch Vụ",
     url: "#",
-    icon: "chart",
+    icon: "tag",
     isActive: false,
     items: [
       {
-        title: "Doanh thu cửa hàng",
-        url: PATHS.admin.revenue.stores,
-        icon: "storeChart",
-        shortcut: ["r", "s"],
+        title: "Phân Loại Dịch Vụ",
+        url: PATHS.admin.serviceCategories,
+        icon: "box",
+        shortcut: ["r", "a"],
       },
       {
-        title: "Doanh thu nền tảng",
-        url: PATHS.admin.revenue.platform,
-        icon: "platformChart",
-        shortcut: ["r", "p"],
+        title: "Loại Dịch Vụ",
+        url: PATHS.admin.services,
+        icon: "building",
+        shortcut: ["r", "s"],
       },
     ],
   },
-  {
-    title: "Cài đặt",
-    url: PATHS.admin.settings,
-    icon: "settings",
-    shortcut: ["s", "e"],
-    isActive: false,
-    items: [],
-  },
 ];
 
-// **Navigation cho Manager**
 export const managerNavItems: TNavItem[] = [
-  {
-    title: "Phân Loại Dịch Vụ",
-    url: PATHS.manager.serviceCategories,
-    icon: "boxes",
-    shortcut: ["t", "s"],
-    isActive: false,
-    items: [],
-  },
-  {
-    title: "Loại Dịch Vụ",
-    url: PATHS.manager.services,
-    icon: "package",
-    shortcut: ["t", "s"],
-    isActive: false,
-    items: [],
-  },
-  // {
-  //   title: "Hoạt Động Của Dịch Vụ",
-  //   url: PATHS.manager.serviceActivities,
-  //   icon: "building",
-  //   shortcut: ["r", "s"],
-  //   isActive: false,
-  //   items: [],
-  // },
-  // {
-  //   title: "Hoạt Động Của Dịch Vụ Phụ",
-  //   url: PATHS.manager.serviceSubActivities,
-  //   icon: "building",
-  //   shortcut: ["r", "s"],
-  //   isActive: false,
-  //   items: [],
-  // },
   {
     title: "Quản Lí Nhóm",
     url: PATHS.manager.groups,
