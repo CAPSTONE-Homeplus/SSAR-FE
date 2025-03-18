@@ -3,14 +3,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAllOrdersByGroupId } from "@/apis/group"; // Changed from getAllOrders
+import { getAllOrdersByGroupId } from "@/apis/group";
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Calendar } from "lucide-react";
 import { TaskBoard } from "@/app/(dashboard)/manager/revenue/_components/group-tables/TaskBoard";
-import { format } from "date-fns";
+import { format, parseISO, isValid, isSameDay } from "date-fns";
 import { vi } from "date-fns/locale";
-import { getCookie } from "cookies-next"; // Added to get cookies
+import { getCookie } from "cookies-next";
+import { Input } from "@/components/ui/input";
 
+// Format cho ngày hiện tại
 const today = format(new Date(), "EEEE, dd/MM/yyyy", { locale: vi });
 
 const StaffAssignBoard = () => {
@@ -62,9 +64,12 @@ const StaffAssignBoard = () => {
     items: [],
     totalPages: 0,
   });
+  const [filteredOrders, setFilteredOrders] = useState<OrderItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
+  const [lastLoadedDate, setLastLoadedDate] = useState<string>(format(new Date(), "yyyy-MM-dd"));
 
   useEffect(() => {
     try {
@@ -88,12 +93,45 @@ const StaffAssignBoard = () => {
     }
   }, []);
 
-  // Load data when groupId is available
+  // Load data when groupId is available initially
   useEffect(() => {
     if (groupId) {
       loadData();
     }
   }, [groupId]);
+
+  // Automatically reload data when selected date changes
+  useEffect(() => {
+    if (selectedDate !== lastLoadedDate && groupId) {
+      console.log(`Date changed from ${lastLoadedDate} to ${selectedDate}, reloading data...`);
+      setLastLoadedDate(selectedDate);
+      loadData();
+    } else {
+      // If we're not reloading the data, just filter the existing data
+      filterOrdersByDate();
+    }
+  }, [selectedDate]);
+
+  // Filter orders by date whenever ordersData changes
+  useEffect(() => {
+    filterOrdersByDate();
+  }, [ordersData.items]);
+
+  // Filter orders by selected date
+  const filterOrdersByDate = () => {
+    if (!ordersData.items.length) return;
+
+    const selected = parseISO(selectedDate);
+    if (!isValid(selected)) return;
+
+    const filtered = ordersData.items.filter((order) => {
+      const orderDate = parseISO(order.createdAt);
+      return isValid(orderDate) && isSameDay(orderDate, selected);
+    });
+
+    setFilteredOrders(filtered);
+    console.log(`Filtered to ${filtered.length} orders for date ${selectedDate}`);
+  };
 
   const loadData = async (pageParam = 1, sizeParam = 10, searchParam = "") => {
     if (!groupId) {
@@ -191,6 +229,14 @@ const StaffAssignBoard = () => {
   // Handle manual refresh
   const handleRefresh = () => {
     loadData();
+    setLastLoadedDate(selectedDate); // Update the last loaded date
+  };
+
+  // Handle date change with auto-reload
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = e.target.value;
+    setSelectedDate(newDate);
+    // The reload will be triggered by the useEffect that watches selectedDate
   };
 
   // Function to standardize status
@@ -257,17 +303,24 @@ const StaffAssignBoard = () => {
     );
   }
 
+  const formattedDisplayDate = format(parseISO(selectedDate), "EEEE, dd/MM/yyyy", { locale: vi });
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Quản lý đơn hàng</h1>
-          <p className="text-gray-600">
-            Kéo và thả các đơn hàng giữa các cột để cập nhật trạng thái
-          </p>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="text-gray-600 font-medium">{today}</span>
+          <div className="flex items-center">
+            <Calendar className="mr-2 h-4 w-4 text-gray-600" />
+            <Input
+              type="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+              className="border-gray-300 rounded-md"
+            />
+          </div>
           <Button
             onClick={handleRefresh}
             variant="outline"
@@ -277,12 +330,22 @@ const StaffAssignBoard = () => {
           </Button>
         </div>
       </div>
+      
+      <div className="flex justify-between items-center">
+        <span className="text-gray-600 font-medium">
+          Đơn hàng ngày: {formattedDisplayDate}
+        </span>
+        <span className="text-gray-600">
+          Hiển thị {filteredOrders.length} đơn hàng
+        </span>
+      </div>
+      
       <TaskBoard
-        orders={ordersData.items.map((order) => ({
+        orders={filteredOrders.map((order) => ({
           id: order.id,
           code: order.code,
           createdAt: order.createdAt,
-          updatedAt: order.updatedAt || order.createdAt, // Dùng createdAt nếu không có updatedAt
+          updatedAt: order.updatedAt || order.createdAt,
           options: Array.isArray(order.options)
             ? order.options.map(String)
             : [],
@@ -330,6 +393,7 @@ const StaffAssignBoard = () => {
           serviceType: order.serviceType ?? "General",
           distanceToCustomer: order.distanceToCustomer ?? 0,
         }))}
+        groupId={groupId || undefined}
       />
     </div>
   );

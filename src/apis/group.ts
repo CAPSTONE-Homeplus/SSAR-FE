@@ -23,9 +23,8 @@ export const getAllOrdersByGroupId = async (groupId: string) => {
       throw new Error("Group ID không tồn tại");
     }
 
-    // Gọi API để lấy danh sách đơn hàng theo groupId
     const response = await httpHomePlus.get<TTableResponse<TOrderResponse>>(
-      `/groups/${groupId}/order`
+      `/groups/${groupId}/order-v2`
     );
 
     return response;

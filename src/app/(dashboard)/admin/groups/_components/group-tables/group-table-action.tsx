@@ -3,7 +3,7 @@
 import { DataTableSearch } from "@/components/table/data-table-search";
 
 import { DataTableResetFilter } from "@/components/table/data-table-reset-filter";
-import { useServiceCategoryTableFilters } from "@/app/(dashboard)/manager/service-categories/_components/service-category-tables/use-store-table-filters";
+import { useGroupTableFilters } from "@/app/(dashboard)/admin/groups/_components/group-tables/use-group-table-filters";
 
 export default function GroupTableAction() {
   const {
@@ -12,7 +12,7 @@ export default function GroupTableAction() {
     searchQuery,
     setPage,
     setSearchQuery,
-  } = useServiceCategoryTableFilters();
+  } = useGroupTableFilters();
   return (
     <div className="flex flex-wrap items-center gap-4">
       <DataTableSearch

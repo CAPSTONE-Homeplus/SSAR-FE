@@ -44,7 +44,7 @@ export default function SignInViewPage() {
       <div className="relative hidden lg:flex h-full flex-col bg-muted lg:col-span-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/30 z-10" />
         <Image
-          src="/image/login_img.webp"
+          src="/image/login-img.jpg"
           alt="Background"
           className="absolute inset-0 h-full w-full object-cover transition-all duration-500"
           width={2000}

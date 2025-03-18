@@ -8,32 +8,22 @@ export const RootPath = {
 
 export const PATHS = {
   admin: {
-    overview: `${RootPath.admin}/overview`,
-    stores: `${RootPath.admin}/stores`,
     groups: `${RootPath.admin}/groups`,
     areas: `${RootPath.admin}/areas`,
     clusters: `${RootPath.admin}/clusters`,
     buildings: `${RootPath.admin}/buildings`,
     houses: `${RootPath.admin}/houses`,
     rooms: `${RootPath.admin}/rooms`,
+    serviceCategories: `${RootPath.admin}/service-categories`,
     services: `${RootPath.admin}/services`,
-    revenue: {
-      stores: `${RootPath.admin}/revenue/stores`,
-      platform: `${RootPath.admin}/revenue/platform`,
-    },
-    settings: `${RootPath.admin}/settings`,
   },
+  
   manager: {
-    serviceCategories: `${RootPath.manager}/service-categories`,
-    services: `${RootPath.manager}/services`,
-    serviceActivities: `${RootPath.manager}/service-activities`,
-    serviceSubActivities: `${RootPath.manager}/service-sub-activities`,
     groups: `${RootPath.manager}/groups`,
     timeSlots: `${RootPath.manager}/time-slots`,
     revenue: `${RootPath.manager}/revenue`,
   },
   staff: {
-    // dashboard: `${RootPath.staff}/dashboard`,
     myTasks: `${RootPath.staff}/my-tasks`,
     schedule: `${RootPath.staff}/schedule`,
     guides: `${RootPath.staff}/guides`,
