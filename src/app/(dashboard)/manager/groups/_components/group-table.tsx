@@ -1,44 +1,53 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataTable } from "@/components/table/data-table";
 import { columns } from "./group-tables/columns";
-import { searchParamsCache } from "@/lib/searchparams";
-import { getAllGroups } from "@/apis/group";
+import { getGroupById } from "@/apis/group";
 import { cookies } from "next/headers";
 
 const GroupTable = async () => {
-  const page = searchParamsCache.get("page") ?? "1"; 
-  const search = searchParamsCache.get("search") ?? "";
-  const size = searchParamsCache.get("size") ?? "10"; 
-
-  const filters = { page, size, ...(search && { search }) };
-
-  let groupPayload;
-  try {
-    const groupResponse = await getAllGroups(filters);
-    groupPayload = groupResponse?.payload ?? { items: [], totalPages: 0 };
-  } catch (error) {
-    console.error("Error fetching groups:", error);
-    groupPayload = { items: [], totalPages: 0 };
-  }
-
+  // Get the user cookie which contains the groupId
   const cookieStore = await cookies();
   const userCookie = cookieStore.get("user");
-  const userId = userCookie ? userCookie.value : null;
-const finalData = groupPayload.items.map((item) => {
-  return {
-    ...item,
-    userId: userId,
-  };
-}
-);
+  
+  let groupData: any[] = [];
+  let totalItems = 0;
+  
+  if (userCookie) {
+    try {
+      // Parse the user data from cookie
+      const userData = JSON.parse(userCookie.value);
+      const groupId = userData.groupId;
+      
+      if (groupId) {
+        // Fetch the specific group by ID
+        const groupResponse = await getGroupById(groupId);
+        
+        if (groupResponse?.payload) {
+          // Format data for the table
+          groupData = [groupResponse.payload];
+          totalItems = 1;
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching group:", error);
+    }
+  }
+
+  // Add userId to the group data for use in columns
+  const finalData = groupData.map((item) => {
+    return {
+      ...item,
+      userId: userCookie ? JSON.parse(userCookie.value).userId : null,
+    };
+  });
+
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Danh sách nhóm</h2>
+      <h2 className="text-xl font-bold mb-4">Thông tin nhóm</h2>
       <DataTable
         data={finalData}
         columns={columns}
-        totalItems={1}
+        totalItems={totalItems}
       />
     </div>
   );
