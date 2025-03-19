@@ -8,7 +8,6 @@ export function middleware(request: NextRequest) {
   const userRaw = request.cookies.get("user")?.value ?? " ";
   let user;
 
-  // Try parsing the user cookie
   try {
     user = JSON.parse(userRaw);
   } catch (error) {
@@ -19,12 +18,10 @@ export function middleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
 
-  // Set the groupId in the headers if it exists
   if (user?.groupId) {
     requestHeaders.set('x-group-id', user.groupId);
   }
 
-  // Allow access to `/` and `/logout` without checks
   if (pathname === "/" || pathname === "/logout") {
     return NextResponse.next({
       request: {
@@ -33,18 +30,14 @@ export function middleware(request: NextRequest) {
     });
   }
 
-
-  // Allow access to `/` and `/logout` without checks
   if (pathname === "/" || pathname === "/logout") {
     return NextResponse.next();
   }
 
-  // Require accessToken for all other paths
   if (!userRaw) {
     return NextResponse.redirect(new URL("/logout", request.url));
   }
 
-  // Role-based path checks
   if (user?.role === "Admin") {
     if (!pathname.startsWith("/admin")) {
       return NextResponse.redirect(new URL("/logout", request.url));
@@ -58,7 +51,6 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/logout", request.url));
     }
   } else {
-    // Redirect to /logout if the role is unknown or invalid
     return NextResponse.redirect(new URL("/logout", request.url));
   }
 

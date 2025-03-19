@@ -2,7 +2,7 @@ import PageContainer from "@/components/layout/page-container";
 import React, { Suspense } from "react";
 
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import StaffAsignBoard from "@/app/(dashboard)/manager/revenue/_components/staff-assign-board";
+import StaffAssignBoard from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderManagement/OrderFilter";
 type Props = {
   keyProps: string;
 };
@@ -15,7 +15,7 @@ const StaffAssignIndex = ({ keyProps }: Props) => {
           key={keyProps}
           fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
         >
-          <StaffAsignBoard />
+          <StaffAssignBoard />
         </Suspense>
       </div>
     </PageContainer>
