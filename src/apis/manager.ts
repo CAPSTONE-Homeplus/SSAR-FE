@@ -14,3 +14,9 @@ export const getAllManagers = async (params?: any) => {
   );
   return response;
 };
+
+
+export const createManager = async (data: Partial<TManagerResponse>) => {
+  const response = await httpHomePlus.post<TManagerResponse>(`/auth/register-manager`, data);
+  return response;
+};
