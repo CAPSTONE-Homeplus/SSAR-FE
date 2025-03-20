@@ -16,6 +16,7 @@ export const PATHS = {
     rooms: `${RootPath.admin}/rooms`,
     serviceCategories: `${RootPath.admin}/service-categories`,
     services: `${RootPath.admin}/services`,
+    managers: `${RootPath.admin}/managers`,
   },
   
   manager: {

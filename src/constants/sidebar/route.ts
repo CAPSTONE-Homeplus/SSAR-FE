@@ -78,22 +78,44 @@ export const adminNavItems: TNavItem[] = [
     isActive: false,
     items: [],
   },
+
+  {
+    title: "Quản Lí Điều Phối Viên",
+    url: "#",
+    icon: "employee",
+    isActive: false,
+    items: [
+      {
+        title: "Danh Sách Điều Phối Viên",
+        url: PATHS.admin.managers,
+        icon: "users",
+        shortcut: ["r", "a"],
+      },
+      {
+        title: "Công Việc Điều Phối",
+        url: PATHS.admin.services,
+        icon: "kanban",
+        shortcut: ["r", "s"],
+      },
+    ],
+  },
+
   {
     title: "Khu vực",
     url: "#",
-    icon: "building",
+    icon: "dashboard",
     isActive: false,
     items: [
       {
         title: "Quản lí khu vực",
         url: PATHS.admin.areas,
-        icon: "building",
+        icon: "filter",
         shortcut: ["r", "a"],
       },
       {
         title: "Quản lí cụm khu vực",
         url: PATHS.admin.clusters,
-        icon: "building",
+        icon: "kanban",
         shortcut: ["r", "s"],
       },
       {
@@ -111,33 +133,33 @@ export const adminNavItems: TNavItem[] = [
       {
         title: "Quản lí phòng",
         url: PATHS.admin.rooms,
-        icon: "home",
+        icon: "post",
         shortcut: ["r", "p"],
       },
     ],
   },
-
   {
     title: "Dịch Vụ",
     url: "#",
-    icon: "tag",
+    icon: "product",
     isActive: false,
     items: [
       {
         title: "Phân Loại Dịch Vụ",
         url: PATHS.admin.serviceCategories,
-        icon: "box",
+        icon: "page",
         shortcut: ["r", "a"],
       },
       {
         title: "Loại Dịch Vụ",
         url: PATHS.admin.services,
-        icon: "building",
+        icon: "post",
         shortcut: ["r", "s"],
       },
     ],
   },
 ];
+
 
 export const managerNavItems: TNavItem[] = [
   {

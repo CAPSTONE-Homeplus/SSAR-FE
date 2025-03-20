@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/table/data-table";
-import { columns } from "./service-category-tables/columns";
+import { columns } from "./manager-tables/columns";
 import { searchParamsCache } from "@/lib/searchparams";
-import { getAllServiceCategories } from "@/apis/service-category";
+import { getAllManagers } from "@/apis/manager";
 
 const ManagerTable = async () => {
   const page = searchParamsCache.get("page");
@@ -13,14 +13,14 @@ const ManagerTable = async () => {
     size: size,
     ...(search && { search }),
   };
-  const storeResponse = await getAllServiceCategories(filters);
-  const storePayload = storeResponse.payload;
+  const managerResponse = await getAllManagers(filters);
+  const managerPayload = managerResponse.payload;
   return (
     <div>
       <DataTable
-        data={storePayload.items}
+        data={managerPayload.items}
         columns={columns}
-        totalItems={storePayload.totalPages}
+        totalItems={managerPayload.totalPages}
       />
     </div>
   );
