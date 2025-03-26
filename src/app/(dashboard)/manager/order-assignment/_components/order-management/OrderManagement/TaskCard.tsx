@@ -4,7 +4,7 @@
 import { useRef, useState } from "react";
 import { useDrag } from "react-dnd";
 import { OrderType } from "@/hooks/useTaskBoard";
-import OrderDetailsPopup from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/OrderDetailsPopup";
+import OrderDetailsPopup from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/OrderDetailsPopup";
 
 const getStatusColor = (status: string): string => {
   switch (status) {
@@ -54,23 +54,21 @@ export const TaskCard: React.FC<TaskCardProps> = ({ order, onRefresh, groupId })
     <div
       ref={ref}
       onClick={handleClick}
-      className={`p-3 my-2 bg-white border ${statusClass} rounded-lg shadow-sm cursor-move 
+      className={`p-2 my-1 bg-white border ${statusClass} rounded-md shadow-sm cursor-move 
         hover:shadow-md transition-all duration-200 ${isDragging ? "opacity-50 scale-95" : "opacity-100"}`}
     >
-      <div className="flex justify-between items-start mb-2">
-        <span className="text-sm font-semibold text-gray-700">{order.code}</span>
-        <span className={`text-xs px-2 py-1 rounded-full ${priorityClass}`}>
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-medium text-gray-700 truncate">{order.code}</span>
+        <span className={`text-xs px-1.5 py-0.5 rounded-full ${priorityClass}`}>
           {order.priorityLevel || "Medium"}
         </span>
       </div>
-      <h3 className="text-md font-medium mb-1 truncate">{order.userId}</h3>
-      <div className="flex justify-between text-xs text-gray-500 mb-2">
-        <span>{new Date(order.createdAt).toLocaleDateString()}</span>
+      <div className="text-sm text-gray-600">
         <span>{order.totalAmount?.toLocaleString()} đ</span>
       </div>
-      <div className="flex justify-between items-center text-xs">
-        <span className="truncate text-gray-600">{order.serviceId || 0} SP</span>
-        <span className="text-gray-600 truncate">{order.employeeId || "Chưa gán"}</span>
+      <div className="flex justify-between text-xs text-gray-500 mt-1">
+        <span>{new Date(order.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+        <span className="truncate">{order.employeeId || "Chưa gán"}</span>
       </div>
       {isPopupOpen && (
         <OrderDetailsPopup

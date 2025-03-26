@@ -158,6 +158,26 @@ export const adminNavItems: TNavItem[] = [
       },
     ],
   },
+  {
+    title: "Doanh Thu & Báo Cáo",
+    url: "#",
+    icon: "chart",
+    isActive: false,
+    items: [
+      {
+        title: "Doanh Thu Tổng",
+        url: PATHS.admin.revenues,
+        icon: "page",
+        shortcut: ["r", "a"],
+      },
+      {
+        title: "Các Giao Dịch",
+        url: PATHS.admin.transactions,
+        icon: "post",
+        shortcut: ["r", "s"],
+      },
+    ],
+  },
 ];
 
 
@@ -179,7 +199,7 @@ export const managerNavItems: TNavItem[] = [
   },
   {
     title: "Trạng Thái Đơn Hàng",
-    url: PATHS.manager.revenue,
+    url: PATHS.manager.orderAssignment,
     icon: "tasks",
     isActive: false,
     items: [],

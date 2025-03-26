@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { useStaffAssignBoard } from "@/hooks/useStaffAssignBoard";
-import { TaskBoard } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderManagement/TaskBoard";
+import { TaskBoard } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderManagement/TaskBoard";
 
 const DateFilter = ({
   filterMode,

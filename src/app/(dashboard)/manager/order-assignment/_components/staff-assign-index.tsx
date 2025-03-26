@@ -2,7 +2,7 @@ import PageContainer from "@/components/layout/page-container";
 import React, { Suspense } from "react";
 
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import StaffAssignBoard from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderManagement/OrderFilter";
+import StaffAssignBoard from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderManagement/OrderFilter";
 type Props = {
   keyProps: string;
 };

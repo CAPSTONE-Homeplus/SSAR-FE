@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // components/OrderDetailsPopup/OverviewTab.tsx
-import { formatCurrency, formatDateTime } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/utils";
+import { formatCurrency, formatDateTime } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/utils";
 import { TabsContent } from "@/components/ui/tabs";
 import { Clipboard, DollarSign, Tag, CheckCircle, User, Calendar } from "lucide-react";
 

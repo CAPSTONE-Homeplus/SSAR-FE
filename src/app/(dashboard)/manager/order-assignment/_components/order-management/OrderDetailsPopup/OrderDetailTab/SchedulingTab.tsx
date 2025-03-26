@@ -3,7 +3,7 @@
 import { TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin } from "lucide-react";
-import { formatDateTime, getStatusColor } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/utils";
+import { formatDateTime, getStatusColor } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/utils";
 
 interface SchedulingTabProps {
   order: any;

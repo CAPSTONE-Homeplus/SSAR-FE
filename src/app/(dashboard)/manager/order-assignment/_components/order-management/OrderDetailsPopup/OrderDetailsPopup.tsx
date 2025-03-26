@@ -7,11 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserPlus, ShieldAlert } from "lucide-react";
 import { useOrderDetails } from "@/hooks/useOrderDetails";
-import { OverviewTab } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/OrderDetailTab/OverviewTab";
-import { ServicesTab } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/OrderDetailTab/ServicesTab";
-import { SchedulingTab } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/OrderDetailTab/SchedulingTab";
-import { StaffingTab } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/OrderDetailTab/StaffingTab";
-import { CancellationTab } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/OrderDetailTab/CancellationTab";
+import { OverviewTab } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/OrderDetailTab/OverviewTab";
+import { ServicesTab } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/OrderDetailTab/ServicesTab";
+import { SchedulingTab } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/OrderDetailTab/SchedulingTab";
+import { StaffingTab } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/OrderDetailTab/StaffingTab";
+import { CancellationTab } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/OrderDetailTab/CancellationTab";
 import { z } from "zod";
 import { OrderSchema } from "@/schema/order.schema";
 
