@@ -3,7 +3,7 @@ import { columns } from "./service-category-tables/columns";
 import { searchParamsCache } from "@/lib/searchparams";
 import { getAllServiceCategories } from "@/apis/service-category";
 
-const ManagerTable = async () => {
+const ServiceCategoryTable = async () => {
   const page = searchParamsCache.get("page");
   const search = searchParamsCache.get("search");
   const size = searchParamsCache.get("size");
@@ -26,4 +26,4 @@ const ManagerTable = async () => {
   );
 };
 
-export default ManagerTable;
+export default ServiceCategoryTable;

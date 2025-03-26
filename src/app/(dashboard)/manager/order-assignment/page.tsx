@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchParams } from "nuqs";
 import { searchParamsCache, serialize } from "@/lib/searchparams";
-import StaffAssignIndex from "@/app/(dashboard)/manager/revenue/_components/staff-assign-index";
+import StaffAssignIndex from "@/app/(dashboard)/manager/order-assignment/_components/staff-assign-index";
 
 type PageProps = {
   searchParams: SearchParams;

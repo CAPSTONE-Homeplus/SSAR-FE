@@ -3,7 +3,7 @@
 import { TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Package, Wrench } from "lucide-react";
-import { getPriorityColor } from "@/app/(dashboard)/manager/revenue/_components/order-management/OrderDetailsPopup/utils";
+import { getPriorityColor } from "@/app/(dashboard)/manager/order-assignment/_components/order-management/OrderDetailsPopup/utils";
 
 interface ServicesTabProps {
   order: any;
