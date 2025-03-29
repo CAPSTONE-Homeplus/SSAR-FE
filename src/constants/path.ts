@@ -17,6 +17,8 @@ export const PATHS = {
     serviceCategories: `${RootPath.admin}/service-categories`,
     services: `${RootPath.admin}/services`,
     managers: `${RootPath.admin}/managers`,
+    staffs:  `${RootPath.admin}/staffs`,
+    users:  `${RootPath.admin}/users`,
     revenues: `${RootPath.admin}/revenues`,
     transactions: `${RootPath.admin}/transactions`,
   },

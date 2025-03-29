@@ -15,7 +15,7 @@ const ManagerIndex = ({ keyProps }: Props) => {
     <PageContainer>
       <div className="space-y-4">
         <div className="flex items-start justify-between">
-          <Heading title="Quản Lí" description="Quản lí điều phối viên" />
+          <Heading title="Quản Lí" description="Điều Phối Viên" />
           <CredenzaCreateManager />
         </div>
         <Separator />

@@ -80,22 +80,28 @@ export const adminNavItems: TNavItem[] = [
   },
 
   {
-    title: "Quản Lí Điều Phối Viên",
+    title: "Quản Lí Tài Khoản",
     url: "#",
-    icon: "employee",
+    icon: "list",
     isActive: false,
     items: [
       {
-        title: "Danh Sách Điều Phối Viên",
+        title: "Điều Phối Viên",
         url: PATHS.admin.managers,
-        icon: "users",
-        shortcut: ["r", "a"],
+        icon: "userPlus",
+        shortcut: ["a", "m"],
       },
       {
-        title: "Công Việc Điều Phối",
-        url: PATHS.admin.services,
-        icon: "kanban",
-        shortcut: ["r", "s"],
+        title: "Nhân Viên",
+        url: PATHS.admin.staffs,
+        icon: "employee",
+        shortcut: ["a", "s"],
+      },
+      {
+        title: "Người Dùng",
+        url: PATHS.admin.users,
+        icon: "users",
+        shortcut: ["a", "u"],
       },
     ],
   },
