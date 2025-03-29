@@ -12,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash, Users } from "lucide-react";
-import { DetailModal } from "@/app/(dashboard)/manager/groups/_components/group-tables/group-detail";
 import { useRouter } from "next/navigation";
 
 interface CellActionProps {
@@ -31,13 +30,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      {/* Modal chi tiết */}
-      <DetailModal
-        isOpen={openDetail}
-        onClose={() => setOpenDetail(false)}
-        data={data}
-      />
-
       {/* Modal xác nhận xóa */}
       <AlertModal
         isOpen={openDelete}

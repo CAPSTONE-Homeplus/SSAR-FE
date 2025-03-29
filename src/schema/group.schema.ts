@@ -9,7 +9,7 @@ export const GroupSchema = BaseSchema.extend({
   areaId: z.string().uuid(),
   managerId: z.string().uuid(),
   clusterIds: z.array(z.string().uuid()).nonempty(), 
-  serviceId: z.string().uuid(), 
+  serviceIds: z.string().uuid(), 
 });
 
 export const GroupCreateSchema = BaseSchema.extend({

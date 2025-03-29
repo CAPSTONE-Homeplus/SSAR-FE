@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataTable } from "@/components/table/data-table";
-import { columns } from "./group-tables/columns";
+// import { DataTable } from "@/components/table/data-table";
+// import { columns } from "./group-tables/columns";
 import { getGroupById } from "@/apis/group";
 import { cookies } from "next/headers";
+import GroupDetailsView from "@/app/(dashboard)/manager/groups/_components/group-tables/group-detail-card";
 
 const GroupTable = async () => {
   // Get the user cookie which contains the groupId
@@ -43,13 +45,12 @@ const GroupTable = async () => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Thông tin nhóm</h2>
-      <DataTable
-        data={finalData}
-        columns={columns}
-        totalItems={totalItems}
-      />
-    </div>
+    <h2 className="text-xl font-bold mb-4">Thông tin nhóm</h2>
+    <GroupDetailsView 
+      data={finalData}
+
+    />
+  </div>
   );
 };
 
